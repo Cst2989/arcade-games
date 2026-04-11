@@ -28,7 +28,7 @@ test('maxStepsPerFrame caps catch-up', () => {
   loop.onUpdate = fn;
   loop.tick(0);
   loop.tick(10_000); // huge gap
-  expect(fn.mock.calls.length).toBeLessThanOrEqual(3);
+  expect(fn.mock.calls.length).toBe(3);
 });
 
 test('render fires once per tick with interpolation alpha in [0,1]', () => {
