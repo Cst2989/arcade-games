@@ -17,6 +17,7 @@ import { BossScene } from './scenes/boss.js';
 import { VictoryScene } from './scenes/victory.js';
 import { PauseScene } from './scenes/pause.js';
 import { GameOverScene } from './scenes/game-over.js';
+import { LevelCompleteScene } from './scenes/level-complete.js';
 
 const BASE = import.meta.env.BASE_URL;
 const assetUrl = (p: string) => `${BASE}${p.replace(/^\/+/, '')}`;
@@ -149,13 +150,14 @@ function launchLevel(
     chunk,
     () => {
       const deps: GameplayDeps = { input, gameLoop, sfx, screenShake, particles };
+      let currentScene: GameplayScene | null = null;
       const gameplay = new GameplayScene(
         renderer,
         atlas,
         level,
         levelIndex,
         deps,
-        () => onLevelCleared(levelIndex, levels, chunks, bossLogin),
+        () => onLevelCleared(levelIndex, levels, chunks, bossLogin, currentScene?.ctx.state.score ?? 0),
         (score, wave) => {
           const over = new GameOverScene(renderer, score, wave, () => {
             launchLevel(levelIndex, levels, chunks, bossLogin);
@@ -163,6 +165,7 @@ function launchLevel(
           sceneManager.replace(over);
         },
       );
+      currentScene = gameplay;
       sceneManager.replace(gameplay);
     },
   );
@@ -174,27 +177,40 @@ function onLevelCleared(
   levels: Level[],
   chunks: Chunk[],
   bossLogin: string,
+  score: number,
 ): void {
   sfx.play('level_up');
+  const level = levels[levelIndex]!;
   const nextIndex = levelIndex + 1;
-  if (nextIndex < levels.length) {
-    launchLevel(nextIndex, levels, chunks, bossLogin);
-    return;
-  }
+  const hasNextLevel = nextIndex < levels.length;
+  const nextLabel = hasNextLevel ? 'NEXT LEVEL' : 'BOSS FIGHT';
 
-  const bossLevel = levels[levels.length - 1]!;
-  const bossIntro = new BossIntroScene(renderer, bossLogin, () => {
-    const deps: GameplayDeps = { input, gameLoop, sfx, screenShake, particles };
-    const boss = new BossScene(renderer, atlas, bossLevel, levels.length - 1, deps, () => {
-      const victory = new VictoryScene(renderer, bossLogin, 0, () => {
-        sceneManager.clear();
-        sceneManager.push(new TitleScene(renderer, particles.stars, (r) => startGame(r)));
+  const complete = new LevelCompleteScene(
+    renderer,
+    level.profile,
+    score,
+    nextLabel,
+    () => {
+      if (hasNextLevel) {
+        launchLevel(nextIndex, levels, chunks, bossLogin);
+        return;
+      }
+      const bossLevel = levels[levels.length - 1]!;
+      const bossIntro = new BossIntroScene(renderer, bossLogin, () => {
+        const deps: GameplayDeps = { input, gameLoop, sfx, screenShake, particles };
+        const boss = new BossScene(renderer, atlas, bossLevel, levels.length - 1, deps, () => {
+          const victory = new VictoryScene(renderer, bossLogin, 0, () => {
+            sceneManager.clear();
+            sceneManager.push(new TitleScene(renderer, particles.stars, (r) => startGame(r)));
+          });
+          sceneManager.replace(victory);
+        });
+        sceneManager.replace(boss);
       });
-      sceneManager.replace(victory);
-    });
-    sceneManager.replace(boss);
-  });
-  sceneManager.replace(bossIntro);
+      sceneManager.replace(bossIntro);
+    },
+  );
+  sceneManager.replace(complete);
 }
 
 window.addEventListener('keydown', (e) => {

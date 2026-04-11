@@ -165,7 +165,13 @@ export class GameplayScene extends Scene {
       for (let col = 0; col < COLS_PER_ROW; col++) {
         const slot = row.cells[col]!;
         const cx = cellCenterX(col);
-        const color = slot.alive ? slot.color : EMPTY_CELL_COLOR;
+        let color = slot.alive ? slot.color : EMPTY_CELL_COLOR;
+        if (slot.alive && slot.entityId !== null) {
+          const hp = this.ctx.world.get(slot.entityId, Health);
+          if (hp && hp.maxHp > 0 && hp.hp < hp.maxHp) {
+            color = darkenColor(slot.color, hp.hp / hp.maxHp);
+          }
+        }
         drawRoundedCell(main, cx, row.y, CELL, color);
       }
     }
@@ -232,6 +238,21 @@ export class GameplayScene extends Scene {
     }
     r.endFrame();
   }
+}
+
+function darkenColor(color: string, hpFraction: number): string {
+  const h = color.startsWith('#') ? color.slice(1) : color;
+  if (h.length !== 6) return color;
+  const r = parseInt(h.slice(0, 2), 16);
+  const g = parseInt(h.slice(2, 4), 16);
+  const b = parseInt(h.slice(4, 6), 16);
+  const t = (1 - Math.max(0, Math.min(1, hpFraction))) * 0.75;
+  const mix = (c: number, dst: number) => Math.round(c * (1 - t) + dst * t);
+  const nr = mix(r, 13);
+  const ng = mix(g, 17);
+  const nb = mix(b, 23);
+  const hex = (n: number) => n.toString(16).padStart(2, '0');
+  return `#${hex(nr)}${hex(ng)}${hex(nb)}`;
 }
 
 function drawRoundedCell(ctx: CanvasRenderingContext2D, cx: number, cy: number, size: number, color: string): void {

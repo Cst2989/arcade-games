@@ -1,5 +1,14 @@
 import type { ContributorStats } from './contributor-stats.js';
 
+export interface BiggestContribution {
+  date: string;
+  message: string;
+  sha: string;
+  additions: number;
+  deletions: number;
+  commits: number;
+}
+
 export interface ContributorProfile {
   login: string;
   avatarUrl: string;
@@ -16,6 +25,7 @@ export interface ContributorProfile {
   topLanguage: string;
   joinedYear: number;
   bio: string;
+  biggestContribution: BiggestContribution;
 }
 
 const LOCATIONS = [
@@ -42,6 +52,23 @@ const BIOS = [
   '10x engineer (10x more bugs)',
   'author of three libraries you have never heard of',
   'CI red? i was just about to fix that',
+];
+
+const COMMIT_POOL = [
+  'rewrite the parser again, this time for real',
+  'feat: add streaming mode (closes #1923)',
+  'refactor: extract 4000 lines into its own package',
+  'fix: off-by-one in the Y2038 countdown',
+  'perf: stop allocating on the hot path',
+  'docs: finally explain how any of this works',
+  'chore: delete 6 years of dead code',
+  'feat: zero-copy codec for the binary format',
+  'fix: race condition that only happens on Tuesdays',
+  'refactor: move from events to streams, sorry',
+  "revert 'revert revert of the revert'",
+  'feat: make it 3x faster (no benchmarks yet)',
+  'fix: handle unicode in repo names properly',
+  'chore: bump minimum node to something sane',
 ];
 
 const WEEKDAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
@@ -100,6 +127,21 @@ export function computeContributorProfile(
   const pick = <T,>(arr: readonly T[], offset: number): T =>
     arr[(seed + offset) % arr.length]!;
 
+  const shaChars = '0123456789abcdef';
+  let sha = '';
+  for (let i = 0; i < 7; i++) {
+    sha += shaChars[(seed >>> (i * 4)) % 16]!;
+  }
+  const bestCount = Math.max(1, best.count);
+  const biggestContribution: BiggestContribution = {
+    date: best.date,
+    message: pick(COMMIT_POOL, 37),
+    sha,
+    additions: bestCount * (40 + ((seed >>> 5) % 160)),
+    deletions: bestCount * (10 + ((seed >>> 9) % 70)),
+    commits: best.count,
+  };
+
   return {
     login,
     avatarUrl: stats.avatarUrl,
@@ -116,5 +158,6 @@ export function computeContributorProfile(
     topLanguage: pick(LANGUAGES, 11),
     joinedYear: 2008 + ((seed >>> 11) % 13),
     bio: pick(BIOS, 23),
+    biggestContribution,
   };
 }
