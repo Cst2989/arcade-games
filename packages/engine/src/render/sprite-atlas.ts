@@ -7,6 +7,8 @@ export interface AtlasFrame {
 
 export function parseAtlasXml(xml: string): Map<string, AtlasFrame> {
   const frames = new Map<string, AtlasFrame>();
+  // Assumes Kenney attribute order: name, x, y, width, height. Reordered or
+  // extra pivot/rotation attrs from other tools will silently drop frames.
   const re = /<SubTexture\s+name="([^"]+)"\s+x="(\d+)"\s+y="(\d+)"\s+width="(\d+)"\s+height="(\d+)"/g;
   let m: RegExpExecArray | null;
   while ((m = re.exec(xml)) !== null) {
