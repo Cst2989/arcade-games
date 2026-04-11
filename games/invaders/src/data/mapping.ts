@@ -33,8 +33,9 @@ export interface Level {
 
 export function enemyFromCommits(commits: number, levelIndex: number): EnemySpec | null {
   if (commits <= 0) return null;
-  const hpBase = Math.ceil(commits / 2);
-  const hp = Math.max(1, Math.ceil(hpBase * (1 + levelIndex * BALANCE.levelDifficultyStep)));
+  const hpBase = commits <= 3 ? 1 : commits <= 6 ? 2 : commits <= 9 ? 3 : 4;
+  const hpScaled = Math.ceil(hpBase * (1 + levelIndex * 0.25));
+  const hp = Math.max(1, Math.min(6, hpScaled));
   const fireRate = (BALANCE.baseFireRate + commits * BALANCE.fireRatePerCommit) *
     (1 + levelIndex * BALANCE.levelDifficultyStep);
   return {

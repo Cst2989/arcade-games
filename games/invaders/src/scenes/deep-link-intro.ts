@@ -1,11 +1,12 @@
-import { Scene } from '@osi/engine';
+import { Scene, AmbientMusic } from '@osi/engine';
 import type { Renderer, Sfx, ParticleEmitter, AudioBus } from '@osi/engine';
 import { BALANCE } from '../config/balance.js';
+import { drawBrandHeader } from '../ui/brand.js';
 
 export class DeepLinkIntroScene extends Scene {
   private elapsed = 0;
   private fired = false;
-  private stopMusic: (() => void) | null = null;
+  private music: AmbientMusic | null = null;
 
   constructor(
     private renderer: Renderer,
@@ -20,18 +21,20 @@ export class DeepLinkIntroScene extends Scene {
 
   override onEnter(): void {
     window.addEventListener('keydown', this.onKey);
+    const music = new AmbientMusic(this.audio);
+    this.music = music;
     this.audio.onUnlocked(() => {
       if (this.fired) return;
-      this.sfx.play('boss_roar', { volume: 0.6 });
-      this.stopMusic = this.sfx.loop('boss_phase', { volume: 0.45 });
+      this.sfx.play('boss_roar', { volume: 0.5 });
+      music.start('foreboding', { volume: 0.4 });
     });
   }
 
   override onExit(): void {
     window.removeEventListener('keydown', this.onKey);
-    if (this.stopMusic) {
-      this.stopMusic();
-      this.stopMusic = null;
+    if (this.music) {
+      this.music.stop();
+      this.music = null;
     }
   }
 
@@ -76,32 +79,39 @@ export class DeepLinkIntroScene extends Scene {
 
     this.stars.render(ctx);
 
+    drawBrandHeader(ctx, {
+      cx: W / 2,
+      topY: 22,
+      elapsed: this.elapsed,
+      compact: true,
+    });
+
     const pulse = 0.5 + 0.5 * Math.sin(this.elapsed * 2.4);
 
     ctx.textAlign = 'center';
     ctx.fillStyle = `rgba(248, 81, 73, ${0.55 + 0.25 * pulse})`;
-    ctx.font = 'bold 18px ui-monospace, Menlo, monospace';
-    ctx.fillText('// INCOMING TRANSMISSION', W / 2, 110);
+    ctx.font = 'bold 16px ui-monospace, Menlo, monospace';
+    ctx.fillText('// INCOMING TRANSMISSION', W / 2, 142);
 
     ctx.fillStyle = '#f85149';
-    ctx.font = 'bold 44px ui-monospace, Menlo, monospace';
-    ctx.fillText('GET READY TO FACE', W / 2, 180);
+    ctx.font = 'bold 38px ui-monospace, Menlo, monospace';
+    ctx.fillText('GET READY TO FACE', W / 2, 196);
 
     ctx.fillStyle = '#ffa657';
-    ctx.font = 'bold 56px ui-monospace, Menlo, monospace';
-    ctx.fillText('THE 5 BOSSES', W / 2, 246);
+    ctx.font = 'bold 50px ui-monospace, Menlo, monospace';
+    ctx.fillText('THE 5 BOSSES', W / 2, 256);
 
     ctx.fillStyle = '#8b949e';
-    ctx.font = '20px ui-monospace, Menlo, monospace';
-    ctx.fillText('OF', W / 2, 284);
+    ctx.font = '18px ui-monospace, Menlo, monospace';
+    ctx.fillText('OF', W / 2, 290);
 
     ctx.fillStyle = '#c9d1d9';
-    ctx.font = 'bold 36px ui-monospace, Menlo, monospace';
+    ctx.font = 'bold 32px ui-monospace, Menlo, monospace';
     const repo = fitRepoText(ctx, this.repoFullName, W - 120);
-    ctx.fillText(repo, W / 2, 332);
+    ctx.fillText(repo, W / 2, 334);
 
     ctx.fillStyle = `rgba(201, 209, 217, ${0.4 + 0.5 * pulse})`;
-    ctx.font = 'italic 22px ui-monospace, Menlo, monospace';
+    ctx.font = 'italic 20px ui-monospace, Menlo, monospace';
     ctx.fillText('are you ready?', W / 2, 396);
 
     const btnW = 340;

@@ -74,4 +74,12 @@ export class AudioBus {
   setSfxVolume(v: number): void {
     if (this.sfxGain) this.sfxGain.gain.value = v;
   }
+
+  getContext(): AudioContext | null {
+    return this.ctx;
+  }
+
+  getMusicDestination(): AudioNode | null {
+    return this.musicGain;
+  }
 }

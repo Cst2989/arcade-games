@@ -13,7 +13,7 @@ export function damageSystem(hits: HitEvent[], now: number, ctx: GameContext): v
       if (!hp || !bullet) continue;
       if (bullet.fromPlayer) ctx.stats.shotsHit += 1;
       hp.hp -= bullet.damage;
-      hp.flashUntil = now + 0.08;
+      hp.flashUntil = now + 0.14;
       const pos = world.get(h.target, Position);
       if (pos) {
         for (let i = 0; i < 6; i++) {

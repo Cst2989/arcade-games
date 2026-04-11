@@ -1,6 +1,7 @@
 import { Scene } from '@osi/engine';
 import type { Renderer, GameLoop } from '@osi/engine';
 import { BALANCE } from '../config/balance.js';
+import { setInGame } from '../ui/chrome.js';
 
 export class PauseScene extends Scene {
   constructor(
@@ -12,10 +13,12 @@ export class PauseScene extends Scene {
   }
   override onEnter(): void {
     this.gameLoop.timeScale = 0;
+    setInGame(false);
     window.addEventListener('keydown', this.onKey);
   }
   override onExit(): void {
     this.gameLoop.timeScale = 1;
+    setInGame(true);
     window.removeEventListener('keydown', this.onKey);
   }
   private onKey = (e: KeyboardEvent) => {

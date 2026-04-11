@@ -28,6 +28,7 @@ import { hudUpdateSystem } from '../systems/hud-update.js';
 
 import { drawHud } from '../ui/hud.js';
 import { drawContributorPanel } from '../ui/contributor-panel.js';
+import { setInGame } from '../ui/chrome.js';
 import { POWERUPS } from '../config/powerups.js';
 import {
   CELL, ROW_PITCH, COLS_PER_ROW, GRID_LEFT, GRID_WIDTH, EMPTY_CELL_COLOR, cellCenterX,
@@ -89,6 +90,7 @@ export class GameplayScene extends Scene {
   }
 
   override onExit(): void {
+    setInGame(false);
     this.ctx.particles.sparks.clear();
     this.ctx.particles.explosions.clear();
     this.ctx.particles.bigExplosions.clear();
@@ -96,6 +98,7 @@ export class GameplayScene extends Scene {
   }
 
   override onEnter(): void {
+    setInGame(true);
     this.ctx.particles.sparks.clear();
     this.ctx.particles.explosions.clear();
     this.ctx.particles.bigExplosions.clear();
@@ -179,13 +182,18 @@ export class GameplayScene extends Scene {
         const slot = row.cells[col]!;
         const cx = cellCenterX(col);
         let color = slot.alive ? slot.color : EMPTY_CELL_COLOR;
+        let hpRef: { hp: number; maxHp: number } | undefined;
         if (slot.alive && slot.entityId !== null) {
           const hp = this.ctx.world.get(slot.entityId, Health);
-          if (hp && hp.maxHp > 0 && hp.hp < hp.maxHp) {
-            color = darkenColor(slot.color, hp.hp / hp.maxHp);
+          if (hp && hp.maxHp > 0) {
+            hpRef = hp;
+            if (hp.hp < hp.maxHp) color = darkenColor(slot.color, hp.hp / hp.maxHp);
           }
         }
         drawRoundedCell(main, cx, row.y, CELL, color);
+        if (hpRef && hpRef.maxHp > 1 && hpRef.hp < hpRef.maxHp) {
+          drawHpPips(main, cx, row.y - CELL / 2 - 5, hpRef.hp, hpRef.maxHp);
+        }
       }
     }
 
@@ -266,6 +274,28 @@ function darkenColor(color: string, hpFraction: number): string {
   const nb = mix(b, 23);
   const hex = (n: number) => n.toString(16).padStart(2, '0');
   return `#${hex(nr)}${hex(ng)}${hex(nb)}`;
+}
+
+function drawHpPips(
+  ctx: CanvasRenderingContext2D,
+  cx: number,
+  cy: number,
+  hp: number,
+  maxHp: number,
+): void {
+  const clamped = Math.max(0, Math.min(maxHp, hp));
+  const barW = 22;
+  const barH = 3;
+  const x = cx - barW / 2;
+  const y = cy - barH / 2;
+  ctx.save();
+  ctx.fillStyle = 'rgba(13, 17, 23, 0.85)';
+  ctx.fillRect(x - 1, y - 1, barW + 2, barH + 2);
+  const fillW = Math.max(0, (clamped / maxHp) * barW);
+  const frac = clamped / maxHp;
+  ctx.fillStyle = frac > 0.6 ? '#39d353' : frac > 0.3 ? '#d29922' : '#f85149';
+  ctx.fillRect(x, y, fillW, barH);
+  ctx.restore();
 }
 
 function drawRoundedCell(ctx: CanvasRenderingContext2D, cx: number, cy: number, size: number, color: string): void {

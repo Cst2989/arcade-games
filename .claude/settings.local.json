@@ -34,7 +34,13 @@
       "Bash(ls -la sheet.*)",
       "Bash(pnpm --filter @osi/invaders test -- --run)",
       "Bash(pnpm -r typecheck)",
-      "Bash(pnpm -r test)"
+      "Bash(pnpm -r test)",
+      "Bash(pnpm typecheck:*)",
+      "mcp__plugin_playwright_playwright__browser_navigate",
+      "Bash(pnpm add:*)",
+      "Bash(pnpm vitest:*)",
+      "Bash(kill %1)",
+      "Bash(pkill -f \"vite.*invaders\")"
     ]
   }
 }

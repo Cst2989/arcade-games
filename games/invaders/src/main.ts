@@ -10,9 +10,10 @@ import type { ContributorStats } from './data/contributor-stats.js';
 import { aggregateDaily, pickBiggestCommit } from './data/contributor-stats.js';
 import {
   getRepo, getContributors, getUser, getCommitsForAuthor,
-  withCache, GitHubRateLimitError, setToken,
+  withCache, GitHubRateLimitError,
   type GitHubUser,
 } from './data/github-client.js';
+import { promptForToken } from './ui/token-prompt.js';
 import { createGameStats, type GameStats } from './scenes/gameplay-context.js';
 
 import { TitleScene } from './scenes/title.js';
@@ -119,6 +120,20 @@ async function boot(): Promise<void> {
   window.addEventListener('pointerdown', unlockAudio);
 
   const params = new URLSearchParams(window.location.search);
+
+  (window as unknown as { __osiShowTokenModal?: () => void }).__osiShowTokenModal = () =>
+    promptForToken({
+      onSave: () => console.log('[invaders] token-modal demo: saved'),
+      onCancel: () => console.log('[invaders] token-modal demo: cancelled'),
+    });
+
+  if (params.get('test') === 'modal') {
+    promptForToken({
+      onSave: () => console.log('[invaders] token-modal demo: saved'),
+      onCancel: () => console.log('[invaders] token-modal demo: cancelled'),
+    });
+  }
+
   const deepLink = params.get('repo') ?? params.get('load');
   const hasValidDeepLink = deepLink !== null && /^[\w.-]+\/[\w.-]+$/.test(deepLink);
 
@@ -133,7 +148,7 @@ async function boot(): Promise<void> {
     );
     sceneManager.push(intro);
   } else {
-    const title = new TitleScene(renderer, particles.stars, (repo) => startGame(repo));
+    const title = new TitleScene(renderer, particles.stars, (repo) => startGame(repo), audio);
     sceneManager.push(title);
   }
 
@@ -146,7 +161,10 @@ function startGame(repoFullName: string): void {
   void loadRealRepo(repoFullName, loading).catch((err) => {
     console.error('[invaders] real-data load failed, using mock', err);
     if (err instanceof GitHubRateLimitError) {
-      promptForToken(() => startGame(repoFullName));
+      promptForToken({
+        onSave: () => startGame(repoFullName),
+        onCancel: () => startGameFromMock(repoFullName, loading),
+      });
       return;
     }
     startGameFromMock(repoFullName, loading);
@@ -258,60 +276,6 @@ function startGameFromMock(repoFullName: string, loading: LoadingScene): void {
   );
 }
 
-function promptForToken(retry: () => void): void {
-  const overlay = document.createElement('div');
-  overlay.style.cssText =
-    'position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(13,17,23,0.92);z-index:9999;color:#c9d1d9;font-family:ui-monospace,Menlo,monospace;';
-
-  const card = document.createElement('div');
-  card.style.cssText = 'background:#161b22;border:1px solid #30363d;padding:24px;max-width:480px;';
-
-  const h = document.createElement('h2');
-  h.style.cssText = 'margin:0 0 12px 0;font-size:16px;';
-  h.textContent = 'rate limit hit';
-
-  const p = document.createElement('p');
-  p.style.cssText = 'margin:0 0 12px 0;font-size:13px;line-height:1.5;';
-  p.append(
-    document.createTextNode("GitHub unauth'd API is 60/hr. Paste a personal access token (classic, scope "),
-  );
-  const code = document.createElement('code');
-  code.textContent = 'public_repo';
-  p.append(code, document.createTextNode(') to keep going. Stored only in localStorage.'));
-
-  const input = document.createElement('input');
-  input.type = 'text';
-  input.placeholder = 'ghp_...';
-  input.style.cssText =
-    'width:100%;padding:8px;background:#0d1117;color:#c9d1d9;border:1px solid #30363d;box-sizing:border-box;';
-
-  const row = document.createElement('div');
-  row.style.cssText = 'margin-top:12px;display:flex;gap:8px;justify-content:flex-end;';
-
-  const cancel = document.createElement('button');
-  cancel.textContent = 'cancel';
-  cancel.style.cssText =
-    'background:#21262d;color:#c9d1d9;border:1px solid #30363d;padding:6px 12px;cursor:pointer;';
-  cancel.onclick = () => overlay.remove();
-
-  const save = document.createElement('button');
-  save.textContent = 'save';
-  save.style.cssText =
-    'background:#238636;color:#ffffff;border:1px solid #2ea043;padding:6px 12px;cursor:pointer;';
-  save.onclick = () => {
-    const val = input.value.trim();
-    if (val) setToken(val);
-    overlay.remove();
-    retry();
-  };
-
-  row.append(cancel, save);
-  card.append(h, p, input, row);
-  overlay.append(card);
-  document.body.append(overlay);
-  input.focus();
-}
-
 function launchLevel(
   levelIndex: number,
   levels: Level[],
@@ -344,9 +308,9 @@ function launchLevel(
               const levelScore = bossRef?.ctx.state.score ?? 0;
               stats.totalScore += levelScore;
               stats.levelsCompleted += 1;
-              const victory = new VictoryScene(renderer, repoFullName, stats, () => {
+              const victory = new VictoryScene(renderer, repoFullName, stats, levels, () => {
                 sceneManager.clear();
-                sceneManager.push(new TitleScene(renderer, particles.stars, (r) => startGame(r)));
+                sceneManager.push(new TitleScene(renderer, particles.stars, (r) => startGame(r), audio));
               });
               sceneManager.replace(victory);
             },

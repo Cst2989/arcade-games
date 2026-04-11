@@ -3,14 +3,135 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Open Source Invaders</title>
+    <meta name="theme-color" content="#0d1117" />
+
+    <title>Open Source Invaders — turn any GitHub repo into a retro arcade game</title>
+    <meta name="description" content="Drop any GitHub repo into Open Source Invaders and the top contributors become the enemy waves and bosses. A free, browser-based retro arcade game powered by real commit history." />
+    <meta name="keywords" content="github, open source, arcade, game, space invaders, retro, browser game, contributors, commits" />
+    <meta name="author" content="Open Source Invaders" />
+
+    <link rel="canonical" href="https://danneciu.github.io/open-source-invaders/" />
+
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%230d1117'/><rect x='6' y='10' width='4' height='4' fill='%2339d353'/><rect x='22' y='10' width='4' height='4' fill='%2339d353'/><rect x='10' y='10' width='12' height='4' fill='%2339d353'/><rect x='6' y='14' width='20' height='4' fill='%2339d353'/><rect x='4' y='18' width='4' height='4' fill='%2339d353'/><rect x='12' y='18' width='2' height='2' fill='%230d1117'/><rect x='18' y='18' width='2' height='2' fill='%230d1117'/><rect x='24' y='18' width='4' height='4' fill='%2339d353'/><rect x='8' y='22' width='4' height='2' fill='%2339d353'/><rect x='20' y='22' width='4' height='2' fill='%2339d353'/></svg>" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Open Source Invaders" />
+    <meta property="og:title" content="Open Source Invaders — battle any GitHub repo's contributors" />
+    <meta property="og:description" content="A retro arcade game where real GitHub contributors become enemy waves. Pick a repo, face 5 bosses, and defeat the top committer. Plays in your browser, free and open source." />
+    <meta property="og:url" content="https://danneciu.github.io/open-source-invaders/" />
+    <meta property="og:image" content="https://danneciu.github.io/open-source-invaders/assets/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Open Source Invaders title screen: pixel-art space invader shooting at a green GitHub contribution grid" />
+    <meta property="og:locale" content="en_US" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Open Source Invaders — battle any GitHub repo's contributors" />
+    <meta name="twitter:description" content="A retro arcade game where real GitHub contributors become enemy waves. Pick a repo, face 5 bosses, and defeat the top committer." />
+    <meta name="twitter:image" content="https://danneciu.github.io/open-source-invaders/assets/og-image.png" />
+    <meta name="twitter:image:alt" content="Open Source Invaders title screen" />
+
+    <meta name="application-name" content="Open Source Invaders" />
+    <meta name="apple-mobile-web-app-title" content="OSI" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "VideoGame",
+        "name": "Open Source Invaders",
+        "description": "Turn any public GitHub repository into a retro arcade Space Invaders clone — the top contributors become the enemy waves and bosses.",
+        "url": "https://danneciu.github.io/open-source-invaders/",
+        "genre": ["Arcade", "Shooter", "Retro"],
+        "gamePlatform": ["Web Browser"],
+        "operatingSystem": "Any",
+        "applicationCategory": "Game",
+        "isAccessibleForFree": true
+      }
+    </script>
+
     <style>
-      html, body { margin: 0; padding: 0; background: #0d1117; overflow: hidden; }
+      html, body { margin: 0; padding: 0; background: #0d1117; overflow: hidden; font-family: ui-monospace, Menlo, monospace; color: #c9d1d9; }
       canvas { display: block; margin: 0 auto; image-rendering: pixelated; }
+      .seo-only { position: absolute; left: -9999px; top: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
+      #cta-follow {
+        position: fixed;
+        top: 16px;
+        right: 16px;
+        z-index: 100;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: #238636;
+        color: #ffffff;
+        text-decoration: none;
+        padding: 10px 16px;
+        font: bold 12px ui-monospace, Menlo, monospace;
+        letter-spacing: 0.3px;
+        border: 2px solid #2ea043;
+        box-shadow: 0 0 14px rgba(57, 211, 83, 0.28), 0 2px 12px rgba(0, 0, 0, 0.5);
+        transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+        animation: cta-pulse 2.4s ease-in-out infinite;
+      }
+      #cta-follow:hover {
+        background: #2ea043;
+        transform: translateY(-1px);
+        box-shadow: 0 0 22px rgba(57, 211, 83, 0.55), 0 4px 16px rgba(0, 0, 0, 0.6);
+      }
+      #cta-follow:active { transform: translateY(0); }
+      #cta-follow .cta-heart { color: #ffdd57; font-size: 14px; line-height: 1; }
+      #cta-follow .cta-arrow { opacity: 0.85; transition: transform 0.15s ease; }
+      #cta-follow:hover .cta-arrow { transform: translateX(3px); }
+
+      @keyframes cta-pulse {
+        0%, 100% { box-shadow: 0 0 14px rgba(57, 211, 83, 0.28), 0 2px 12px rgba(0, 0, 0, 0.5); }
+        50%      { box-shadow: 0 0 22px rgba(57, 211, 83, 0.45), 0 2px 12px rgba(0, 0, 0, 0.5); }
+      }
+
+      body.osi-in-game #cta-follow { display: none; }
+
+      @media (max-width: 720px) {
+        #cta-follow { font-size: 11px; padding: 8px 12px; top: 10px; right: 10px; }
+      }
     </style>
   </head>
   <body>
     <canvas id="game" width="960" height="600"></canvas>
+
+    <a id="cta-follow"
+       href="https://neciudan.dev/subscribe"
+       target="_blank"
+       rel="noopener noreferrer"
+       title="Like this game? Follow neciudan.dev for more">
+      <span class="cta-heart">♥</span>
+      <span>Like this? Follow neciudan.dev</span>
+      <span class="cta-arrow">→</span>
+    </a>
+
+    <div class="seo-only" aria-hidden="false">
+      <h1>Open Source Invaders</h1>
+      <p>
+        Open Source Invaders is a free, open-source browser arcade game that turns any public
+        GitHub repository into a retro Space Invaders experience. Enter a repo like
+        <code>facebook/react</code> or <code>vitejs/vite</code> and the top 5 contributors
+        become the five levels, with the most active committer as the final boss.
+      </p>
+      <h2>How to play</h2>
+      <ul>
+        <li>Move with arrow keys or A / D</li>
+        <li>Fire with Space</li>
+        <li>Drop a bomb with X</li>
+        <li>Pause with Escape</li>
+      </ul>
+      <h2>Share a level</h2>
+      <p>
+        Share any battle by appending <code>?repo=owner/name</code> to the URL — for example,
+        <code>?repo=tanstack/query</code>. Friends will land straight into the briefing screen
+        for that repo.
+      </p>
+    </div>
+
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>

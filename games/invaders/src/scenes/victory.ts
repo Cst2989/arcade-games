@@ -2,6 +2,8 @@ import { Scene } from '@osi/engine';
 import type { Renderer } from '@osi/engine';
 import { BALANCE } from '../config/balance.js';
 import type { GameStats } from './gameplay-context.js';
+import type { Level } from '../data/mapping.js';
+import { mountSharePanel, unmountSharePanel, type ShareContributor } from '../ui/share-panel.js';
 
 interface Confetto {
   x: number;
@@ -28,6 +30,7 @@ export class VictoryScene extends Scene {
     private renderer: Renderer,
     private repoName: string,
     private stats: GameStats,
+    private levels: Level[],
     private onReplay: () => void,
   ) {
     super();
@@ -36,10 +39,30 @@ export class VictoryScene extends Scene {
   override onEnter(): void {
     window.addEventListener('keydown', this.onKey);
     this.spawnBurst(80);
+    const contributors: ShareContributor[] = [...this.levels]
+      .reverse()
+      .map((lv) => {
+        const base: ShareContributor = {
+          login: lv.contributor.login,
+          totalCommits: lv.contributor.totalCommits ?? lv.profile.totalCommits ?? 0,
+        };
+        return lv.profile.avatarImage
+          ? { ...base, avatarImage: lv.profile.avatarImage }
+          : base;
+      });
+    setTimeout(() => {
+      mountSharePanel({
+        repoName: this.repoName,
+        contributors,
+        finalScore: this.stats.totalScore,
+        onReplay: () => this.onReplay(),
+      });
+    }, 1800);
   }
 
   override onExit(): void {
     window.removeEventListener('keydown', this.onKey);
+    unmountSharePanel();
   }
 
   private onKey = (e: KeyboardEvent) => {
@@ -158,9 +181,9 @@ export class VictoryScene extends Scene {
     drawStat(ctx, col2X, row, 'BOMBS DETONATED', bombsUsed.toLocaleString(), '#f85149');
 
     ctx.fillStyle = '#8b949e';
-    ctx.font = '14px ui-monospace, Menlo, monospace';
+    ctx.font = '13px ui-monospace, Menlo, monospace';
     ctx.textAlign = 'center';
-    ctx.fillText('ENTER to play another repo', W / 2, H - 28);
+    ctx.fillText('ENTER to play another repo', W / 2, H - 24);
     this.renderer.endFrame();
   }
 }

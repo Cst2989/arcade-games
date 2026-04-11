@@ -37,3 +37,5 @@ export { ScreenShake } from './fx/screen-shake.js';
 // audio
 export { AudioBus } from './audio/audio-bus.js';
 export { Sfx } from './audio/sfx.js';
+export { AmbientMusic } from './audio/ambient-music.js';
+export type { AmbientMode } from './audio/ambient-music.js';
