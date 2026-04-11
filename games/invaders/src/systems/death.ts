@@ -37,9 +37,10 @@ export function deathSystem(_dt: number, now: number, ctx: GameContext): void {
         x: pos?.x ?? 0,
         y: pos?.y ?? 0,
       });
-      if (en.hardSquare && pos) {
+      if (pos) {
         const dense = en.commits >= 15;
-        const dropChance = dense ? 0.9 : 0.55;
+        const hard = en.hardSquare;
+        const dropChance = dense ? 0.9 : hard ? 0.6 : 0.22;
         if (Math.random() < dropChance) {
           let def = POWERUPS[Math.floor(Math.random() * POWERUPS.length)]!;
           if (dense && Math.random() < 0.6) {
@@ -49,8 +50,8 @@ export function deathSystem(_dt: number, now: number, ctx: GameContext): void {
           world.add(p, Position, { x: pos.x, y: pos.y });
           world.add(p, Velocity, { vx: 0, vy: BALANCE.powerupFallSpeed });
           world.add(p, Powerup, { kind: def.kind });
-          world.add(p, Collider, { w: 22, h: 22 });
-          world.add(p, SpriteRef, { name: 'power-up.png', scale: 1, tint: def.color });
+          world.add(p, Collider, { w: 28, h: 28 });
+          world.add(p, SpriteRef, { name: def.sprite, scale: 1 });
         }
       }
       ctx.state.score += en.commits * 10;

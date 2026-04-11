@@ -128,13 +128,16 @@ export function waveSpawnerSystem(dt: number, ctx: GameContext): void {
 
   reapDeadEntities(ctx);
 
-  let lowestY = -Infinity;
-  for (const row of ctx.rows) if (row.y > lowestY) lowestY = row.y;
+  let lowestAliveY = -Infinity;
+  for (const row of ctx.rows) {
+    if (!row.cells.some((c) => c.alive)) continue;
+    if (row.y > lowestAliveY) lowestAliveY = row.y;
+  }
 
   let playerY: number = BALANCE.viewportHeight;
   for (const [, pos] of ctx.world.query(Position, Player)) playerY = pos.y;
 
-  if (!state.gameOverFired && lowestY > playerY - CELL) {
+  if (!state.gameOverFired && lowestAliveY > playerY - CELL) {
     state.gameOverFired = true;
     for (const [pid, hp] of ctx.world.query(Health, Player)) {
       hp.hp = 0;

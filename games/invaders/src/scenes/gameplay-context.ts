@@ -24,6 +24,12 @@ export interface RowState {
   cells: CellSlot[];
 }
 
+export interface HudPowerupChip {
+  label: string;
+  color: string;
+  remaining: number;
+}
+
 export interface HudState {
   score: number;
   combo: number;
@@ -32,6 +38,8 @@ export interface HudState {
   playerHp: number;
   playerMaxHp: number;
   chaos: string | null;
+  bombsLeft: number;
+  activePowerups: HudPowerupChip[];
 }
 
 export interface GameContext {
@@ -59,6 +67,9 @@ export interface GameContext {
     combo: number;
     comboExpires: number;
     chaosActive: { kind: string; until: number } | null;
+    forkSeconds: number;
+    rebaseSeconds: number;
+    squashReady: boolean;
   };
 }
 
@@ -71,5 +82,7 @@ export function createHudState(): HudState {
     playerHp: 0,
     playerMaxHp: 0,
     chaos: null,
+    bombsLeft: 0,
+    activePowerups: [],
   };
 }

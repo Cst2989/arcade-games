@@ -6,7 +6,7 @@ import { randRange } from '@osi/engine';
 export function enemyAiSystem(dt: number, ctx: GameContext): void {
   const { world, sfx } = ctx;
   const chaosFireBoost = ctx.state.chaosActive?.kind === 'CI_FAILED' ? 1.2 : 1;
-  const chaosSlow = ctx.state.chaosActive?.kind === 'REBASE' ? BALANCE.powerupRebaseSlow : 1;
+  const chaosSlow = ctx.state.rebaseSeconds > 0 ? BALANCE.powerupRebaseSlow : 1;
 
   for (const [e, pos, en] of world.query(Position, Enemy)) {
     const vel = world.get(e, Velocity);

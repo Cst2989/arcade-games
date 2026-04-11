@@ -76,6 +76,9 @@ export class GameplayScene extends Scene {
         combo: 0,
         comboExpires: 0,
         chaosActive: null,
+        forkSeconds: 0,
+        rebaseSeconds: 0,
+        squashReady: false,
       },
     };
     events.on('levelCleared', () => this.onLevelCleared());

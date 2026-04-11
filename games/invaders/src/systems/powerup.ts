@@ -1,7 +1,7 @@
 import type { GameContext } from '../scenes/gameplay-context.js';
 import { Powerup, Player, Health, Position, Enemy } from '../components/index.js';
 
-export function applyPowerup(kind: string, playerEntity: number, ctx: GameContext, now: number): void {
+export function applyPowerup(kind: string, playerEntity: number, ctx: GameContext, _now: number): void {
   const { world, sfx, particles } = ctx;
   const p = world.get(playerEntity, Player);
   const hp = world.get(playerEntity, Health);
@@ -13,17 +13,14 @@ export function applyPowerup(kind: string, playerEntity: number, ctx: GameContex
     case 'revert':
       hp.hp = Math.min(hp.maxHp, hp.hp + 1);
       break;
-    case 'fork': {
-      const prev = p.shotsMultiplier;
-      p.shotsMultiplier = 3;
-      setTimeout(() => { p.shotsMultiplier = prev; }, 8000);
+    case 'fork':
+      ctx.state.forkSeconds = 8;
       break;
-    }
     case 'rebase':
-      ctx.state.chaosActive = { kind: 'REBASE', until: now + 5 };
+      ctx.state.rebaseSeconds = 5;
       break;
     case 'squash':
-      (ctx as unknown as Record<string, unknown>)._osi_nextShotPierce = true;
+      ctx.state.squashReady = true;
       break;
     case 'forcepush': {
       const toClear: number[] = [];
@@ -43,6 +40,5 @@ export function applyPowerup(kind: string, playerEntity: number, ctx: GameContex
       break;
     }
   }
-  // Silence unused warning on Powerup import — it's semantic only in the type system now
   void Powerup;
 }
