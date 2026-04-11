@@ -1,0 +1,40 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git add:*)",
+      "Bash(git commit -m ':*)",
+      "Bash(pnpm --version)",
+      "Bash(pnpm install:*)",
+      "Bash(git commit:*)",
+      "Bash(pnpm --filter @osi/engine test)",
+      "Bash(pnpm --filter @osi/invaders typecheck)",
+      "Bash(echo \"EXIT:$?\")",
+      "Bash(pnpm --filter @osi/engine typecheck)",
+      "Bash(echo \"exit=$?\")",
+      "Bash(pnpm --filter @osi/engine test world)",
+      "Bash(pnpm --filter @osi/engine test gameloop)",
+      "Bash(pnpm --filter @osi/engine exec vitest run)",
+      "Bash(pnpm --filter @osi/engine exec vitest run tests/render/camera.test.ts)",
+      "Bash(pnpm --filter @osi/engine exec vitest run tests/fx/screen-shake.test.ts)",
+      "Bash(git -C /Users/danneciu/Desktop/apps/open-source-invaders show 8ba1682 -- packages/engine/src/util/perlin.ts packages/engine/src/fx/screen-shake.ts packages/engine/tests/fx/screen-shake.test.ts)",
+      "Bash(pnpm --filter @osi/engine exec vitest run tests/fx/particles.test.ts)",
+      "Bash(git -C /Users/danneciu/Desktop/apps/open-source-invaders show 4a9ceed:packages/engine/tests/fx/particles.test.ts)",
+      "Bash(git -C /Users/danneciu/Desktop/apps/open-source-invaders show 4a9ceed:packages/engine/src/fx/particles.ts)",
+      "Bash(pnpm --filter @osi/engine exec vitest run tests/fx/tween.test.ts)",
+      "Bash(git -C /Users/danneciu/Desktop/apps/open-source-invaders show 448c4b6:packages/engine/src/fx/tween.ts)",
+      "Bash(git -C /Users/danneciu/Desktop/apps/open-source-invaders show 448c4b6:packages/engine/tests/fx/tween.test.ts)",
+      "Bash(git -C /Users/danneciu/Desktop/apps/open-source-invaders show eceab5a -- packages/engine/src/audio/audio-bus.ts packages/engine/src/audio/sfx.ts)",
+      "Bash(wc -l /Users/danneciu/Desktop/apps/open-source-invaders/docs/superpowers/plans/*.md)",
+      "Bash(pnpm --filter @osi/invaders test)",
+      "Bash(curl -sL -o /tmp/kenney.zip -w \"HTTP:%{http_code} SIZE:%{size_download}\\\\n\" \"https://kenney.nl/media/pages/assets/space-shooter-redux/9a50b6ab7c-1677693167/kenney_space-shooter-redux.zip\")",
+      "WebFetch(domain:kenney.nl)",
+      "WebFetch(domain:www.kenney.nl)",
+      "WebSearch",
+      "Bash(curl:*)",
+      "Bash(ls -la sheet.*)",
+      "Bash(pnpm --filter @osi/invaders test -- --run)",
+      "Bash(pnpm -r typecheck)",
+      "Bash(pnpm -r test)"
+    ]
+  }
+}

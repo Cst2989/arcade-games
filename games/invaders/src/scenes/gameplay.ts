@@ -275,21 +275,29 @@ function drawRoundedCell(ctx: CanvasRenderingContext2D, cx: number, cy: number, 
 }
 
 function drawInstructions(ctx: CanvasRenderingContext2D, atlas: SpriteAtlas): void {
-  const x = 590;
-  let y = 90;
+  const boxX = 576;
+  const boxY = 76;
+  const boxW = 360;
+  const boxH = 344;
+  const padX = 18;
+  const padY = 16;
+  const contentX = boxX + padX;
+
   ctx.save();
 
   ctx.fillStyle = 'rgba(22, 27, 34, 0.70)';
-  ctx.fillRect(x - 14, y - 22, 356, 332);
+  ctx.fillRect(boxX, boxY, boxW, boxH);
   ctx.strokeStyle = '#30363d';
   ctx.lineWidth = 1;
-  ctx.strokeRect(x - 14, y - 22, 356, 332);
+  ctx.strokeRect(boxX, boxY, boxW, boxH);
 
   ctx.textAlign = 'left';
+  ctx.textBaseline = 'alphabetic';
   ctx.fillStyle = '#8b949e';
   ctx.font = '10px ui-monospace, Menlo, monospace';
-  ctx.fillText('HOW TO PLAY', x, y - 6);
+  ctx.fillText('HOW TO PLAY', contentX, boxY + padY + 2);
 
+  let y = boxY + padY + 26;
   ctx.font = '12px ui-monospace, Menlo, monospace';
   const controls: Array<[string, string]> = [
     ['\u2190 \u2192 / A D', 'move'],
@@ -299,16 +307,16 @@ function drawInstructions(ctx: CanvasRenderingContext2D, atlas: SpriteAtlas): vo
   ];
   for (const [key, desc] of controls) {
     ctx.fillStyle = '#58a6ff';
-    ctx.fillText(key, x, y);
+    ctx.fillText(key, contentX, y);
     ctx.fillStyle = '#8b949e';
-    ctx.fillText(desc, x + 110, y);
-    y += 16;
+    ctx.fillText(desc, contentX + 110, y);
+    y += 18;
   }
 
-  y += 12;
+  y += 14;
   ctx.fillStyle = '#8b949e';
   ctx.font = '10px ui-monospace, Menlo, monospace';
-  ctx.fillText('POWER-UPS  (auto on pickup)', x, y);
+  ctx.fillText('POWER-UPS  (auto on pickup)', contentX, y);
   y += 22;
 
   const effects: Record<string, string> = {
@@ -321,46 +329,46 @@ function drawInstructions(ctx: CanvasRenderingContext2D, atlas: SpriteAtlas): vo
   ctx.font = '12px ui-monospace, Menlo, monospace';
   const iconScale = 0.6;
   for (const def of POWERUPS) {
-    const iconCx = x + 10;
+    const iconCx = contentX + 10;
     const iconCy = y - 4;
     if (atlas.has(def.sprite)) {
       atlas.draw(ctx, def.sprite, iconCx, iconCy, iconScale);
     } else {
       ctx.fillStyle = def.color;
-      ctx.fillRect(x, y - 12, 14, 14);
+      ctx.fillRect(contentX, y - 12, 14, 14);
     }
     ctx.fillStyle = '#c9d1d9';
-    ctx.fillText(def.label, x + 28, y);
+    ctx.fillText(def.label, contentX + 28, y);
     ctx.fillStyle = '#8b949e';
-    ctx.fillText(effects[def.kind] ?? '', x + 140, y);
+    ctx.fillText(effects[def.kind] ?? '', contentX + 140, y);
     y += 22;
   }
 
-  y += 4;
+  y += 6;
   ctx.fillStyle = '#484f58';
   ctx.font = '10px ui-monospace, Menlo, monospace';
-  ctx.fillText('squash = queued; fires on', x, y); y += 12;
-  ctx.fillText('your next SPACE shot', x, y);
+  ctx.fillText('squash = queued; fires on', contentX, y); y += 12;
+  ctx.fillText('your next SPACE shot', contentX, y);
 
   ctx.restore();
 }
 
 function drawGridHeader(ctx: CanvasRenderingContext2D, totalCommits: number, weeksSeen: number): void {
   ctx.save();
+  const cx = GRID_LEFT + GRID_WIDTH / 2;
   ctx.fillStyle = '#c9d1d9';
-  ctx.font = '14px ui-monospace, Menlo, monospace';
-  ctx.textAlign = 'left';
+  ctx.font = '13px ui-monospace, Menlo, monospace';
+  ctx.textAlign = 'center';
   ctx.fillText(
     `${totalCommits.toLocaleString()} contributions in the last year`,
-    GRID_LEFT,
-    40,
+    cx, 30,
   );
   ctx.fillStyle = '#8b949e';
-  ctx.font = '11px ui-monospace, Menlo, monospace';
-  ctx.fillText(`weeks defended: ${weeksSeen}`, GRID_LEFT + GRID_WIDTH - 140, 40);
+  ctx.font = '10px ui-monospace, Menlo, monospace';
+  ctx.fillText(`weeks defended: ${weeksSeen}`, cx, 46);
 
-  const legendX = GRID_LEFT + GRID_WIDTH - 110;
-  const legendY = 56;
+  const legendX = cx - 32;
+  const legendY = 58;
   const legendCell = 10;
   const legendGap = 3;
   ctx.fillStyle = '#8b949e';

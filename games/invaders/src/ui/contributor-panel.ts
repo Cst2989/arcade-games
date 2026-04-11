@@ -6,8 +6,13 @@ export interface KillStats {
 }
 
 const PANEL_X = 20;
-const PANEL_Y = 80;
+const PANEL_Y = 96;
 const PANEL_W = 360;
+const PANEL_H = 472;
+const PAD_X = 22;
+const PAD_Y = 20;
+const CONTENT_X = PANEL_X + PAD_X;
+const CONTENT_W = PANEL_W - PAD_X * 2;
 
 function avatarColor(login: string): string {
   let h = 2166136261;
@@ -61,6 +66,7 @@ function drawWeekdayBars(
   height: number,
   weekdayCounts: number[],
 ): void {
+  ctx.save();
   const labels = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
   const max = Math.max(1, ...weekdayCounts);
   const gap = 4;
@@ -79,6 +85,7 @@ function drawWeekdayBars(
     ctx.textAlign = 'center';
     ctx.fillText(labels[i]!, bx + barW / 2, y + height + 11);
   }
+  ctx.restore();
 }
 
 export function drawContributorPanel(
@@ -88,38 +95,43 @@ export function drawContributorPanel(
 ): void {
   ctx.save();
   ctx.fillStyle = 'rgba(22, 27, 34, 0.70)';
-  ctx.fillRect(PANEL_X - 4, PANEL_Y - 4, PANEL_W + 8, 460);
+  ctx.fillRect(PANEL_X, PANEL_Y, PANEL_W, PANEL_H);
   ctx.strokeStyle = '#30363d';
   ctx.lineWidth = 1;
-  ctx.strokeRect(PANEL_X - 4, PANEL_Y - 4, PANEL_W + 8, 460);
+  ctx.strokeRect(PANEL_X, PANEL_Y, PANEL_W, PANEL_H);
+
+  let y = PANEL_Y + PAD_Y + 4;
 
   ctx.textAlign = 'left';
+  ctx.textBaseline = 'alphabetic';
   ctx.fillStyle = '#8b949e';
   ctx.font = '10px ui-monospace, Menlo, monospace';
-  ctx.fillText('TARGET  // git blame', PANEL_X, PANEL_Y + 8);
+  ctx.fillText('TARGET  // git blame', CONTENT_X, y);
 
-  drawAvatar(ctx, PANEL_X + 30, PANEL_Y + 48, 22, profile.login);
+  drawAvatar(ctx, CONTENT_X + 22, y + 36, 22, profile.login);
 
   ctx.textAlign = 'left';
   ctx.fillStyle = '#c9d1d9';
   ctx.font = 'bold 18px ui-monospace, Menlo, monospace';
-  ctx.fillText(`@${profile.login}`, PANEL_X + 64, PANEL_Y + 44);
+  ctx.fillText(`@${profile.login}`, CONTENT_X + 56, y + 34);
   ctx.fillStyle = '#8b949e';
   ctx.font = '11px ui-monospace, Menlo, monospace';
-  ctx.fillText(profile.bio, PANEL_X + 64, PANEL_Y + 62);
+  ctx.fillText(profile.bio, CONTENT_X + 56, y + 52);
 
+  y += 86;
   ctx.fillStyle = '#8b949e';
   ctx.font = '11px ui-monospace, Menlo, monospace';
-  ctx.fillText(profile.location, PANEL_X, PANEL_Y + 96);
+  ctx.fillText(profile.location, CONTENT_X, y);
+  y += 16;
   ctx.fillStyle = '#6e7681';
   ctx.fillText(
     `joined ${profile.joinedYear}  ·  ${profile.publicRepos} repos  ·  ${profile.followers.toLocaleString()} followers`,
-    PANEL_X, PANEL_Y + 112,
+    CONTENT_X, y,
   );
 
-  const col1 = PANEL_X;
-  const col2 = PANEL_X + 180;
-  let y = PANEL_Y + 144;
+  const col1 = CONTENT_X;
+  const col2 = CONTENT_X + Math.floor(CONTENT_W / 2);
+  y += 24;
 
   drawStatRow(ctx, col1, y, 'TOTAL COMMITS',
     profile.totalCommits.toLocaleString(), '#39d353');
@@ -138,26 +150,33 @@ export function drawContributorPanel(
   y += 36;
   drawStatRow(ctx, col1, y, 'TOP LANGUAGE', profile.topLanguage, '#58a6ff');
 
-  y += 36;
+  y += 34;
   ctx.fillStyle = '#8b949e';
   ctx.font = '10px ui-monospace, Menlo, monospace';
   ctx.fillText('COMMITS BY WEEKDAY', col1, y);
-  drawWeekdayBars(ctx, col1, y + 6, PANEL_W, 40, profile.weekdayCounts);
+  drawWeekdayBars(ctx, col1, y + 6, CONTENT_W, 36, profile.weekdayCounts);
 
-  y += 68;
+  y += 64;
+  ctx.textAlign = 'left';
   ctx.fillStyle = '#8b949e';
   ctx.font = '10px ui-monospace, Menlo, monospace';
   ctx.fillText('KILL COUNT', col1, y);
-  y += 14;
+
   const pct = kills.total > 0 ? kills.defeated / kills.total : 0;
-  const barW = PANEL_W;
+  const barW = CONTENT_W;
+  const barY = y + 8;
   ctx.fillStyle = '#21262d';
-  ctx.fillRect(col1, y, barW, 8);
+  ctx.fillRect(col1, barY, barW, 8);
   ctx.fillStyle = '#f85149';
-  ctx.fillRect(col1, y, Math.round(barW * pct), 8);
+  ctx.fillRect(col1, barY, Math.round(barW * pct), 8);
+
   ctx.font = '11px ui-monospace, Menlo, monospace';
   ctx.fillStyle = '#c9d1d9';
-  ctx.fillText(`${kills.defeated} / ${kills.total} defeated  (${Math.round(pct * 100)}%)`, col1, y + 24);
+  ctx.textAlign = 'left';
+  ctx.fillText(`${kills.defeated} / ${kills.total} defeated`, col1, barY + 22);
+  ctx.fillStyle = '#8b949e';
+  ctx.textAlign = 'right';
+  ctx.fillText(`${Math.round(pct * 100)}%`, col1 + CONTENT_W, barY + 22);
 
   ctx.restore();
 }

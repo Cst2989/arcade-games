@@ -1,5 +1,5 @@
 import { Scene } from '@osi/engine';
-import type { Renderer } from '@osi/engine';
+import type { Renderer, Sfx } from '@osi/engine';
 import { BALANCE } from '../config/balance.js';
 
 export class GameOverScene extends Scene {
@@ -7,6 +7,7 @@ export class GameOverScene extends Scene {
     private renderer: Renderer,
     private score: number,
     private waveReached: number,
+    private sfx: Sfx,
     private onRestart: () => void,
   ) {
     super();
@@ -14,6 +15,7 @@ export class GameOverScene extends Scene {
 
   override onEnter(): void {
     window.addEventListener('keydown', this.onKey);
+    this.sfx.play('game_over', { volume: 0.8 });
   }
 
   override onExit(): void {

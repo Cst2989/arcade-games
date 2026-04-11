@@ -84,6 +84,8 @@ async function boot(): Promise<void> {
       boss_die: assetUrl('assets/sfx/boss_die.wav'),
       ui_hover: assetUrl('assets/sfx/ui_hover.wav'),
       ui_click: assetUrl('assets/sfx/ui_click.wav'),
+      level_complete: assetUrl('assets/sfx/level_complete.wav'),
+      game_over: assetUrl('assets/sfx/game_over.wav'),
     });
     console.log('[invaders] sfx loaded');
   } catch (err) {
@@ -121,7 +123,10 @@ function startGame(repoFullName: string): void {
   const chunks: Chunk[] = extractChunks(data.readme, repoFullName);
   loading.setProgress(1, 'ready');
 
-  setTimeout(() => launchLevel(0, levels, chunks, data.contributors[0]!.login), 600);
+  setTimeout(
+    () => launchLevel(0, levels, chunks, data.contributors[0]!.login, repoFullName),
+    600,
+  );
 }
 
 function launchLevel(
@@ -129,6 +134,7 @@ function launchLevel(
   levels: Level[],
   chunks: Chunk[],
   bossLogin: string,
+  repoFullName: string,
 ): void {
   const level = levels[levelIndex]!;
   const chunk = chunks[levelIndex % Math.max(chunks.length, 1)] ?? {
@@ -157,10 +163,13 @@ function launchLevel(
         level,
         levelIndex,
         deps,
-        () => onLevelCleared(levelIndex, levels, chunks, bossLogin, currentScene?.ctx.state.score ?? 0),
+        () => onLevelCleared(
+          levelIndex, levels, chunks, bossLogin, repoFullName,
+          currentScene?.ctx.state.score ?? 0,
+        ),
         (score, wave) => {
-          const over = new GameOverScene(renderer, score, wave, () => {
-            launchLevel(levelIndex, levels, chunks, bossLogin);
+          const over = new GameOverScene(renderer, score, wave, sfx, () => {
+            launchLevel(levelIndex, levels, chunks, bossLogin, repoFullName);
           });
           sceneManager.replace(over);
         },
@@ -177,6 +186,7 @@ function onLevelCleared(
   levels: Level[],
   chunks: Chunk[],
   bossLogin: string,
+  repoFullName: string,
   score: number,
 ): void {
   sfx.play('level_up');
@@ -190,9 +200,12 @@ function onLevelCleared(
     level.profile,
     score,
     nextLabel,
+    sfx,
+    levelIndex,
+    repoFullName,
     () => {
       if (hasNextLevel) {
-        launchLevel(nextIndex, levels, chunks, bossLogin);
+        launchLevel(nextIndex, levels, chunks, bossLogin, repoFullName);
         return;
       }
       const bossLevel = levels[levels.length - 1]!;

@@ -42,15 +42,24 @@ export function drawHud(renderer: Renderer, hud: HudState): void {
 
   if (hud.combo > 1) {
     ctx.fillStyle = BALANCE.accentYellow;
-    ctx.font = 'bold 28px ui-monospace, Menlo, monospace';
-    ctx.textAlign = 'center';
-    ctx.fillText(`×${hud.combo} COMBO`, BALANCE.viewportWidth / 2, 40);
+    ctx.font = 'bold 14px ui-monospace, Menlo, monospace';
+    ctx.textAlign = 'left';
+    ctx.fillText(`×${hud.combo} COMBO`, 150, 44);
   }
   if (hud.chaos) {
-    ctx.fillStyle = BALANCE.accentRed;
+    const label = `!! ${hud.chaos.replace(/_/g, ' ')} !!`;
     ctx.font = 'bold 18px ui-monospace, Menlo, monospace';
     ctx.textAlign = 'center';
-    ctx.fillText(`!! ${hud.chaos.replace(/_/g, ' ')} !!`, BALANCE.viewportWidth / 2, 70);
+    const chaosCx = 576 + 360 / 2;
+    const chaosCy = 462;
+    const textW = ctx.measureText(label).width;
+    ctx.fillStyle = 'rgba(13, 17, 23, 0.85)';
+    ctx.fillRect(chaosCx - textW / 2 - 12, chaosCy - 18, textW + 24, 28);
+    ctx.strokeStyle = BALANCE.accentRed;
+    ctx.lineWidth = 1;
+    ctx.strokeRect(chaosCx - textW / 2 - 12, chaosCy - 18, textW + 24, 28);
+    ctx.fillStyle = BALANCE.accentRed;
+    ctx.fillText(label, chaosCx, chaosCy);
   }
   ctx.restore();
 }
