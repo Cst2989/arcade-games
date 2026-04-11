@@ -40,7 +40,12 @@
       "Bash(pnpm add:*)",
       "Bash(pnpm vitest:*)",
       "Bash(kill %1)",
-      "Bash(pkill -f \"vite.*invaders\")"
+      "Bash(pkill -f \"vite.*invaders\")",
+      "Bash(BASE_PATH=/ pnpm --filter @osi/invaders build)",
+      "Bash(netlify --version)",
+      "Bash(netlify api:*)",
+      "Read(//private/tmp/**)",
+      "Bash(netlify deploy:*)"
     ]
   }
 }
