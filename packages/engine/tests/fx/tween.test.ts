@@ -36,3 +36,34 @@ test('easeOutQuad is monotonic', () => {
     prev = v;
   }
 });
+
+test('loop tween never fires onComplete', () => {
+  const obj = { x: 0 };
+  const fn = vi.fn();
+  const t = new Tween(obj, { x: 10 }, {
+    duration: 1,
+    easing: Easing.linear,
+    loop: true,
+    onComplete: fn,
+  });
+  t.update(5);
+  expect(fn).not.toHaveBeenCalled();
+  expect(t.done).toBe(false);
+});
+
+test('update is a no-op after done', () => {
+  const obj = { x: 0 };
+  const t = new Tween(obj, { x: 10 }, { duration: 1, easing: Easing.linear });
+  t.update(2); // completes, snaps to 10
+  obj.x = 99;
+  t.update(1);
+  expect(obj.x).toBe(99);
+});
+
+test('multi-key tween interpolates each field independently', () => {
+  const obj = { x: 0, y: 100 };
+  const t = new Tween(obj, { x: 10, y: 50 }, { duration: 1, easing: Easing.linear });
+  t.update(0.5);
+  expect(obj.x).toBeCloseTo(5);
+  expect(obj.y).toBeCloseTo(75);
+});
