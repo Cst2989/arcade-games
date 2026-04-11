@@ -87,6 +87,7 @@ export class ParticleEmitter {
     return this._count;
   }
 
+  // Returns [NaN, NaN] when the pool is empty — callers must guard on aliveCount().
   debugFirst(): [number, number] {
     for (let i = 0; i < this.cfg.capacity; i++) {
       if (this.alive[i]) return [this.data[i * STRIDE]!, this.data[i * STRIDE + 1]!];
