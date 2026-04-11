@@ -7,6 +7,7 @@ export class AudioBus {
   private pendingUnlock: (() => void)[] = [];
 
   async init(): Promise<void> {
+    if (this.ctx) return;
     this.ctx = new (window.AudioContext || (window as any).webkitAudioContext)();
     this.master = this.ctx.createGain();
     this.master.gain.value = 0.8;
@@ -62,6 +63,7 @@ export class AudioBus {
     src.start();
     return () => {
       try { src.stop(); } catch {}
+      g.disconnect();
     };
   }
 
