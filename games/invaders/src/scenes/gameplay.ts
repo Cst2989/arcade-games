@@ -42,6 +42,8 @@ export interface GameplayDeps {
 export class GameplayScene extends Scene {
   readonly ctx: GameContext;
   protected now = 0;
+  private playerSpawned = false;
+  private gameOverFired = false;
 
   constructor(
     protected renderer: Renderer,
@@ -50,6 +52,7 @@ export class GameplayScene extends Scene {
     levelIndex: number,
     deps: GameplayDeps,
     private onLevelCleared: () => void,
+    private onGameOver?: (score: number, wave: number) => void,
   ) {
     super();
     const events = new EventBus<InvadersEvents>();
@@ -97,6 +100,8 @@ export class GameplayScene extends Scene {
     this.ctx.world.add(e, Collider, { w: 40, h: 32 });
 
     this.ctx.state.waveIndex = 0;
+    this.playerSpawned = true;
+    this.gameOverFired = false;
   }
 
   override update(dt: number): void {
@@ -123,6 +128,15 @@ export class GameplayScene extends Scene {
     screenShakeSystem(dt, this.ctx);
     tweenSystem(dt, this.ctx);
     hudUpdateSystem(dt, this.ctx);
+
+    if (this.playerSpawned && !this.gameOverFired) {
+      let alive = false;
+      for (const entry of this.ctx.world.query(Player)) { void entry; alive = true; break; }
+      if (!alive) {
+        this.gameOverFired = true;
+        this.onGameOver?.(this.ctx.state.score, this.ctx.state.waveIndex);
+      }
+    }
   }
 
   override render(): void {
@@ -194,6 +208,7 @@ export class GameplayScene extends Scene {
     this.ctx.particles.powerupDust.render(main);
     main.restore();
     drawHud(r, this.ctx.hud);
+    drawInstructions(main);
     if (this.ctx.state.chaosActive?.kind === 'CI_FAILED') {
       main.fillStyle = 'rgba(248, 81, 73, 0.10)';
       main.fillRect(0, 0, BALANCE.viewportWidth, BALANCE.viewportHeight);
@@ -219,6 +234,66 @@ function drawRoundedCell(ctx: CanvasRenderingContext2D, cx: number, cy: number, 
   ctx.quadraticCurveTo(x, y, x + r, y);
   ctx.closePath();
   ctx.fill();
+}
+
+function drawInstructions(ctx: CanvasRenderingContext2D): void {
+  const x = 590;
+  let y = 90;
+  ctx.save();
+  ctx.textAlign = 'left';
+
+  ctx.fillStyle = '#8b949e';
+  ctx.font = '11px ui-monospace, Menlo, monospace';
+  ctx.fillText('HOW TO PLAY', x, y);
+  y += 18;
+
+  ctx.fillStyle = '#c9d1d9';
+  ctx.font = '12px ui-monospace, Menlo, monospace';
+  const controls: Array<[string, string]> = [
+    ['\u2190 \u2192 / A D', 'move'],
+    ['SPACE', 'fire'],
+    ['X', 'bomb (1/level)'],
+    ['ESC', 'pause'],
+  ];
+  for (const [key, desc] of controls) {
+    ctx.fillStyle = '#58a6ff';
+    ctx.fillText(key, x, y);
+    ctx.fillStyle = '#8b949e';
+    ctx.fillText(desc, x + 110, y);
+    y += 16;
+  }
+
+  y += 10;
+  ctx.fillStyle = '#8b949e';
+  ctx.font = '11px ui-monospace, Menlo, monospace';
+  ctx.fillText('POWER-UPS  (auto on pickup)', x, y);
+  y += 18;
+
+  const powerups: Array<[string, string, string]> = [
+    ['revert',     '#3fb950', 'heal +1 HP'],
+    ['fork',       '#58a6ff', 'triple shot 8s'],
+    ['rebase',     '#d29922', 'slow enemies 5s'],
+    ['squash',     '#a371f7', 'next shot pierces'],
+    ['force push', '#f85149', 'clear screen'],
+  ];
+  ctx.font = '12px ui-monospace, Menlo, monospace';
+  for (const [label, color, effect] of powerups) {
+    ctx.fillStyle = color;
+    ctx.fillRect(x, y - 9, 10, 10);
+    ctx.fillStyle = '#c9d1d9';
+    ctx.fillText(label, x + 16, y);
+    ctx.fillStyle = '#8b949e';
+    ctx.fillText(effect, x + 110, y);
+    y += 16;
+  }
+
+  y += 6;
+  ctx.fillStyle = '#484f58';
+  ctx.font = '10px ui-monospace, Menlo, monospace';
+  ctx.fillText('squash = queued; fires on', x, y); y += 12;
+  ctx.fillText('your next SPACE shot', x, y);
+
+  ctx.restore();
 }
 
 function drawGridHeader(ctx: CanvasRenderingContext2D, totalCommits: number, weeksSeen: number): void {

@@ -37,14 +37,21 @@ export function deathSystem(_dt: number, now: number, ctx: GameContext): void {
         x: pos?.x ?? 0,
         y: pos?.y ?? 0,
       });
-      if (en.hardSquare && pos && Math.random() < BALANCE.powerupDropChance) {
-        const def = POWERUPS[Math.floor(Math.random() * POWERUPS.length)]!;
-        const p = world.spawn();
-        world.add(p, Position, { x: pos.x, y: pos.y });
-        world.add(p, Velocity, { vx: 0, vy: BALANCE.powerupFallSpeed });
-        world.add(p, Powerup, { kind: def.kind });
-        world.add(p, Collider, { w: 22, h: 22 });
-        world.add(p, SpriteRef, { name: 'power-up.png', scale: 1, tint: def.color });
+      if (en.hardSquare && pos) {
+        const dense = en.commits >= 15;
+        const dropChance = dense ? 0.9 : 0.55;
+        if (Math.random() < dropChance) {
+          let def = POWERUPS[Math.floor(Math.random() * POWERUPS.length)]!;
+          if (dense && Math.random() < 0.6) {
+            def = POWERUPS.find((p) => p.kind === 'forcepush') ?? def;
+          }
+          const p = world.spawn();
+          world.add(p, Position, { x: pos.x, y: pos.y });
+          world.add(p, Velocity, { vx: 0, vy: BALANCE.powerupFallSpeed });
+          world.add(p, Powerup, { kind: def.kind });
+          world.add(p, Collider, { w: 22, h: 22 });
+          world.add(p, SpriteRef, { name: 'power-up.png', scale: 1, tint: def.color });
+        }
       }
       ctx.state.score += en.commits * 10;
       ctx.state.combo += 1;

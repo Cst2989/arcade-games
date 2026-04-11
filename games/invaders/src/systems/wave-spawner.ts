@@ -14,7 +14,7 @@ export const GRID_LEFT = (BALANCE.viewportWidth - GRID_WIDTH) / 2;
 export const ROW_TOP_Y = 80;
 export const EMPTY_CELL_COLOR = '#161b22';
 
-const SPAWN_INTERVAL = 1.0;
+const SPAWN_INTERVAL = 1.5;
 const DESCENT_SPEED = ROW_PITCH / SPAWN_INTERVAL;
 
 export function cellCenterX(col: number): number {

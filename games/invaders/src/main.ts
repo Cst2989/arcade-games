@@ -16,6 +16,7 @@ import { BossIntroScene } from './scenes/boss-intro.js';
 import { BossScene } from './scenes/boss.js';
 import { VictoryScene } from './scenes/victory.js';
 import { PauseScene } from './scenes/pause.js';
+import { GameOverScene } from './scenes/game-over.js';
 
 const BASE = import.meta.env.BASE_URL;
 const assetUrl = (p: string) => `${BASE}${p.replace(/^\/+/, '')}`;
@@ -148,9 +149,20 @@ function launchLevel(
     chunk,
     () => {
       const deps: GameplayDeps = { input, gameLoop, sfx, screenShake, particles };
-      const gameplay = new GameplayScene(renderer, atlas, level, levelIndex, deps, () => {
-        onLevelCleared(levelIndex, levels, chunks, bossLogin);
-      });
+      const gameplay = new GameplayScene(
+        renderer,
+        atlas,
+        level,
+        levelIndex,
+        deps,
+        () => onLevelCleared(levelIndex, levels, chunks, bossLogin),
+        (score, wave) => {
+          const over = new GameOverScene(renderer, score, wave, () => {
+            launchLevel(levelIndex, levels, chunks, bossLogin);
+          });
+          sceneManager.replace(over);
+        },
+      );
       sceneManager.replace(gameplay);
     },
   );
