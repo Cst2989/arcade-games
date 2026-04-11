@@ -17,6 +17,9 @@ import { BossScene } from './scenes/boss.js';
 import { VictoryScene } from './scenes/victory.js';
 import { PauseScene } from './scenes/pause.js';
 
+const BASE = import.meta.env.BASE_URL;
+const assetUrl = (p: string) => `${BASE}${p.replace(/^\/+/, '')}`;
+
 const canvas = document.getElementById('game') as HTMLCanvasElement;
 const renderer = new Renderer(canvas);
 const gameLoop = new GameLoop({ fixedDt: BALANCE.fixedDt, maxStepsPerFrame: 5 });
@@ -54,12 +57,44 @@ gameLoop.onRender = (alpha) => {
 async function boot(): Promise<void> {
   try {
     await atlas.load(
-      '/assets/kenney-space-shooter/sheet.png',
-      '/assets/kenney-space-shooter/sheet.xml',
+      assetUrl('assets/kenney-space-shooter/sheet.png'),
+      assetUrl('assets/kenney-space-shooter/sheet.xml'),
     );
-  } catch {
-    console.warn('[invaders] sprite atlas missing — falling back to colored rects');
+    console.log('[invaders] atlas loaded');
+  } catch (err) {
+    console.warn('[invaders] sprite atlas missing — falling back to colored rects', err);
   }
+
+  await audio.init();
+  try {
+    await sfx.load({
+      shoot: assetUrl('assets/sfx/shoot.wav'),
+      enemy_shoot: assetUrl('assets/sfx/enemy_shoot.wav'),
+      hit_soft: assetUrl('assets/sfx/hit_soft.wav'),
+      hit_hard: assetUrl('assets/sfx/hit_hard.wav'),
+      explode_small: assetUrl('assets/sfx/explode_small.wav'),
+      explode_big: assetUrl('assets/sfx/explode_big.wav'),
+      powerup_drop: assetUrl('assets/sfx/powerup_drop.wav'),
+      powerup_get: assetUrl('assets/sfx/powerup_get.wav'),
+      level_up: assetUrl('assets/sfx/level_up.wav'),
+      boss_phase: assetUrl('assets/sfx/boss_phase.wav'),
+      boss_roar: assetUrl('assets/sfx/boss_roar.wav'),
+      boss_die: assetUrl('assets/sfx/boss_die.wav'),
+      ui_hover: assetUrl('assets/sfx/ui_hover.wav'),
+      ui_click: assetUrl('assets/sfx/ui_click.wav'),
+    });
+    console.log('[invaders] sfx loaded');
+  } catch (err) {
+    console.warn('[invaders] sfx load failed', err);
+  }
+
+  const unlockAudio = () => {
+    audio.unlock();
+    window.removeEventListener('keydown', unlockAudio);
+    window.removeEventListener('pointerdown', unlockAudio);
+  };
+  window.addEventListener('keydown', unlockAudio);
+  window.addEventListener('pointerdown', unlockAudio);
 
   const title = new TitleScene(renderer, particles.stars, (repo) => startGame(repo));
   sceneManager.push(title);
@@ -128,6 +163,7 @@ function onLevelCleared(
   chunks: Chunk[],
   bossLogin: string,
 ): void {
+  sfx.play('level_up');
   const nextIndex = levelIndex + 1;
   if (nextIndex < levels.length) {
     launchLevel(nextIndex, levels, chunks, bossLogin);

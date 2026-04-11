@@ -11,6 +11,19 @@ export type InvadersEvents = {
   bossPhase: { from: 1 | 2 | 3; to: 1 | 2 | 3 };
 };
 
+export interface CellSlot {
+  commits: number;
+  color: string;
+  alive: boolean;
+  entityId: number | null;
+}
+
+export interface RowState {
+  weekIndex: number;
+  y: number;
+  cells: CellSlot[];
+}
+
 export interface HudState {
   score: number;
   combo: number;
@@ -38,6 +51,7 @@ export interface GameContext {
   sfx: Sfx;
   level: Level;
   levelIndex: number;
+  rows: RowState[];
   hud: HudState;
   state: {
     waveIndex: number;
