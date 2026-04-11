@@ -1,7 +1,7 @@
 import { defineConfig } from 'vite';
 
 export default defineConfig({
-  base: '/open-source-invaders/',
+  base: process.env['BASE_PATH'] ?? '/open-source-invaders/',
   build: {
     outDir: 'dist',
     target: 'es2022',
