@@ -1,4 +1,5 @@
 import type { ContributorStats } from './contributor-stats.js';
+import { computeContributorProfile, type ContributorProfile } from './contributor-profile.js';
 import { BALANCE } from '../config/balance.js';
 
 export interface EnemySpec {
@@ -23,6 +24,7 @@ export interface ContributorInfo {
 export interface Level {
   contributor: ContributorInfo & { avatar?: string; totalCommits?: number };
   waves: Wave[];
+  profile: ContributorProfile;
 }
 
 export function enemyFromCommits(commits: number, levelIndex: number): EnemySpec | null {
@@ -71,5 +73,6 @@ export function contributorToLevel(
       totalCommits: stats.totalCommits,
     },
     waves,
+    profile: computeContributorProfile(stats, info.login),
   };
 }

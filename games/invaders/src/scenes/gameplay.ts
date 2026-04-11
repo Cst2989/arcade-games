@@ -27,6 +27,8 @@ import { tweenSystem } from '../systems/tween.js';
 import { hudUpdateSystem } from '../systems/hud-update.js';
 
 import { drawHud } from '../ui/hud.js';
+import { drawContributorPanel } from '../ui/contributor-panel.js';
+import { POWERUPS } from '../config/powerups.js';
 import {
   CELL, ROW_PITCH, COLS_PER_ROW, GRID_LEFT, GRID_WIDTH, EMPTY_CELL_COLOR, cellCenterX,
 } from '../systems/wave-spawner.js';
@@ -211,7 +213,19 @@ export class GameplayScene extends Scene {
     this.ctx.particles.powerupDust.render(main);
     main.restore();
     drawHud(r, this.ctx.hud);
-    drawInstructions(main);
+
+    const total = this.ctx.level.waves.reduce((n, w) => n + w.enemies.length, 0);
+    const unspawned = this.ctx.level.waves
+      .slice(this.ctx.state.waveIndex)
+      .reduce((n, w) => n + w.enemies.length, 0);
+    const aliveNow = this.ctx.rows.reduce(
+      (n, row) => n + row.cells.filter((c) => c.alive).length,
+      0,
+    );
+    const defeated = Math.max(0, total - unspawned - aliveNow);
+    drawContributorPanel(main, this.ctx.level.profile, { defeated, total });
+
+    drawInstructions(main, this.atlas);
     if (this.ctx.state.chaosActive?.kind === 'CI_FAILED') {
       main.fillStyle = 'rgba(248, 81, 73, 0.10)';
       main.fillRect(0, 0, BALANCE.viewportWidth, BALANCE.viewportHeight);
@@ -239,18 +253,22 @@ function drawRoundedCell(ctx: CanvasRenderingContext2D, cx: number, cy: number, 
   ctx.fill();
 }
 
-function drawInstructions(ctx: CanvasRenderingContext2D): void {
+function drawInstructions(ctx: CanvasRenderingContext2D, atlas: SpriteAtlas): void {
   const x = 590;
   let y = 90;
   ctx.save();
+
+  ctx.fillStyle = 'rgba(22, 27, 34, 0.70)';
+  ctx.fillRect(x - 14, y - 22, 356, 332);
+  ctx.strokeStyle = '#30363d';
+  ctx.lineWidth = 1;
+  ctx.strokeRect(x - 14, y - 22, 356, 332);
+
   ctx.textAlign = 'left';
-
   ctx.fillStyle = '#8b949e';
-  ctx.font = '11px ui-monospace, Menlo, monospace';
-  ctx.fillText('HOW TO PLAY', x, y);
-  y += 18;
+  ctx.font = '10px ui-monospace, Menlo, monospace';
+  ctx.fillText('HOW TO PLAY', x, y - 6);
 
-  ctx.fillStyle = '#c9d1d9';
   ctx.font = '12px ui-monospace, Menlo, monospace';
   const controls: Array<[string, string]> = [
     ['\u2190 \u2192 / A D', 'move'],
@@ -266,31 +284,38 @@ function drawInstructions(ctx: CanvasRenderingContext2D): void {
     y += 16;
   }
 
-  y += 10;
+  y += 12;
   ctx.fillStyle = '#8b949e';
-  ctx.font = '11px ui-monospace, Menlo, monospace';
+  ctx.font = '10px ui-monospace, Menlo, monospace';
   ctx.fillText('POWER-UPS  (auto on pickup)', x, y);
-  y += 18;
+  y += 22;
 
-  const powerups: Array<[string, string, string]> = [
-    ['revert',     '#3fb950', 'heal +1 HP'],
-    ['fork',       '#58a6ff', 'triple shot 8s'],
-    ['rebase',     '#d29922', 'slow enemies 5s'],
-    ['squash',     '#a371f7', 'next shot pierces'],
-    ['force push', '#f85149', 'clear screen'],
-  ];
+  const effects: Record<string, string> = {
+    revert:    'heal +1 HP',
+    fork:      'triple shot 8s',
+    rebase:    'slow enemies 5s',
+    squash:    'next shot pierces',
+    forcepush: 'clear screen',
+  };
   ctx.font = '12px ui-monospace, Menlo, monospace';
-  for (const [label, color, effect] of powerups) {
-    ctx.fillStyle = color;
-    ctx.fillRect(x, y - 9, 10, 10);
+  const iconScale = 0.6;
+  for (const def of POWERUPS) {
+    const iconCx = x + 10;
+    const iconCy = y - 4;
+    if (atlas.has(def.sprite)) {
+      atlas.draw(ctx, def.sprite, iconCx, iconCy, iconScale);
+    } else {
+      ctx.fillStyle = def.color;
+      ctx.fillRect(x, y - 12, 14, 14);
+    }
     ctx.fillStyle = '#c9d1d9';
-    ctx.fillText(label, x + 16, y);
+    ctx.fillText(def.label, x + 28, y);
     ctx.fillStyle = '#8b949e';
-    ctx.fillText(effect, x + 110, y);
-    y += 16;
+    ctx.fillText(effects[def.kind] ?? '', x + 140, y);
+    y += 22;
   }
 
-  y += 6;
+  y += 4;
   ctx.fillStyle = '#484f58';
   ctx.font = '10px ui-monospace, Menlo, monospace';
   ctx.fillText('squash = queued; fires on', x, y); y += 12;
