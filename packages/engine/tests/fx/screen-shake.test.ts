@@ -23,3 +23,13 @@ test('zero duration removes shake immediately', () => {
   s.update(0.016);
   expect(s.activeCount()).toBe(0);
 });
+
+test('quadratic decay shrinks amplitude well below peak before expiry', () => {
+  // At 95% of duration, decay² = 0.0025, so offset must stay under 1% of amp.
+  const s = new ScreenShake({ maxAmplitude: 100 });
+  s.add({ amplitude: 50, duration: 1 });
+  for (let i = 0; i < 95; i++) s.update(0.01);
+  expect(s.activeCount()).toBe(1);
+  expect(Math.abs(s.offsetX)).toBeLessThan(0.5);
+  expect(Math.abs(s.offsetY)).toBeLessThan(0.5);
+});
