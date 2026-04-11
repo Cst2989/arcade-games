@@ -11,6 +11,7 @@ export function defineComponent<T>(name: string): Component<T> {
 }
 
 export class World {
+  // Entity ids are monotonically assigned and never recycled.
   private nextId: Entity = 1;
   private stores = new Map<symbol, Map<Entity, unknown>>();
   private alive = new Set<Entity>();
@@ -66,9 +67,8 @@ export class World {
     outer: for (const [id, v0] of first) {
       const row: unknown[] = [id, v0];
       for (const s of rest) {
-        const v = s.get(id);
-        if (v === undefined) continue outer;
-        row.push(v);
+        if (!s.has(id)) continue outer;
+        row.push(s.get(id));
       }
       yield row;
     }
