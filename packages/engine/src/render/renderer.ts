@@ -21,18 +21,18 @@ export class Renderer {
   constructor(private target: HTMLCanvasElement) {
     this.width = target.width;
     this.height = target.height;
-    this.main = target.getContext('2d')!;
+    const ctx = target.getContext('2d');
+    if (!ctx) throw new Error('Renderer: failed to acquire 2D context on target canvas');
+    this.main = ctx;
   }
 
   addLayer(cfg: LayerConfig): void {
     const canvas = document.createElement('canvas');
     canvas.width = this.width;
     canvas.height = this.height;
-    const layer: InternalLayer = {
-      ...cfg,
-      canvas,
-      ctx: canvas.getContext('2d')!,
-    };
+    const ctx = canvas.getContext('2d');
+    if (!ctx) throw new Error(`Renderer: failed to acquire 2D context for layer "${cfg.name}"`);
+    const layer: InternalLayer = { ...cfg, canvas, ctx };
     this.layers.push(layer);
     this.byName.set(cfg.name, layer);
   }
@@ -54,6 +54,9 @@ export class Renderer {
   endFrame(): void {
     for (const l of this.layers) {
       if (l.postFx === 'glow') {
+        // ctx.filter is supported on Chrome/Firefox and Safari 18+. On
+        // older Safari the blur is silently dropped and glow degrades to
+        // a plain additive draw — acceptable graceful fallback.
         this.main.save();
         this.main.globalCompositeOperation = 'lighter';
         this.main.filter = 'blur(6px)';
