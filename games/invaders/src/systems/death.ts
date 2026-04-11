@@ -40,7 +40,9 @@ export function deathSystem(_dt: number, now: number, ctx: GameContext): void {
       if (pos) {
         const dense = en.commits >= 15;
         const hard = en.hardSquare;
-        const dropChance = dense ? 0.9 : hard ? 0.6 : 0.22;
+        const base = dense ? 0.9 : hard ? 0.6 : 0.22;
+        const dropMul = Math.max(0.4, 1 - ctx.levelIndex * 0.12);
+        const dropChance = base * dropMul;
         if (Math.random() < dropChance) {
           let def = POWERUPS[Math.floor(Math.random() * POWERUPS.length)]!;
           if (dense && Math.random() < 0.6) {

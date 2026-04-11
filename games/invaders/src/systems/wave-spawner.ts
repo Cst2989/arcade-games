@@ -14,8 +14,12 @@ export const GRID_LEFT = (BALANCE.viewportWidth - GRID_WIDTH) / 2;
 export const ROW_TOP_Y = 80;
 export const EMPTY_CELL_COLOR = '#161b22';
 
-const SPAWN_INTERVAL = 1.5;
-const DESCENT_SPEED = ROW_PITCH / SPAWN_INTERVAL;
+const BASE_SPAWN_INTERVAL = 1.5;
+const LEVEL_SPEED_STEP = 0.10;
+
+function levelSpeedMul(levelIndex: number): number {
+  return 1 + levelIndex * LEVEL_SPEED_STEP;
+}
 
 export function cellCenterX(col: number): number {
   return GRID_LEFT + col * ROW_PITCH + CELL / 2;
@@ -100,6 +104,9 @@ function spawnNext(ctx: GameContext): void {
 export function waveSpawnerSystem(dt: number, ctx: GameContext): void {
   const state = getSpawnerState(ctx);
   const totalWaves = ctx.level.waves.length;
+  const speedMul = levelSpeedMul(ctx.levelIndex);
+  const spawnInterval = BASE_SPAWN_INTERVAL / speedMul;
+  const descentSpeed = ROW_PITCH / spawnInterval;
 
   if (!state.initialized) {
     state.initialized = true;
@@ -110,7 +117,7 @@ export function waveSpawnerSystem(dt: number, ctx: GameContext): void {
 
   state.spawnTimer += dt;
 
-  const descent = DESCENT_SPEED * dt;
+  const descent = descentSpeed * dt;
   for (const row of ctx.rows) {
     row.y += descent;
     for (const slot of row.cells) {
@@ -121,8 +128,8 @@ export function waveSpawnerSystem(dt: number, ctx: GameContext): void {
     }
   }
 
-  if (state.spawnTimer >= SPAWN_INTERVAL) {
-    state.spawnTimer -= SPAWN_INTERVAL;
+  if (state.spawnTimer >= spawnInterval) {
+    state.spawnTimer -= spawnInterval;
     spawnNext(ctx);
   }
 
