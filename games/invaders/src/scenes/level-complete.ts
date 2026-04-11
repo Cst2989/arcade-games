@@ -38,7 +38,8 @@ export class LevelCompleteScene extends Scene {
   constructor(
     private renderer: Renderer,
     private profile: ContributorProfile,
-    private score: number,
+    private levelScore: number,
+    private totalScore: number,
     private nextLabel: string,
     private sfx: Sfx,
     private levelIndex: number,
@@ -118,7 +119,8 @@ export class LevelCompleteScene extends Scene {
   }
 
   private onKey = (e: KeyboardEvent) => {
-    if (e.key === 'Enter' || e.key === ' ') {
+    if (this.elapsed < 0.4) return;
+    if (e.key === 'Enter') {
       this.triggerNext();
     } else if (e.key === 't' || e.key === 'T') {
       this.shareOn('x');
@@ -153,6 +155,7 @@ export class LevelCompleteScene extends Scene {
 
   private onMouseDown = (e: MouseEvent) => {
     if (e.button !== 0) return;
+    if (this.elapsed < 0.4) return;
     const key = this.hitTest(this.mouseX, this.mouseY);
     if (!key) return;
     if (key === 'x') this.shareOn('x');
@@ -171,9 +174,9 @@ export class LevelCompleteScene extends Scene {
 
   private buttonRects(): Record<BtnKey, Rect> {
     const W = BALANCE.viewportWidth;
-    const btnY = 120 + 360 - 56;
-    const btnW = 140;
-    const btnH = 36;
+    const btnY = 120 + 360 + 20;
+    const btnW = 150;
+    const btnH = 40;
     const gap = 14;
     const totalW = btnW * 3 + gap * 2;
     const startX = W / 2 - totalW / 2;
@@ -248,7 +251,7 @@ export class LevelCompleteScene extends Scene {
     ctx.lineWidth = 1;
     ctx.strokeRect(card.x, card.y, card.w, card.h);
 
-    drawAvatar(ctx, W / 2, card.y + 58, 36, this.profile.login);
+    drawAvatar(ctx, W / 2, card.y + 58, 36, this.profile.login, this.profile.avatarImage);
 
     ctx.textAlign = 'center';
     ctx.fillStyle = '#8b949e';
@@ -260,14 +263,27 @@ export class LevelCompleteScene extends Scene {
     ctx.fillText(`@${this.profile.login}`, W / 2, card.y + 142);
 
     ctx.fillStyle = '#6e7681';
-    ctx.font = '11px ui-monospace, Menlo, monospace';
+    ctx.font = '10px ui-monospace, Menlo, monospace';
     ctx.fillText(
-      `score ${this.score.toLocaleString()}  ·  ${this.profile.totalCommits.toLocaleString()} commits defeated`,
-      W / 2, card.y + 160,
+      `${this.profile.totalCommits.toLocaleString()} commits defeated`,
+      W / 2, card.y + 158,
     );
 
+    const scoreRowY = card.y + 180;
+    const scoreGap = 150;
+    ctx.textAlign = 'center';
+    ctx.font = '10px ui-monospace, Menlo, monospace';
+    ctx.fillStyle = '#6e7681';
+    ctx.fillText('LEVEL SCORE', W / 2 - scoreGap, scoreRowY);
+    ctx.fillText('TOTAL SCORE', W / 2 + scoreGap, scoreRowY);
+    ctx.font = 'bold 22px ui-monospace, Menlo, monospace';
+    ctx.fillStyle = '#c9d1d9';
+    ctx.fillText(this.levelScore.toLocaleString(), W / 2 - scoreGap, scoreRowY + 22);
+    ctx.fillStyle = BALANCE.accentGreen;
+    ctx.fillText(this.totalScore.toLocaleString(), W / 2 + scoreGap, scoreRowY + 22);
+
     const commit = this.profile.biggestContribution;
-    const commitY = card.y + 192;
+    const commitY = card.y + 226;
 
     ctx.textAlign = 'left';
     ctx.fillStyle = '#8b949e';
@@ -276,21 +292,22 @@ export class LevelCompleteScene extends Scene {
 
     ctx.fillStyle = '#c9d1d9';
     ctx.font = '14px ui-monospace, Menlo, monospace';
-    ctx.fillText(`"${commit.message}"`, card.x + 32, commitY + 22);
+    const msgLines = wrapLines(ctx, `"${commit.message}"`, card.w - 64, 2);
+    for (let i = 0; i < msgLines.length; i++) {
+      ctx.fillText(msgLines[i]!, card.x + 32, commitY + 22 + i * 18);
+    }
+    const metaY = commitY + 22 + msgLines.length * 18 + 6;
 
     ctx.fillStyle = '#8b949e';
     ctx.font = '11px ui-monospace, Menlo, monospace';
-    ctx.fillText(
-      `${commit.sha}  ${commit.date}`,
-      card.x + 32, commitY + 44,
-    );
+    ctx.fillText(`${commit.sha}  ${commit.date}`, card.x + 32, metaY);
 
     ctx.fillStyle = BALANCE.accentGreen;
-    ctx.fillText(`+${commit.additions.toLocaleString()}`, card.x + 32, commitY + 64);
+    ctx.fillText(`+${commit.additions.toLocaleString()}`, card.x + 32, metaY + 18);
     ctx.fillStyle = BALANCE.accentRed;
-    ctx.fillText(`-${commit.deletions.toLocaleString()}`, card.x + 100, commitY + 64);
+    ctx.fillText(`-${commit.deletions.toLocaleString()}`, card.x + 100, metaY + 18);
     ctx.fillStyle = '#6e7681';
-    ctx.fillText(`${commit.commits} commits that day`, card.x + 170, commitY + 64);
+    ctx.fillText(`${commit.commits} commits that day`, card.x + 170, metaY + 18);
 
     const rects = this.buttonRects();
     drawBrandButton(ctx, rects.x, 'TWEET  [T]', X_BG, '#ffffff', 'x', this.hover === 'x');
@@ -409,6 +426,38 @@ function drawBlueskyLogo(
   ctx.restore();
 }
 
+function wrapLines(
+  ctx: CanvasRenderingContext2D,
+  text: string,
+  maxW: number,
+  maxLines: number,
+): string[] {
+  const words = text.split(/\s+/).filter(Boolean);
+  const lines: string[] = [];
+  let line = '';
+  for (const w of words) {
+    const test = line ? `${line} ${w}` : w;
+    if (ctx.measureText(test).width > maxW) {
+      if (line) lines.push(line);
+      if (lines.length === maxLines - 1) {
+        let tail = w;
+        const rest = words.slice(words.indexOf(w) + 1).join(' ');
+        if (rest) tail = `${w} ${rest}`;
+        while (tail.length > 0 && ctx.measureText(tail + '…').width > maxW) {
+          tail = tail.slice(0, -1);
+        }
+        lines.push(tail + '…');
+        return lines;
+      }
+      line = w;
+    } else {
+      line = test;
+    }
+  }
+  if (line) lines.push(line);
+  return lines;
+}
+
 function avatarColor(login: string): string {
   let h = 2166136261;
   for (let i = 0; i < login.length; i++) {
@@ -418,19 +467,37 @@ function avatarColor(login: string): string {
   return `hsl(${h % 360}, 55%, 48%)`;
 }
 
-function drawAvatar(ctx: CanvasRenderingContext2D, cx: number, cy: number, r: number, login: string): void {
+function drawAvatar(
+  ctx: CanvasRenderingContext2D,
+  cx: number,
+  cy: number,
+  r: number,
+  login: string,
+  image?: HTMLImageElement,
+): void {
   ctx.save();
   ctx.beginPath();
   ctx.arc(cx, cy, r, 0, Math.PI * 2);
-  ctx.fillStyle = avatarColor(login);
-  ctx.fill();
-  ctx.lineWidth = 3;
-  ctx.strokeStyle = '#30363d';
-  ctx.stroke();
-  ctx.fillStyle = '#0d1117';
-  ctx.font = 'bold 36px ui-monospace, Menlo, monospace';
-  ctx.textAlign = 'center';
-  ctx.textBaseline = 'middle';
-  ctx.fillText((login[0] ?? '?').toUpperCase(), cx, cy + 1);
+  if (image && image.complete && image.naturalWidth > 0) {
+    ctx.save();
+    ctx.clip();
+    ctx.drawImage(image, cx - r, cy - r, r * 2, r * 2);
+    ctx.restore();
+    ctx.lineWidth = 3;
+    ctx.strokeStyle = '#30363d';
+    ctx.stroke();
+  } else {
+    ctx.fillStyle = avatarColor(login);
+    ctx.fill();
+    ctx.lineWidth = 3;
+    ctx.strokeStyle = '#30363d';
+    ctx.stroke();
+    ctx.fillStyle = '#0d1117';
+    ctx.font = 'bold 36px ui-monospace, Menlo, monospace';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText((login[0] ?? '?').toUpperCase(), cx, cy + 1);
+    ctx.textBaseline = 'alphabetic';
+  }
   ctx.restore();
 }

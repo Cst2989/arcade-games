@@ -1,4 +1,5 @@
 import type { ContributorStats } from './contributor-stats.js';
+import type { GitHubUser } from './github-client.js';
 
 export interface BiggestContribution {
   date: string;
@@ -12,6 +13,7 @@ export interface BiggestContribution {
 export interface ContributorProfile {
   login: string;
   avatarUrl: string;
+  avatarImage?: HTMLImageElement;
   totalCommits: number;
   longestStreak: number;
   currentStreak: number;
@@ -26,6 +28,12 @@ export interface ContributorProfile {
   joinedYear: number;
   bio: string;
   biggestContribution: BiggestContribution;
+}
+
+export interface ProfileOverrides {
+  user?: GitHubUser;
+  language?: string | null;
+  avatarImage?: HTMLImageElement;
 }
 
 const LOCATIONS = [
@@ -85,6 +93,7 @@ function hashString(s: string): number {
 export function computeContributorProfile(
   stats: ContributorStats,
   login: string,
+  overrides: ProfileOverrides = {},
 ): ContributorProfile {
   const daily = stats.daily;
 
@@ -133,18 +142,27 @@ export function computeContributorProfile(
     sha += shaChars[(seed >>> (i * 4)) % 16]!;
   }
   const bestCount = Math.max(1, best.count);
+  const real = stats.biggestCommit;
   const biggestContribution: BiggestContribution = {
-    date: best.date,
-    message: pick(COMMIT_POOL, 37),
-    sha,
+    date: real?.date ?? best.date,
+    message: real?.message ?? pick(COMMIT_POOL, 37),
+    sha: real?.sha ?? sha,
     additions: bestCount * (40 + ((seed >>> 5) % 160)),
     deletions: bestCount * (10 + ((seed >>> 9) % 70)),
-    commits: best.count,
+    commits: real?.commitsThatDay ?? best.count,
   };
 
-  return {
+  const { user, language, avatarImage } = overrides;
+  const joinedYear = user?.created_at
+    ? new Date(user.created_at).getUTCFullYear()
+    : 2008 + ((seed >>> 11) % 13);
+  const bioFallback = pick(BIOS, 23);
+  const locationFallback = pick(LOCATIONS, 0);
+  const topLanguageFallback = pick(LANGUAGES, 11);
+
+  const profile: ContributorProfile = {
     login,
-    avatarUrl: stats.avatarUrl,
+    avatarUrl: user?.avatar_url ?? stats.avatarUrl,
     totalCommits: stats.totalCommits,
     longestStreak: longest,
     currentStreak,
@@ -152,12 +170,14 @@ export function computeContributorProfile(
     mostActiveWeekday: WEEKDAYS[mostActiveIdx]!,
     activeDays,
     weekdayCounts,
-    location: pick(LOCATIONS, 0),
-    followers: 120 + ((seed >>> 3) % 9000),
-    publicRepos: 12 + ((seed >>> 7) % 180),
-    topLanguage: pick(LANGUAGES, 11),
-    joinedYear: 2008 + ((seed >>> 11) % 13),
-    bio: pick(BIOS, 23),
+    location: user?.location?.trim() || locationFallback,
+    followers: user?.followers ?? (120 + ((seed >>> 3) % 9000)),
+    publicRepos: user?.public_repos ?? (12 + ((seed >>> 7) % 180)),
+    topLanguage: (language ?? '').trim() || topLanguageFallback,
+    joinedYear,
+    bio: user?.bio?.trim() || bioFallback,
     biggestContribution,
   };
+  if (avatarImage) profile.avatarImage = avatarImage;
+  return profile;
 }

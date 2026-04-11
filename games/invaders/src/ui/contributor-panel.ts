@@ -14,6 +14,44 @@ const PAD_Y = 20;
 const CONTENT_X = PANEL_X + PAD_X;
 const CONTENT_W = PANEL_W - PAD_X * 2;
 
+function truncate(ctx: CanvasRenderingContext2D, text: string, maxW: number): string {
+  if (ctx.measureText(text).width <= maxW) return text;
+  let s = text;
+  while (s.length > 1 && ctx.measureText(s + '…').width > maxW) s = s.slice(0, -1);
+  return s + '…';
+}
+
+function wrap(
+  ctx: CanvasRenderingContext2D,
+  text: string,
+  maxW: number,
+  maxLines: number,
+): string[] {
+  const words = text.split(/\s+/).filter(Boolean);
+  const lines: string[] = [];
+  let line = '';
+  for (let i = 0; i < words.length; i++) {
+    const w = words[i]!;
+    const test = line ? `${line} ${w}` : w;
+    if (ctx.measureText(test).width > maxW) {
+      if (line) lines.push(line);
+      if (lines.length === maxLines - 1) {
+        let tail = words.slice(i).join(' ');
+        while (tail.length > 0 && ctx.measureText(tail + '…').width > maxW) {
+          tail = tail.slice(0, -1);
+        }
+        lines.push(tail + '…');
+        return lines;
+      }
+      line = w;
+    } else {
+      line = test;
+    }
+  }
+  if (line) lines.push(line);
+  return lines;
+}
+
 function avatarColor(login: string): string {
   let h = 2166136261;
   for (let i = 0; i < login.length; i++) {
@@ -24,20 +62,37 @@ function avatarColor(login: string): string {
   return `hsl(${hue}, 55%, 48%)`;
 }
 
-function drawAvatar(ctx: CanvasRenderingContext2D, cx: number, cy: number, r: number, login: string): void {
+function drawAvatar(
+  ctx: CanvasRenderingContext2D,
+  cx: number,
+  cy: number,
+  r: number,
+  login: string,
+  image?: HTMLImageElement,
+): void {
   ctx.save();
   ctx.beginPath();
   ctx.arc(cx, cy, r, 0, Math.PI * 2);
-  ctx.fillStyle = avatarColor(login);
-  ctx.fill();
-  ctx.lineWidth = 2;
-  ctx.strokeStyle = '#30363d';
-  ctx.stroke();
-  ctx.fillStyle = '#0d1117';
-  ctx.font = 'bold 22px ui-monospace, Menlo, monospace';
-  ctx.textAlign = 'center';
-  ctx.textBaseline = 'middle';
-  ctx.fillText((login[0] ?? '?').toUpperCase(), cx, cy + 1);
+  if (image && image.complete && image.naturalWidth > 0) {
+    ctx.save();
+    ctx.clip();
+    ctx.drawImage(image, cx - r, cy - r, r * 2, r * 2);
+    ctx.restore();
+    ctx.lineWidth = 2;
+    ctx.strokeStyle = '#30363d';
+    ctx.stroke();
+  } else {
+    ctx.fillStyle = avatarColor(login);
+    ctx.fill();
+    ctx.lineWidth = 2;
+    ctx.strokeStyle = '#30363d';
+    ctx.stroke();
+    ctx.fillStyle = '#0d1117';
+    ctx.font = 'bold 22px ui-monospace, Menlo, monospace';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText((login[0] ?? '?').toUpperCase(), cx, cy + 1);
+  }
   ctx.restore();
 }
 
@@ -108,20 +163,24 @@ export function drawContributorPanel(
   ctx.font = '10px ui-monospace, Menlo, monospace';
   ctx.fillText('TARGET  // git blame', CONTENT_X, y);
 
-  drawAvatar(ctx, CONTENT_X + 22, y + 36, 22, profile.login);
+  drawAvatar(ctx, CONTENT_X + 22, y + 36, 22, profile.login, profile.avatarImage);
 
   ctx.textAlign = 'left';
   ctx.fillStyle = '#c9d1d9';
   ctx.font = 'bold 18px ui-monospace, Menlo, monospace';
-  ctx.fillText(`@${profile.login}`, CONTENT_X + 56, y + 34);
+  const loginLabel = truncate(ctx, `@${profile.login}`, CONTENT_W - 56);
+  ctx.fillText(loginLabel, CONTENT_X + 56, y + 34);
   ctx.fillStyle = '#8b949e';
   ctx.font = '11px ui-monospace, Menlo, monospace';
-  ctx.fillText(profile.bio, CONTENT_X + 56, y + 52);
+  const bioLines = wrap(ctx, profile.bio, CONTENT_W - 56, 2);
+  for (let i = 0; i < bioLines.length; i++) {
+    ctx.fillText(bioLines[i]!, CONTENT_X + 56, y + 52 + i * 14);
+  }
 
   y += 86;
   ctx.fillStyle = '#8b949e';
   ctx.font = '11px ui-monospace, Menlo, monospace';
-  ctx.fillText(profile.location, CONTENT_X, y);
+  ctx.fillText(truncate(ctx, profile.location, CONTENT_W), CONTENT_X, y);
   y += 16;
   ctx.fillStyle = '#6e7681';
   ctx.fillText(

@@ -1,7 +1,7 @@
 import { Scene, EventBus, World } from '@osi/engine';
 import type { Renderer, SpriteAtlas, InputMap, GameLoop, Sfx, ScreenShake, Tween } from '@osi/engine';
 import type { Level } from '../data/mapping.js';
-import type { GameContext, HudState, InvadersEvents } from './gameplay-context.js';
+import type { GameContext, GameStats, HudState, InvadersEvents } from './gameplay-context.js';
 import { createHudState } from './gameplay-context.js';
 import {
   Position, SpriteRef, Health, Player, Powerup, Collider, Enemy, Bullet,
@@ -39,6 +39,7 @@ export interface GameplayDeps {
   sfx: Sfx;
   screenShake: ScreenShake;
   particles: GameContext['particles'];
+  stats: GameStats;
 }
 
 export class GameplayScene extends Scene {
@@ -72,6 +73,7 @@ export class GameplayScene extends Scene {
       levelIndex,
       rows: [],
       hud,
+      stats: deps.stats,
       state: {
         waveIndex: 0,
         score: 0,
@@ -86,7 +88,18 @@ export class GameplayScene extends Scene {
     events.on('levelCleared', () => this.onLevelCleared());
   }
 
+  override onExit(): void {
+    this.ctx.particles.sparks.clear();
+    this.ctx.particles.explosions.clear();
+    this.ctx.particles.bigExplosions.clear();
+    this.ctx.particles.powerupDust.clear();
+  }
+
   override onEnter(): void {
+    this.ctx.particles.sparks.clear();
+    this.ctx.particles.explosions.clear();
+    this.ctx.particles.bigExplosions.clear();
+    this.ctx.particles.powerupDust.clear();
     const e = this.ctx.world.spawn();
     const tier = SHIP_TIERS[this.ctx.levelIndex]!;
     this.ctx.world.add(e, Position, {

@@ -15,7 +15,7 @@ export const ROW_TOP_Y = 80;
 export const EMPTY_CELL_COLOR = '#161b22';
 
 const BASE_SPAWN_INTERVAL = 1.5;
-const LEVEL_SPEED_STEP = 0.10;
+const LEVEL_SPEED_STEP = 0.18;
 
 function levelSpeedMul(levelIndex: number): number {
   return 1 + levelIndex * LEVEL_SPEED_STEP;
@@ -65,6 +65,7 @@ interface SpawnerState {
   initialized: boolean;
   spawnTimer: number;
   gameOverFired: boolean;
+  levelClearedFired: boolean;
 }
 
 function getSpawnerState(ctx: GameContext): SpawnerState {
@@ -72,7 +73,7 @@ function getSpawnerState(ctx: GameContext): SpawnerState {
   const any = ctx as unknown as Record<string, SpawnerState | undefined>;
   let s = any[key];
   if (!s) {
-    s = { initialized: false, spawnTimer: 0, gameOverFired: false };
+    s = { initialized: false, spawnTimer: 0, gameOverFired: false, levelClearedFired: false };
     any[key] = s;
   }
   return s;
@@ -153,7 +154,8 @@ export function waveSpawnerSystem(dt: number, ctx: GameContext): void {
   }
 
   const anyAlive = ctx.rows.some((r) => r.cells.some((c) => c.alive));
-  if (ctx.state.waveIndex >= totalWaves && !anyAlive) {
+  if (!state.levelClearedFired && ctx.state.waveIndex >= totalWaves && !anyAlive) {
+    state.levelClearedFired = true;
     ctx.events.emit('levelCleared', {});
   }
 }

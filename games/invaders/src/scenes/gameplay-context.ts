@@ -42,6 +42,28 @@ export interface HudState {
   activePowerups: HudPowerupChip[];
 }
 
+export interface GameStats {
+  totalScore: number;
+  shotsFired: number;
+  shotsHit: number;
+  enemiesKilled: number;
+  bombsUsed: number;
+  powerupsCollected: number;
+  levelsCompleted: number;
+}
+
+export function createGameStats(): GameStats {
+  return {
+    totalScore: 0,
+    shotsFired: 0,
+    shotsHit: 0,
+    enemiesKilled: 0,
+    bombsUsed: 0,
+    powerupsCollected: 0,
+    levelsCompleted: 0,
+  };
+}
+
 export interface GameContext {
   world: World;
   input: InputMap;
@@ -61,6 +83,7 @@ export interface GameContext {
   levelIndex: number;
   rows: RowState[];
   hud: HudState;
+  stats: GameStats;
   state: {
     waveIndex: number;
     score: number;

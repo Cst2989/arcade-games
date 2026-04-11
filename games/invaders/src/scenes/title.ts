@@ -19,6 +19,7 @@ export class TitleScene extends Scene {
 
   override onEnter(): void {
     window.addEventListener('keydown', this.onKey);
+    window.addEventListener('paste', this.onPaste);
     for (let i = 0; i < 200 - this.stars.aliveCount(); i++) {
       this.stars.spawn({
         x: Math.random() * BALANCE.viewportWidth,
@@ -32,6 +33,20 @@ export class TitleScene extends Scene {
 
   override onExit(): void {
     window.removeEventListener('keydown', this.onKey);
+    window.removeEventListener('paste', this.onPaste);
+  }
+
+  private sanitizeRepoInput(raw: string): string {
+    const trimmed = raw.trim();
+    // Accept full GitHub URLs by extracting owner/name
+    const urlMatch = trimmed.match(/github\.com\/([\w.-]+\/[\w.-]+)/i);
+    const core = urlMatch ? urlMatch[1]! : trimmed;
+    // Strip trailing .git, query strings, hashes, trailing slashes
+    return core
+      .replace(/\.git$/i, '')
+      .replace(/[?#].*$/, '')
+      .replace(/\/+$/, '')
+      .replace(/[^\w\-/.]/g, '');
   }
 
   private onKey = (e: KeyboardEvent) => {
@@ -43,9 +58,21 @@ export class TitleScene extends Scene {
     } else if (e.key === 'Tab') {
       e.preventDefault();
       this.selectedChip = (this.selectedChip + 1) % FEATURED.length;
-    } else if (e.key.length === 1 && /[\w\-/.]/.test(e.key)) {
+    } else if (
+      !e.metaKey && !e.ctrlKey && !e.altKey &&
+      e.key.length === 1 && /[\w\-/.]/.test(e.key)
+    ) {
       this.inputValue += e.key;
     }
+  };
+
+  private onPaste = (e: ClipboardEvent) => {
+    const text = e.clipboardData?.getData('text') ?? '';
+    if (!text) return;
+    e.preventDefault();
+    const cleaned = this.sanitizeRepoInput(text);
+    if (!cleaned) return;
+    this.inputValue = (this.inputValue + cleaned).slice(0, 80);
   };
 
   override update(dt: number): void {

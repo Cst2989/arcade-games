@@ -1,5 +1,9 @@
 import type { ContributorStats } from './contributor-stats.js';
-import { computeContributorProfile, type ContributorProfile } from './contributor-profile.js';
+import {
+  computeContributorProfile,
+  type ContributorProfile,
+  type ProfileOverrides,
+} from './contributor-profile.js';
 import { BALANCE } from '../config/balance.js';
 
 export interface EnemySpec {
@@ -54,6 +58,7 @@ export function contributorToLevel(
   stats: ContributorStats,
   info: ContributorInfo,
   levelIndex: number,
+  overrides: ProfileOverrides = {},
 ): Level {
   const waves: Wave[] = [];
   for (let w = 0; w < 52; w++) {
@@ -64,15 +69,16 @@ export function contributorToLevel(
       const e = enemyFromCommits(day.count, levelIndex);
       if (e) enemies.push({ ...e, date: day.date });
     }
+    if (enemies.length === 0) continue;
     waves.push({ weekStart: slice[0]!.date, enemies });
   }
   return {
     contributor: {
       ...info,
-      avatar: stats.avatarUrl,
+      avatar: overrides.user?.avatar_url ?? stats.avatarUrl,
       totalCommits: stats.totalCommits,
     },
     waves,
-    profile: computeContributorProfile(stats, info.login),
+    profile: computeContributorProfile(stats, info.login, overrides),
   };
 }

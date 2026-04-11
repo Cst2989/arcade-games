@@ -26,10 +26,12 @@ export function playerControlSystem(dt: number, ctx: GameContext): void {
       }
       if (pierceNext) ctx.state.squashReady = false;
       p.fireCooldown = BALANCE.playerFireCooldown;
+      ctx.stats.shotsFired += spread;
       sfx.play('shoot', { pitch: 0.95 + Math.random() * 0.1 });
     }
     if (input.wasPressed('bomb') && p.bombsLeft > 0) {
       p.bombsLeft -= 1;
+      ctx.stats.bombsUsed += 1;
       sfx.play('explode_big');
       screenShake.add({ amplitude: 14, duration: 0.45 });
       const enemiesToKill: number[] = [];

@@ -5,7 +5,7 @@ export const BALANCE = {
   fixedDt: 1 / 60,
 
   // Difficulty
-  levelDifficultyStep: 0.25,
+  levelDifficultyStep: 0.4,
   baseFireRate: 0.2,
   fireRatePerCommit: 0.05,
 

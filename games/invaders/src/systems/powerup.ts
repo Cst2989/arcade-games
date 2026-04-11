@@ -7,6 +7,7 @@ export function applyPowerup(kind: string, playerEntity: number, ctx: GameContex
   const hp = world.get(playerEntity, Health);
   const pos = world.get(playerEntity, Position);
   if (!p || !hp || !pos) return;
+  ctx.stats.powerupsCollected += 1;
   sfx.play('powerup_get');
 
   switch (kind) {

@@ -5,6 +5,8 @@ import type { Renderer, SpriteAtlas } from '@osi/engine';
 import type { Level } from '../data/mapping.js';
 
 export class BossScene extends GameplayScene {
+  private stopBossMusic: (() => void) | null = null;
+
   constructor(
     renderer: Renderer,
     atlas: SpriteAtlas,
@@ -12,12 +14,15 @@ export class BossScene extends GameplayScene {
     levelIndex: number,
     deps: GameplayDeps,
     onVictory: () => void,
+    onGameOver?: (score: number, wave: number) => void,
   ) {
-    super(renderer, atlas, level, levelIndex, deps, onVictory);
+    super(renderer, atlas, level, levelIndex, deps, onVictory, onGameOver);
   }
 
   override onEnter(): void {
     super.onEnter();
+    this.ctx.sfx.play('boss_roar', { volume: 0.9 });
+    this.stopBossMusic = this.ctx.sfx.loop('boss_phase', { volume: 0.35 });
     const toRemove: number[] = [];
     for (const [e] of this.ctx.world.query(SpriteRef, Collider)) {
       if (this.ctx.world.has(e, Player)) continue;
@@ -37,5 +42,13 @@ export class BossScene extends GameplayScene {
     });
     this.ctx.world.add(boss, SpriteRef, { name: 'ufoBlue.png', scale: 1.4 });
     this.ctx.world.add(boss, BossTag, { phase: 1, phaseTime: 0, fireTimer: 1 });
+  }
+
+  override onExit(): void {
+    if (this.stopBossMusic) {
+      this.stopBossMusic();
+      this.stopBossMusic = null;
+    }
+    super.onExit();
   }
 }

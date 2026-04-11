@@ -16,4 +16,10 @@ export class Sfx {
     if (!buf) return;
     this.bus.playSfx(buf, opts ?? {});
   }
+
+  loop(name: string, opts?: { volume?: number }): (() => void) | null {
+    const buf = this.buffers.get(name);
+    if (!buf) return null;
+    return this.bus.playMusic(buf, { loop: true, volume: opts?.volume ?? 1 });
+  }
 }
