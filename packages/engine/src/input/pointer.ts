@@ -4,11 +4,17 @@ export class Pointer {
   down = false;
   clickedThisFrame = false;
 
+  // attach() is one-shot by design — there is no detach(). The engine
+  // assumes a single long-lived canvas for the lifetime of the app.
   attach(canvas: HTMLCanvasElement): void {
     canvas.addEventListener('pointermove', (e) => {
       const r = canvas.getBoundingClientRect();
-      this.x = e.clientX - r.left;
-      this.y = e.clientY - r.top;
+      // Translate client coords into the canvas drawing buffer, so CSS
+      // scaling (HiDPI, responsive layouts) does not desync hit-testing.
+      const sx = canvas.width / r.width;
+      const sy = canvas.height / r.height;
+      this.x = (e.clientX - r.left) * sx;
+      this.y = (e.clientY - r.top) * sy;
     });
     canvas.addEventListener('pointerdown', () => {
       this.down = true;
