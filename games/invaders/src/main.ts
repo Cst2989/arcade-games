@@ -316,7 +316,7 @@ function launchLevel(
     level.profile,
     isBossLevel,
     () => {
-      const deps: GameplayDeps = { input, gameLoop, sfx, screenShake, particles, stats };
+      const deps: GameplayDeps = { input, gameLoop, sfx, screenShake, particles, stats, repoName: repoFullName };
       if (isBossLevel) {
         const bossIntro = new BossIntroScene(renderer, level.contributor.login, () => {
           let bossRef: BossScene | null = null;

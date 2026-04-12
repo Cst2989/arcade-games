@@ -262,7 +262,7 @@ export class TitleScene extends Scene {
       ctx.textAlign = 'center';
       ctx.fillStyle = '#6e7681';
       ctx.font = '11px ui-monospace, Menlo, monospace';
-      ctx.fillText('// or pick a featured repo with TAB', W / 2, 392);
+      ctx.fillText('// or pick a featured repo with TAB', W / 2, 387);
 
       const chipY = 408;
       const chipSpacing = 175;

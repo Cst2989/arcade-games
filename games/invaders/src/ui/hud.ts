@@ -2,6 +2,7 @@ import type { Renderer } from '@osi/engine';
 import { BALANCE } from '../config/balance.js';
 import type { HudState } from '../scenes/gameplay-context.js';
 import { isTouchDevice } from './touch-detect.js';
+import { drawInvaderLogo } from './brand.js';
 
 export function drawHud(renderer: Renderer, hud: HudState): void {
   const ctx = renderer.main;
@@ -15,6 +16,15 @@ export function drawHud(renderer: Renderer, hud: HudState): void {
   ctx.textAlign = 'left';
   ctx.fillText(`SCORE ${hud.score}`, 20, 24);
   if (!mobile) ctx.fillText(`WAVE ${hud.waveIndex + 1}/${hud.totalWaves}`, 20, 44);
+
+  if (hud.repoName) {
+    const repoY = mobile ? 40 : 64;
+    drawInvaderLogo(ctx, 30, repoY - 4, 2);
+    ctx.fillStyle = '#39d353';
+    ctx.font = mobile ? '10px ui-monospace, Menlo, monospace' : '12px ui-monospace, Menlo, monospace';
+    ctx.textAlign = 'left';
+    ctx.fillText(hud.repoName, 44, repoY);
+  }
 
   const hpW = mobile ? 100 : 160;
   ctx.fillStyle = BALANCE.bgAlt;

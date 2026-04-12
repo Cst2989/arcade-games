@@ -42,6 +42,7 @@ export interface GameplayDeps {
   screenShake: ScreenShake;
   particles: GameContext['particles'];
   stats: GameStats;
+  repoName: string;
 }
 
 export class GameplayScene extends Scene {
@@ -62,6 +63,7 @@ export class GameplayScene extends Scene {
     super();
     const events = new EventBus<InvadersEvents>();
     const hud: HudState = createHudState();
+    hud.repoName = deps.repoName;
     this.ctx = {
       world: new World(),
       input: deps.input,

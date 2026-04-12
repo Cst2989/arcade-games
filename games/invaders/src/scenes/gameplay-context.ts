@@ -40,6 +40,7 @@ export interface HudState {
   chaos: string | null;
   bombsLeft: number;
   activePowerups: HudPowerupChip[];
+  repoName: string;
 }
 
 export interface GameStats {
@@ -107,5 +108,6 @@ export function createHudState(): HudState {
     chaos: null,
     bombsLeft: 0,
     activePowerups: [],
+    repoName: '',
   };
 }
