@@ -253,7 +253,7 @@ export class GameplayScene extends Scene {
     const defeated = Math.max(0, total - unspawned - aliveNow);
     drawContributorPanel(main, this.ctx.level.profile, { defeated, total });
 
-    if (!isTouchDevice()) drawInstructions(main, this.atlas);
+    drawInstructions(main, this.atlas, isTouchDevice());
     if (this.ctx.state.chaosActive?.kind === 'CI_FAILED') {
       main.fillStyle = 'rgba(248, 81, 73, 0.10)';
       main.fillRect(0, 0, BALANCE.viewportWidth, BALANCE.viewportHeight);
@@ -318,7 +318,11 @@ function drawRoundedCell(ctx: CanvasRenderingContext2D, cx: number, cy: number, 
   ctx.fill();
 }
 
-function drawInstructions(ctx: CanvasRenderingContext2D, atlas: SpriteAtlas): void {
+function drawInstructions(ctx: CanvasRenderingContext2D, atlas: SpriteAtlas, mobile = false): void {
+  if (mobile) {
+    drawInstructionsMobile(ctx, atlas);
+    return;
+  }
   const boxX = 576;
   const boxY = 76;
   const boxW = 360;
@@ -393,6 +397,60 @@ function drawInstructions(ctx: CanvasRenderingContext2D, atlas: SpriteAtlas): vo
   ctx.font = '10px ui-monospace, Menlo, monospace';
   ctx.fillText('squash = queued; fires on', contentX, y); y += 12;
   ctx.fillText('your next SPACE shot', contentX, y);
+
+  ctx.restore();
+}
+
+function drawInstructionsMobile(ctx: CanvasRenderingContext2D, atlas: SpriteAtlas): void {
+  const W = BALANCE.viewportWidth;
+  const boxW = 200;
+  const boxX = W - boxW - 20;
+  const boxY = 96;
+  const boxH = 200;
+  const padX = 12;
+  const contentX = boxX + padX;
+
+  ctx.save();
+
+  ctx.fillStyle = 'rgba(22, 27, 34, 0.70)';
+  ctx.fillRect(boxX, boxY, boxW, boxH);
+  ctx.strokeStyle = '#30363d';
+  ctx.lineWidth = 1;
+  ctx.strokeRect(boxX, boxY, boxW, boxH);
+
+  ctx.textAlign = 'left';
+  ctx.textBaseline = 'alphabetic';
+  ctx.fillStyle = '#8b949e';
+  ctx.font = '9px ui-monospace, Menlo, monospace';
+  ctx.fillText('POWER-UPS', contentX, boxY + 14);
+
+  let y = boxY + 30;
+  const effects: Record<string, string> = {
+    revert:    '+1 HP',
+    fork:      'triple shot',
+    rebase:    'slow enemies',
+    squash:    'pierce shot',
+    forcepush: 'clear screen',
+  };
+  ctx.font = '11px ui-monospace, Menlo, monospace';
+  const iconScale = 0.5;
+  for (const def of POWERUPS) {
+    const iconCx = contentX + 8;
+    const iconCy = y - 4;
+    if (atlas.has(def.sprite)) {
+      atlas.draw(ctx, def.sprite, iconCx, iconCy, iconScale);
+    } else {
+      ctx.fillStyle = def.color;
+      ctx.fillRect(contentX, y - 10, 12, 12);
+    }
+    ctx.fillStyle = '#c9d1d9';
+    ctx.fillText(def.label, contentX + 22, y);
+    ctx.fillStyle = '#8b949e';
+    ctx.font = '10px ui-monospace, Menlo, monospace';
+    ctx.fillText(effects[def.kind] ?? '', contentX + 100, y);
+    ctx.font = '11px ui-monospace, Menlo, monospace';
+    y += 20;
+  }
 
   ctx.restore();
 }

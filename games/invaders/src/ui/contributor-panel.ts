@@ -15,9 +15,9 @@ const PAD_Y = 20;
 const CONTENT_X = PANEL_X + PAD_X;
 const CONTENT_W = PANEL_W - PAD_X * 2;
 
-const M_PANEL_W = 200;
-const M_PANEL_H = 180;
-const M_PAD_X = 12;
+const M_PANEL_W = 240;
+const M_PANEL_H = 310;
+const M_PAD_X = 14;
 const M_CONTENT_X = PANEL_X + M_PAD_X;
 const M_CONTENT_W = M_PANEL_W - M_PAD_X * 2;
 
@@ -264,43 +264,58 @@ function drawContributorPanelMobile(
   ctx.strokeRect(PANEL_X, PANEL_Y, M_PANEL_W, M_PANEL_H);
 
   let y = PANEL_Y + 14;
+  const col1 = M_CONTENT_X;
+  const col2 = M_CONTENT_X + Math.floor(M_CONTENT_W / 2);
 
   ctx.textAlign = 'left';
   ctx.textBaseline = 'alphabetic';
 
-  drawAvatar(ctx, M_CONTENT_X + 14, y + 18, 14, profile.login, profile.avatarImage);
+  ctx.fillStyle = '#8b949e';
+  ctx.font = '9px ui-monospace, Menlo, monospace';
+  ctx.fillText('TARGET', col1, y);
+
+  y += 6;
+  drawAvatar(ctx, col1 + 14, y + 18, 14, profile.login, profile.avatarImage);
 
   ctx.fillStyle = '#c9d1d9';
   ctx.font = 'bold 13px ui-monospace, Menlo, monospace';
-  ctx.fillText(truncate(ctx, `@${profile.login}`, M_CONTENT_W - 38), M_CONTENT_X + 36, y + 16);
+  ctx.fillText(truncate(ctx, `@${profile.login}`, M_CONTENT_W - 38), col1 + 36, y + 16);
   ctx.fillStyle = '#6e7681';
   ctx.font = '10px ui-monospace, Menlo, monospace';
-  ctx.fillText(truncate(ctx, profile.bio, M_CONTENT_W - 38), M_CONTENT_X + 36, y + 30);
+  ctx.fillText(truncate(ctx, profile.bio, M_CONTENT_W - 38), col1 + 36, y + 30);
 
-  y += 50;
-  drawStatRow(ctx, M_CONTENT_X, y, 'COMMITS', profile.totalCommits.toLocaleString(), '#39d353');
-  drawStatRow(ctx, M_CONTENT_X + Math.floor(M_CONTENT_W / 2), y, 'STREAK', `${profile.longestStreak}d`);
+  y += 48;
+  drawStatRow(ctx, col1, y, 'COMMITS', profile.totalCommits.toLocaleString(), '#39d353');
+  drawStatRow(ctx, col2, y, 'ACTIVE DAYS', `${profile.activeDays}/365`);
 
-  y += 42;
+  y += 36;
+  drawStatRow(ctx, col1, y, 'LONGEST STREAK', `${profile.longestStreak}d`);
+  drawStatRow(ctx, col2, y, 'CURRENT', `${profile.currentStreak}d`, profile.currentStreak > 7 ? '#ffa657' : '#c9d1d9');
+
+  y += 36;
+  drawStatRow(ctx, col1, y, 'BEST DAY', `${profile.bestDay.count}`);
+  drawStatRow(ctx, col2, y, 'LANGUAGE', profile.topLanguage, '#58a6ff');
+
+  y += 40;
   ctx.textAlign = 'left';
   ctx.fillStyle = '#8b949e';
-  ctx.font = '10px ui-monospace, Menlo, monospace';
-  ctx.fillText('KILL COUNT', M_CONTENT_X, y);
+  ctx.font = '9px ui-monospace, Menlo, monospace';
+  ctx.fillText('KILL COUNT', col1, y);
 
   const pct = kills.total > 0 ? kills.defeated / kills.total : 0;
   const barY = y + 8;
   ctx.fillStyle = '#21262d';
-  ctx.fillRect(M_CONTENT_X, barY, M_CONTENT_W, 6);
+  ctx.fillRect(col1, barY, M_CONTENT_W, 6);
   ctx.fillStyle = '#f85149';
-  ctx.fillRect(M_CONTENT_X, barY, Math.round(M_CONTENT_W * pct), 6);
+  ctx.fillRect(col1, barY, Math.round(M_CONTENT_W * pct), 6);
 
   ctx.font = '10px ui-monospace, Menlo, monospace';
   ctx.fillStyle = '#c9d1d9';
   ctx.textAlign = 'left';
-  ctx.fillText(`${kills.defeated}/${kills.total}`, M_CONTENT_X, barY + 18);
+  ctx.fillText(`${kills.defeated}/${kills.total}`, col1, barY + 18);
   ctx.fillStyle = '#8b949e';
   ctx.textAlign = 'right';
-  ctx.fillText(`${Math.round(pct * 100)}%`, M_CONTENT_X + M_CONTENT_W, barY + 18);
+  ctx.fillText(`${Math.round(pct * 100)}%`, col1 + M_CONTENT_W, barY + 18);
 
   ctx.restore();
 }
