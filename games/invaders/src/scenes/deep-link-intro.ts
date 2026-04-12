@@ -7,6 +7,7 @@ export class DeepLinkIntroScene extends Scene {
   private elapsed = 0;
   private fired = false;
   private music: AmbientMusic | null = null;
+  private startBtn: HTMLButtonElement | null = null;
 
   constructor(
     private renderer: Renderer,
@@ -22,7 +23,10 @@ export class DeepLinkIntroScene extends Scene {
 
   override onEnter(): void {
     window.addEventListener('keydown', this.onKey);
-    if (this.touch) window.addEventListener('pointerdown', this.onTap);
+    if (this.touch) {
+      this.mountStartButton();
+      window.addEventListener('resize', this.repositionStartButton);
+    }
     const music = new AmbientMusic(this.audio);
     this.music = music;
     this.audio.onUnlocked(() => {
@@ -34,7 +38,11 @@ export class DeepLinkIntroScene extends Scene {
 
   override onExit(): void {
     window.removeEventListener('keydown', this.onKey);
-    window.removeEventListener('pointerdown', this.onTap);
+    window.removeEventListener('resize', this.repositionStartButton);
+    if (this.startBtn) {
+      this.startBtn.remove();
+      this.startBtn = null;
+    }
     if (this.music) {
       this.music.stop();
       this.music = null;
@@ -65,12 +73,51 @@ export class DeepLinkIntroScene extends Scene {
     }
   };
 
-  private onTap = (e: PointerEvent) => {
-    if (this.elapsed < 0.4 || this.fired) return;
-    if ((e.target as HTMLElement)?.closest('#touch-controls')) return;
-    e.preventDefault();
-    this.fired = true;
-    this.onLaunch();
+  private mountStartButton(): void {
+    const W = BALANCE.viewportWidth;
+    const H = BALANCE.viewportHeight;
+    const btnW = 340;
+    const btnH = 54;
+    const btnX = W / 2 - btnW / 2;
+    const btnY = H - btnH - 40;
+
+    const btn = document.createElement('button');
+    btn.textContent = 'TAP TO START';
+    btn.style.cssText = `position:absolute;pointer-events:auto;touch-action:manipulation;width:${btnW}px;height:${btnH}px;background:#da3633;border:2px solid #f85149;color:#fff;font:bold 18px ui-monospace,Menlo,monospace;padding:0;z-index:10;-webkit-tap-highlight-color:transparent;transform-origin:top left;`;
+    btn.addEventListener('pointerdown', (e) => {
+      e.preventDefault();
+      if (this.elapsed < 0.4 || this.fired) return;
+      this.fired = true;
+      this.onLaunch();
+    });
+    document.body.appendChild(btn);
+    this.startBtn = btn;
+
+    const canvas = this.renderer.main.canvas;
+    const rect = canvas.getBoundingClientRect();
+    const sx = rect.width / W;
+    const sy = rect.height / H;
+    btn.style.left = `${rect.left + btnX * sx}px`;
+    btn.style.top = `${rect.top + btnY * sy}px`;
+    btn.style.transform = `scale(${sx},${sy})`;
+  }
+
+  private repositionStartButton = (): void => {
+    if (!this.startBtn) return;
+    const W = BALANCE.viewportWidth;
+    const H = BALANCE.viewportHeight;
+    const btnW = 340;
+    const btnH = 54;
+    const btnX = W / 2 - btnW / 2;
+    const btnY = H - btnH - 40;
+
+    const canvas = this.renderer.main.canvas;
+    const rect = canvas.getBoundingClientRect();
+    const sx = rect.width / W;
+    const sy = rect.height / H;
+    this.startBtn.style.left = `${rect.left + btnX * sx}px`;
+    this.startBtn.style.top = `${rect.top + btnY * sy}px`;
+    this.startBtn.style.transform = `scale(${sx},${sy})`;
   };
 
   override render(): void {
@@ -125,24 +172,26 @@ export class DeepLinkIntroScene extends Scene {
     ctx.font = 'italic 20px ui-monospace, Menlo, monospace';
     ctx.fillText('are you ready?', W / 2, 396);
 
-    const btnW = 340;
-    const btnH = 54;
-    const btnX = W / 2 - btnW / 2;
-    const btnY = H - btnH - 40;
+    if (!this.touch) {
+      const btnW = 340;
+      const btnH = 54;
+      const btnX = W / 2 - btnW / 2;
+      const btnY = H - btnH - 40;
 
-    ctx.fillStyle = '#da3633';
-    ctx.fillRect(btnX, btnY, btnW, btnH);
-    ctx.fillStyle = `rgba(255, 255, 255, ${0.08 + 0.12 * pulse})`;
-    ctx.fillRect(btnX, btnY, btnW, btnH);
-    ctx.strokeStyle = '#f85149';
-    ctx.lineWidth = 2;
-    ctx.strokeRect(btnX + 0.5, btnY + 0.5, btnW - 1, btnH - 1);
+      ctx.fillStyle = '#da3633';
+      ctx.fillRect(btnX, btnY, btnW, btnH);
+      ctx.fillStyle = `rgba(255, 255, 255, ${0.08 + 0.12 * pulse})`;
+      ctx.fillRect(btnX, btnY, btnW, btnH);
+      ctx.strokeStyle = '#f85149';
+      ctx.lineWidth = 2;
+      ctx.strokeRect(btnX + 0.5, btnY + 0.5, btnW - 1, btnH - 1);
 
-    ctx.textBaseline = 'middle';
-    ctx.fillStyle = '#ffffff';
-    ctx.font = 'bold 18px ui-monospace, Menlo, monospace';
-    ctx.fillText(this.touch ? 'TAP TO START' : 'PRESS ENTER TO START', W / 2, btnY + btnH / 2 + 1);
-    ctx.textBaseline = 'alphabetic';
+      ctx.textBaseline = 'middle';
+      ctx.fillStyle = '#ffffff';
+      ctx.font = 'bold 18px ui-monospace, Menlo, monospace';
+      ctx.fillText('PRESS ENTER TO START', W / 2, btnY + btnH / 2 + 1);
+      ctx.textBaseline = 'alphabetic';
+    }
 
     this.renderer.endFrame();
   }

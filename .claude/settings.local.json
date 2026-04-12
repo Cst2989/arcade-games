@@ -46,7 +46,9 @@
       "Bash(netlify api:*)",
       "Read(//private/tmp/**)",
       "Bash(netlify deploy:*)",
-      "Bash(pnpm:*)"
+      "Bash(pnpm:*)",
+      "Bash(npx tsc:*)",
+      "Bash(echo \"EXIT: $?\")"
     ]
   }
 }
