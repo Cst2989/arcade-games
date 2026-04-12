@@ -11,6 +11,8 @@ export class TitleScene extends Scene {
   private elapsed = 0;
   private selectedChip = 0;
   private music: AmbientMusic | null = null;
+  private touchOverlay: HTMLDivElement | null = null;
+  private domInput: HTMLInputElement | null = null;
 
   constructor(
     private renderer: Renderer,
@@ -40,8 +42,8 @@ export class TitleScene extends Scene {
       this.audio.onUnlocked(() => music.start('welcoming', { volume: 0.32 }));
     }
     if (this.touch) {
-      const canvas = this.renderer.main.canvas;
-      canvas.addEventListener('pointerdown', this.onCanvasTap);
+      this.mountTouchOverlay();
+      window.addEventListener('resize', this.repositionTouchOverlay);
     }
   }
 
@@ -52,9 +54,11 @@ export class TitleScene extends Scene {
       this.music.stop();
       this.music = null;
     }
-    if (this.touch) {
-      const canvas = this.renderer.main.canvas;
-      canvas.removeEventListener('pointerdown', this.onCanvasTap);
+    if (this.touchOverlay) {
+      window.removeEventListener('resize', this.repositionTouchOverlay);
+      this.touchOverlay.remove();
+      this.touchOverlay = null;
+      this.domInput = null;
     }
   }
 
@@ -95,39 +99,76 @@ export class TitleScene extends Scene {
     this.inputValue = (this.inputValue + cleaned).slice(0, 80);
   };
 
-  private onCanvasTap = (e: PointerEvent) => {
-    const canvas = this.renderer.main.canvas;
-    const rect = canvas.getBoundingClientRect();
-    const sx = canvas.width / rect.width;
-    const sy = canvas.height / rect.height;
-    const x = (e.clientX - rect.left) * sx;
-    const y = (e.clientY - rect.top) * sy;
-
+  private mountTouchOverlay(): void {
     const W = BALANCE.viewportWidth;
     const H = BALANCE.viewportHeight;
+
+    const overlay = document.createElement('div');
+    overlay.style.cssText = `position:absolute;width:${W}px;height:${H}px;transform-origin:top left;pointer-events:none;z-index:10;`;
+    document.body.appendChild(overlay);
+    this.touchOverlay = overlay;
+
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.placeholder = 'owner/repo';
+    input.autocomplete = 'off';
+    input.autocapitalize = 'off';
+    input.spellcheck = false;
+    const inputW = 460;
+    const inputH = 52;
+    const inputX = W / 2 - inputW / 2;
+    const inputY = 314;
+    input.style.cssText = `position:absolute;pointer-events:auto;touch-action:manipulation;left:${inputX}px;top:${inputY}px;width:${inputW}px;height:${inputH}px;padding:0 12px 0 30px;background:#0d1117;border:2px solid rgba(57,211,83,0.7);color:#c9d1d9;font:20px ui-monospace,Menlo,monospace;outline:none;box-sizing:border-box;-webkit-appearance:none;border-radius:0;`;
+    input.addEventListener('input', () => {
+      this.inputValue = this.sanitizeRepoInput(input.value);
+    });
+    overlay.appendChild(input);
+    this.domInput = input;
 
     const chipY = 408;
     const chipSpacing = 175;
     const totalCW = chipSpacing * FEATURED.length;
     const chipStartX = W / 2 - totalCW / 2 + chipSpacing / 2;
-    for (let i = 0; i < FEATURED.length; i++) {
+    FEATURED.forEach((name, i) => {
+      const btn = document.createElement('button');
+      btn.textContent = name;
       const cx = chipStartX + i * chipSpacing;
       const chipW = 160;
       const chipH = 28;
-      if (x >= cx - chipW / 2 && x <= cx + chipW / 2 && y >= chipY - chipH / 2 && y <= chipY + chipH / 2) {
-        this.onStart(FEATURED[i]!);
-        return;
-      }
-    }
+      btn.style.cssText = `position:absolute;pointer-events:auto;touch-action:manipulation;left:${cx - chipW / 2}px;top:${chipY - chipH / 2}px;width:${chipW}px;height:${chipH}px;background:rgba(22,27,34,0.85);border:1px solid #30363d;color:#8b949e;font:12px ui-monospace,Menlo,monospace;padding:0;-webkit-tap-highlight-color:transparent;`;
+      btn.addEventListener('pointerdown', (e) => {
+        e.preventDefault();
+        this.onStart(name);
+      });
+      overlay.appendChild(btn);
+    });
 
     const btnW = 300;
     const btnH = 48;
     const btnX = W / 2 - btnW / 2;
     const btnY = H - btnH - 38;
-    if (x >= btnX && x <= btnX + btnW && y >= btnY && y <= btnY + btnH) {
+    const launch = document.createElement('button');
+    launch.textContent = 'PRESS TO LAUNCH';
+    launch.style.cssText = `position:absolute;pointer-events:auto;touch-action:manipulation;left:${btnX}px;top:${btnY}px;width:${btnW}px;height:${btnH}px;background:#238636;border:2px solid #2ea043;color:#fff;font:bold 16px ui-monospace,Menlo,monospace;padding:0;-webkit-tap-highlight-color:transparent;`;
+    launch.addEventListener('pointerdown', (e) => {
+      e.preventDefault();
       const val = this.inputValue.trim() || FEATURED[this.selectedChip]!;
       this.onStart(val);
-    }
+    });
+    overlay.appendChild(launch);
+
+    this.repositionTouchOverlay();
+  }
+
+  private repositionTouchOverlay = (): void => {
+    if (!this.touchOverlay) return;
+    const canvas = this.renderer.main.canvas;
+    const rect = canvas.getBoundingClientRect();
+    const sx = rect.width / BALANCE.viewportWidth;
+    const sy = rect.height / BALANCE.viewportHeight;
+    this.touchOverlay.style.left = `${rect.left}px`;
+    this.touchOverlay.style.top = `${rect.top}px`;
+    this.touchOverlay.style.transform = `scale(${sx},${sy})`;
   };
 
   override update(dt: number): void {
