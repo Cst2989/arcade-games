@@ -29,7 +29,6 @@ import { GameOverScene } from './scenes/game-over.js';
 import { LevelCompleteScene } from './scenes/level-complete.js';
 import { CanvasScaler } from './ui/canvas-scaler.js';
 import { TouchControls } from './ui/touch-controls.js';
-import { TouchMenuOverlays } from './ui/touch-menu.js';
 import { isTouchDevice } from './ui/touch-detect.js';
 
 const BASE = import.meta.env.BASE_URL;
@@ -50,16 +49,13 @@ const renderer = new Renderer(canvas);
 const scaler = new CanvasScaler(canvas);
 const touch = isTouchDevice();
 const touchControls = touch ? new TouchControls(scaler) : null;
-const touchMenu = touch ? new TouchMenuOverlays(scaler) : null;
 if (touchControls) touchControls.mount();
 
 window.addEventListener('resize', () => {
   touchControls?.reposition();
-  touchMenu?.reposition();
 });
 window.addEventListener('orientationchange', () => {
   touchControls?.reposition();
-  touchMenu?.reposition();
 });
 
 const gameLoop = new GameLoop({ fixedDt: BALANCE.fixedDt, maxStepsPerFrame: 5 });
@@ -134,9 +130,13 @@ async function boot(): Promise<void> {
     audio.unlock();
     window.removeEventListener('keydown', unlockAudio);
     window.removeEventListener('pointerdown', unlockAudio);
+    window.removeEventListener('touchstart', unlockAudio);
+    window.removeEventListener('click', unlockAudio);
   };
   window.addEventListener('keydown', unlockAudio);
   window.addEventListener('pointerdown', unlockAudio);
+  window.addEventListener('touchstart', unlockAudio);
+  window.addEventListener('click', unlockAudio);
 
   const params = new URLSearchParams(window.location.search);
 
@@ -168,7 +168,7 @@ async function boot(): Promise<void> {
     );
     sceneManager.push(intro);
   } else {
-    const title = new TitleScene(renderer, particles.stars, (repo) => startGame(repo), audio, touch, touchMenu);
+    const title = new TitleScene(renderer, particles.stars, (repo) => startGame(repo), audio, touch);
     sceneManager.push(title);
   }
 
@@ -330,7 +330,7 @@ function launchLevel(
               stats.levelsCompleted += 1;
               const victory = new VictoryScene(renderer, repoFullName, stats, levels, () => {
                 sceneManager.clear();
-                sceneManager.push(new TitleScene(renderer, particles.stars, (r) => startGame(r), audio, touch, touchMenu));
+                sceneManager.push(new TitleScene(renderer, particles.stars, (r) => startGame(r), audio, touch));
               }, touch);
               sceneManager.replace(victory);
             },

@@ -1,6 +1,5 @@
 import { Scene, AmbientMusic } from '@osi/engine';
 import type { Renderer, ParticleEmitter, AudioBus } from '@osi/engine';
-import type { TouchMenuOverlays } from '../ui/touch-menu.js';
 import { BALANCE } from '../config/balance.js';
 import { drawBrandHeader } from '../ui/brand.js';
 
@@ -19,7 +18,6 @@ export class TitleScene extends Scene {
     private onStart: (repo: string) => void,
     private audio?: AudioBus,
     private touch = false,
-    private touchMenu?: TouchMenuOverlays | null,
   ) {
     super();
   }
@@ -41,11 +39,10 @@ export class TitleScene extends Scene {
       this.music = music;
       this.audio.onUnlocked(() => music.start('welcoming', { volume: 0.32 }));
     }
-    this.touchMenu?.mountTitle({
-      onStart: (repo) => this.onStart(repo),
-      getInput: () => this.inputValue,
-      setInput: (v) => { this.inputValue = v; },
-    });
+    if (this.touch) {
+      const canvas = this.renderer.main.canvas;
+      canvas.addEventListener('pointerdown', this.onCanvasTap);
+    }
   }
 
   override onExit(): void {
@@ -55,7 +52,10 @@ export class TitleScene extends Scene {
       this.music.stop();
       this.music = null;
     }
-    this.touchMenu?.unmountTitle();
+    if (this.touch) {
+      const canvas = this.renderer.main.canvas;
+      canvas.removeEventListener('pointerdown', this.onCanvasTap);
+    }
   }
 
   private sanitizeRepoInput(raw: string): string {
@@ -93,6 +93,41 @@ export class TitleScene extends Scene {
     const cleaned = this.sanitizeRepoInput(text);
     if (!cleaned) return;
     this.inputValue = (this.inputValue + cleaned).slice(0, 80);
+  };
+
+  private onCanvasTap = (e: PointerEvent) => {
+    const canvas = this.renderer.main.canvas;
+    const rect = canvas.getBoundingClientRect();
+    const sx = canvas.width / rect.width;
+    const sy = canvas.height / rect.height;
+    const x = (e.clientX - rect.left) * sx;
+    const y = (e.clientY - rect.top) * sy;
+
+    const W = BALANCE.viewportWidth;
+    const H = BALANCE.viewportHeight;
+
+    const chipY = 408;
+    const chipSpacing = 175;
+    const totalCW = chipSpacing * FEATURED.length;
+    const chipStartX = W / 2 - totalCW / 2 + chipSpacing / 2;
+    for (let i = 0; i < FEATURED.length; i++) {
+      const cx = chipStartX + i * chipSpacing;
+      const chipW = 160;
+      const chipH = 28;
+      if (x >= cx - chipW / 2 && x <= cx + chipW / 2 && y >= chipY - chipH / 2 && y <= chipY + chipH / 2) {
+        this.onStart(FEATURED[i]!);
+        return;
+      }
+    }
+
+    const btnW = 300;
+    const btnH = 48;
+    const btnX = W / 2 - btnW / 2;
+    const btnY = H - btnH - 38;
+    if (x >= btnX && x <= btnX + btnW && y >= btnY && y <= btnY + btnH) {
+      const val = this.inputValue.trim() || FEATURED[this.selectedChip]!;
+      this.onStart(val);
+    }
   };
 
   override update(dt: number): void {
