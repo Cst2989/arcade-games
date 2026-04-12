@@ -45,7 +45,8 @@
       "Bash(netlify --version)",
       "Bash(netlify api:*)",
       "Read(//private/tmp/**)",
-      "Bash(netlify deploy:*)"
+      "Bash(netlify deploy:*)",
+      "Bash(pnpm:*)"
     ]
   }
 }
