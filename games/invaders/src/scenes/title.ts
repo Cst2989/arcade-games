@@ -229,78 +229,80 @@ export class TitleScene extends Scene {
       W / 2, card.y + 76,
     );
 
-    ctx.font = '12px ui-monospace, Menlo, monospace';
-    ctx.fillStyle = '#8b949e';
-    ctx.textAlign = 'center';
-    ctx.fillText('ENTER A REPO — owner/name', W / 2, 300);
-
-    const inputW = 460;
-    const inputH = 52;
-    const inputX = W / 2 - inputW / 2;
-    const inputY = 314;
-
-    ctx.fillStyle = '#0d1117';
-    ctx.fillRect(inputX, inputY, inputW, inputH);
-    ctx.strokeStyle = `rgba(57, 211, 83, ${0.5 + 0.3 * pulse})`;
-    ctx.lineWidth = 2;
-    ctx.strokeRect(inputX + 1, inputY + 1, inputW - 2, inputH - 2);
-
-    ctx.fillStyle = '#39d353';
-    ctx.font = '12px ui-monospace, Menlo, monospace';
-    ctx.textAlign = 'left';
-    ctx.fillText('>', inputX + 12, inputY + 32);
-
-    ctx.fillStyle = '#c9d1d9';
-    ctx.font = '22px ui-monospace, Menlo, monospace';
-    const cursor = Math.floor(this.blinkT * 2) % 2 === 0 ? '_' : ' ';
-    const placeholder = this.inputValue === '';
-    ctx.fillStyle = placeholder ? '#484f58' : '#c9d1d9';
-    const displayText = placeholder ? 'facebook/react' : this.inputValue;
-    ctx.fillText(displayText + (placeholder ? '' : cursor), inputX + 30, inputY + 34);
-
-    ctx.textAlign = 'center';
-    ctx.fillStyle = '#6e7681';
-    ctx.font = '11px ui-monospace, Menlo, monospace';
-    ctx.fillText('// or pick a featured repo with TAB', W / 2, 392);
-
-    const chipY = 408;
-    const chipSpacing = 175;
-    const totalW = chipSpacing * FEATURED.length;
-    const startX = W / 2 - totalW / 2 + chipSpacing / 2;
-    FEATURED.forEach((name, i) => {
-      const cx = startX + i * chipSpacing;
-      const selected = i === this.selectedChip;
-      const chipW = 160;
-      const chipH = 28;
-      const cy = chipY;
-      ctx.fillStyle = selected ? 'rgba(35, 134, 54, 0.35)' : 'rgba(22, 27, 34, 0.7)';
-      ctx.fillRect(cx - chipW / 2, cy - chipH / 2, chipW, chipH);
-      ctx.strokeStyle = selected ? '#39d353' : '#30363d';
-      ctx.lineWidth = selected ? 2 : 1;
-      ctx.strokeRect(cx - chipW / 2 + 0.5, cy - chipH / 2 + 0.5, chipW - 1, chipH - 1);
-      ctx.fillStyle = selected ? '#39d353' : '#8b949e';
+    if (!this.touch) {
       ctx.font = '12px ui-monospace, Menlo, monospace';
-      ctx.fillText(name, cx, cy + 4);
-    });
+      ctx.fillStyle = '#8b949e';
+      ctx.textAlign = 'center';
+      ctx.fillText('ENTER A REPO — owner/name', W / 2, 300);
 
-    const btnW = 300;
-    const btnH = 48;
-    const btnX = W / 2 - btnW / 2;
-    const btnY = H - btnH - 38;
+      const inputW = 460;
+      const inputH = 52;
+      const inputX = W / 2 - inputW / 2;
+      const inputY = 314;
 
-    ctx.fillStyle = '#238636';
-    ctx.fillRect(btnX, btnY, btnW, btnH);
-    ctx.fillStyle = `rgba(255, 255, 255, ${0.08 + 0.14 * pulse})`;
-    ctx.fillRect(btnX, btnY, btnW, btnH);
-    ctx.strokeStyle = '#2ea043';
-    ctx.lineWidth = 2;
-    ctx.strokeRect(btnX + 0.5, btnY + 0.5, btnW - 1, btnH - 1);
+      ctx.fillStyle = '#0d1117';
+      ctx.fillRect(inputX, inputY, inputW, inputH);
+      ctx.strokeStyle = `rgba(57, 211, 83, ${0.5 + 0.3 * pulse})`;
+      ctx.lineWidth = 2;
+      ctx.strokeRect(inputX + 1, inputY + 1, inputW - 2, inputH - 2);
 
-    ctx.textBaseline = 'middle';
-    ctx.fillStyle = '#ffffff';
-    ctx.font = 'bold 16px ui-monospace, Menlo, monospace';
-    ctx.fillText('PRESS ENTER TO LAUNCH', W / 2, btnY + btnH / 2 + 1);
-    ctx.textBaseline = 'alphabetic';
+      ctx.fillStyle = '#39d353';
+      ctx.font = '12px ui-monospace, Menlo, monospace';
+      ctx.textAlign = 'left';
+      ctx.fillText('>', inputX + 12, inputY + 32);
+
+      ctx.fillStyle = '#c9d1d9';
+      ctx.font = '22px ui-monospace, Menlo, monospace';
+      const cursor = Math.floor(this.blinkT * 2) % 2 === 0 ? '_' : ' ';
+      const placeholder = this.inputValue === '';
+      ctx.fillStyle = placeholder ? '#484f58' : '#c9d1d9';
+      const displayText = placeholder ? 'facebook/react' : this.inputValue;
+      ctx.fillText(displayText + (placeholder ? '' : cursor), inputX + 30, inputY + 34);
+
+      ctx.textAlign = 'center';
+      ctx.fillStyle = '#6e7681';
+      ctx.font = '11px ui-monospace, Menlo, monospace';
+      ctx.fillText('// or pick a featured repo with TAB', W / 2, 392);
+
+      const chipY = 408;
+      const chipSpacing = 175;
+      const totalW = chipSpacing * FEATURED.length;
+      const startX = W / 2 - totalW / 2 + chipSpacing / 2;
+      FEATURED.forEach((name, i) => {
+        const cx = startX + i * chipSpacing;
+        const selected = i === this.selectedChip;
+        const chipW = 160;
+        const chipH = 28;
+        const cy = chipY;
+        ctx.fillStyle = selected ? 'rgba(35, 134, 54, 0.35)' : 'rgba(22, 27, 34, 0.7)';
+        ctx.fillRect(cx - chipW / 2, cy - chipH / 2, chipW, chipH);
+        ctx.strokeStyle = selected ? '#39d353' : '#30363d';
+        ctx.lineWidth = selected ? 2 : 1;
+        ctx.strokeRect(cx - chipW / 2 + 0.5, cy - chipH / 2 + 0.5, chipW - 1, chipH - 1);
+        ctx.fillStyle = selected ? '#39d353' : '#8b949e';
+        ctx.font = '12px ui-monospace, Menlo, monospace';
+        ctx.fillText(name, cx, cy + 4);
+      });
+
+      const btnW = 300;
+      const btnH = 48;
+      const btnX = W / 2 - btnW / 2;
+      const btnY = H - btnH - 38;
+
+      ctx.fillStyle = '#238636';
+      ctx.fillRect(btnX, btnY, btnW, btnH);
+      ctx.fillStyle = `rgba(255, 255, 255, ${0.08 + 0.14 * pulse})`;
+      ctx.fillRect(btnX, btnY, btnW, btnH);
+      ctx.strokeStyle = '#2ea043';
+      ctx.lineWidth = 2;
+      ctx.strokeRect(btnX + 0.5, btnY + 0.5, btnW - 1, btnH - 1);
+
+      ctx.textBaseline = 'middle';
+      ctx.fillStyle = '#ffffff';
+      ctx.font = 'bold 16px ui-monospace, Menlo, monospace';
+      ctx.fillText('PRESS ENTER TO LAUNCH', W / 2, btnY + btnH / 2 + 1);
+      ctx.textBaseline = 'alphabetic';
+    }
 
     this.renderer.endFrame();
   }
