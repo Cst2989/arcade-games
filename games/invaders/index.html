@@ -130,9 +130,35 @@
       @media (max-width: 720px) {
         #cta-follow { font-size: 11px; padding: 8px 12px; top: 10px; right: 10px; }
       }
+
+      #rotate-prompt {
+        display: none;
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        background: #0d1117;
+        color: #c9d1d9;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 16px;
+        font: 16px ui-monospace, Menlo, monospace;
+        text-align: center;
+        padding: 24px;
+      }
+      #rotate-prompt .rotate-icon { font-size: 48px; }
+      @media (orientation: portrait) and (max-width: 900px) {
+        #rotate-prompt { display: flex; }
+      }
     </style>
   </head>
   <body>
+    <div id="rotate-prompt">
+      <div class="rotate-icon">&#x1F4F1;&#x21BB;</div>
+      <div>Rotate your device to<br><strong>landscape mode</strong></div>
+      <div style="color: #8b949e; font-size: 12px;">This game is best played horizontally</div>
+    </div>
+
     <canvas id="game" width="960" height="600"></canvas>
 
     <a id="cta-follow"

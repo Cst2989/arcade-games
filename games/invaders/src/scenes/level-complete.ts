@@ -153,10 +153,16 @@ export class LevelCompleteScene extends Scene {
     this.renderer.main.canvas.style.cursor = '';
   };
 
-  private onMouseDown = (e: MouseEvent) => {
+  private onMouseDown = (e: MouseEvent | PointerEvent) => {
     if (e.button !== 0) return;
     if (this.elapsed < 0.4) return;
-    const key = this.hitTest(this.mouseX, this.mouseY);
+    const canvas = this.renderer.main.canvas;
+    const rect = canvas.getBoundingClientRect();
+    const scaleX = canvas.width / rect.width;
+    const scaleY = canvas.height / rect.height;
+    const x = (e.clientX - rect.left) * scaleX;
+    const y = (e.clientY - rect.top) * scaleY;
+    const key = this.hitTest(x, y);
     if (!key) return;
     if (key === 'x') this.shareOn('x');
     else if (key === 'bsky') this.shareOn('bsky');
