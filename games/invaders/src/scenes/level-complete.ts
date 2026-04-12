@@ -52,9 +52,9 @@ export class LevelCompleteScene extends Scene {
   override onEnter(): void {
     window.addEventListener('keydown', this.onKey);
     const canvas = this.renderer.main.canvas;
-    canvas.addEventListener('mousemove', this.onMouseMove);
-    canvas.addEventListener('mousedown', this.onMouseDown);
-    canvas.addEventListener('mouseleave', this.onMouseLeave);
+    canvas.addEventListener('pointermove', this.onMouseMove as EventListener);
+    canvas.addEventListener('pointerdown', this.onMouseDown as EventListener);
+    canvas.addEventListener('pointerleave', this.onMouseLeave as EventListener);
     this.sfx.play('level_complete', { volume: 0.9 });
     this.spawnBurst(60);
   }
@@ -62,9 +62,9 @@ export class LevelCompleteScene extends Scene {
   override onExit(): void {
     window.removeEventListener('keydown', this.onKey);
     const canvas = this.renderer.main.canvas;
-    canvas.removeEventListener('mousemove', this.onMouseMove);
-    canvas.removeEventListener('mousedown', this.onMouseDown);
-    canvas.removeEventListener('mouseleave', this.onMouseLeave);
+    canvas.removeEventListener('pointermove', this.onMouseMove as EventListener);
+    canvas.removeEventListener('pointerdown', this.onMouseDown as EventListener);
+    canvas.removeEventListener('pointerleave', this.onMouseLeave as EventListener);
     canvas.style.cursor = '';
   }
 

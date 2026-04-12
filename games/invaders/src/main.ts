@@ -27,6 +27,10 @@ import { VictoryScene } from './scenes/victory.js';
 import { PauseScene } from './scenes/pause.js';
 import { GameOverScene } from './scenes/game-over.js';
 import { LevelCompleteScene } from './scenes/level-complete.js';
+import { CanvasScaler } from './ui/canvas-scaler.js';
+import { TouchControls } from './ui/touch-controls.js';
+import { TouchMenuOverlays } from './ui/touch-menu.js';
+import { isTouchDevice } from './ui/touch-detect.js';
 
 const BASE = import.meta.env.BASE_URL;
 const assetUrl = (p: string) => `${BASE}${p.replace(/^\/+/, '')}`;
@@ -43,6 +47,21 @@ function loadImage(url: string): Promise<HTMLImageElement> {
 
 const canvas = document.getElementById('game') as HTMLCanvasElement;
 const renderer = new Renderer(canvas);
+const scaler = new CanvasScaler(canvas);
+const touch = isTouchDevice();
+const touchControls = touch ? new TouchControls(scaler) : null;
+const touchMenu = touch ? new TouchMenuOverlays(scaler) : null;
+if (touchControls) touchControls.mount();
+
+window.addEventListener('resize', () => {
+  touchControls?.reposition();
+  touchMenu?.reposition();
+});
+window.addEventListener('orientationchange', () => {
+  touchControls?.reposition();
+  touchMenu?.reposition();
+});
+
 const gameLoop = new GameLoop({ fixedDt: BALANCE.fixedDt, maxStepsPerFrame: 5 });
 const kb = new Keyboard();
 kb.attach(window);
@@ -145,10 +164,11 @@ async function boot(): Promise<void> {
       sfx,
       audio,
       () => startGame(deepLink),
+      touch,
     );
     sceneManager.push(intro);
   } else {
-    const title = new TitleScene(renderer, particles.stars, (repo) => startGame(repo), audio);
+    const title = new TitleScene(renderer, particles.stars, (repo) => startGame(repo), audio, touch, touchMenu);
     sceneManager.push(title);
   }
 
@@ -310,14 +330,14 @@ function launchLevel(
               stats.levelsCompleted += 1;
               const victory = new VictoryScene(renderer, repoFullName, stats, levels, () => {
                 sceneManager.clear();
-                sceneManager.push(new TitleScene(renderer, particles.stars, (r) => startGame(r), audio));
-              });
+                sceneManager.push(new TitleScene(renderer, particles.stars, (r) => startGame(r), audio, touch, touchMenu));
+              }, touch);
               sceneManager.replace(victory);
             },
             (score, wave) => {
               const over = new GameOverScene(renderer, score, wave, sfx, () => {
                 launchLevel(levelIndex, levels, ranks, repoFullName, stats);
-              });
+              }, touch);
               sceneManager.replace(over);
             },
           );
@@ -342,13 +362,14 @@ function launchLevel(
         (score, wave) => {
           const over = new GameOverScene(renderer, score, wave, sfx, () => {
             launchLevel(levelIndex, levels, ranks, repoFullName, stats);
-          });
+          }, touch);
           sceneManager.replace(over);
         },
       );
       currentScene = gameplay;
       sceneManager.replace(gameplay);
     },
+    touch,
   );
   sceneManager.replace(intro);
 }
@@ -387,7 +408,7 @@ window.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') {
     const top = sceneManager.top();
     if (top instanceof GameplayScene || top instanceof BossScene) {
-      sceneManager.push(new PauseScene(renderer, gameLoop, () => sceneManager.pop()));
+      sceneManager.push(new PauseScene(renderer, gameLoop, () => sceneManager.pop(), touch));
     }
   }
 });

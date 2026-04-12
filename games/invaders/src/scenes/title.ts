@@ -1,5 +1,6 @@
 import { Scene, AmbientMusic } from '@osi/engine';
 import type { Renderer, ParticleEmitter, AudioBus } from '@osi/engine';
+import type { TouchMenuOverlays } from '../ui/touch-menu.js';
 import { BALANCE } from '../config/balance.js';
 import { drawBrandHeader } from '../ui/brand.js';
 
@@ -17,6 +18,8 @@ export class TitleScene extends Scene {
     private stars: ParticleEmitter,
     private onStart: (repo: string) => void,
     private audio?: AudioBus,
+    private touch = false,
+    private touchMenu?: TouchMenuOverlays | null,
   ) {
     super();
   }
@@ -38,6 +41,11 @@ export class TitleScene extends Scene {
       this.music = music;
       this.audio.onUnlocked(() => music.start('welcoming', { volume: 0.32 }));
     }
+    this.touchMenu?.mountTitle({
+      onStart: (repo) => this.onStart(repo),
+      getInput: () => this.inputValue,
+      setInput: (v) => { this.inputValue = v; },
+    });
   }
 
   override onExit(): void {
@@ -47,6 +55,7 @@ export class TitleScene extends Scene {
       this.music.stop();
       this.music = null;
     }
+    this.touchMenu?.unmountTitle();
   }
 
   private sanitizeRepoInput(raw: string): string {
