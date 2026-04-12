@@ -392,7 +392,7 @@ export function mountSharePanel(opts: SharePanelOptions): void {
   ensureStyle();
   document.getElementById(PANEL_ID)?.remove();
 
-  const pageUrl = opts.pageUrl ?? (typeof window !== 'undefined' ? window.location.href : '');
+  const pageUrl = opts.pageUrl ?? `https://os-invaders.com?repo=${encodeURIComponent(opts.repoName)}`;
   const intents = buildIntentUrls(opts, pageUrl);
   const shareText = buildShareText(opts);
 

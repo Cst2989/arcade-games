@@ -1,0 +1,180 @@
+<!doctype html>
+<html>
+<head>
+<title>OG Image Generator</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=block" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; }
+  body { background: #000; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+  canvas { display: block; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1200" height="630"></canvas>
+<script>
+const FONT = '"JetBrains Mono", "Courier New", monospace';
+
+document.fonts.ready.then(() => {
+const W = 1200, H = 630;
+const canvas = document.getElementById('c');
+const ctx = canvas.getContext('2d');
+
+// Background
+ctx.fillStyle = '#0d1117';
+ctx.fillRect(0, 0, W, H);
+
+// Contribution grid background
+const shades = ['#161b22', '#0e4429', '#006d32', '#26a641', '#39d353'];
+const cell = 14, gap = 3;
+ctx.globalAlpha = 0.2;
+for (let y = 0; y < H; y += cell + gap) {
+  for (let x = 0; x < W; x += cell + gap) {
+    const i = Math.floor(Math.random() * 7);
+    ctx.fillStyle = i < 5 ? shades[i] : '#161b22';
+    ctx.fillRect(x, y, cell, cell);
+  }
+}
+ctx.globalAlpha = 1;
+
+// Darken overlay
+ctx.fillStyle = 'rgba(13, 17, 23, 0.5)';
+ctx.fillRect(0, 0, W, H);
+
+// Radial glow
+const grad = ctx.createRadialGradient(W/2, H/2 - 60, 40, W/2, H/2, W * 0.55);
+grad.addColorStop(0, 'rgba(57, 211, 83, 0.18)');
+grad.addColorStop(1, 'rgba(13, 17, 23, 0)');
+ctx.fillStyle = grad;
+ctx.fillRect(0, 0, W, H);
+
+// Border
+ctx.strokeStyle = '#2ea043';
+ctx.lineWidth = 4;
+ctx.strokeRect(18, 18, W - 36, H - 36);
+
+// Green alien (pixel art) - centered top
+const invaderPattern = [
+  '  #    #  ',
+  '   #  #   ',
+  '  ######  ',
+  ' ## ## ## ',
+  '##########',
+  '# ###### #',
+  '# #    # #',
+  '   ## ##  ',
+];
+const pixelSize = 8;
+const invW = invaderPattern[0].length;
+const invH = invaderPattern.length;
+const invOx = W/2 - (invW * pixelSize) / 2;
+const invOy = 52;
+ctx.fillStyle = '#39d353';
+ctx.shadowColor = 'rgba(57, 211, 83, 0.7)';
+ctx.shadowBlur = 24;
+for (let y = 0; y < invH; y++) {
+  for (let x = 0; x < invW; x++) {
+    if (invaderPattern[y][x] === '#') {
+      ctx.fillRect(invOx + x * pixelSize, invOy + y * pixelSize, pixelSize, pixelSize);
+    }
+  }
+}
+ctx.shadowBlur = 0;
+
+// Title
+ctx.textAlign = 'center';
+ctx.fillStyle = '#39d353';
+ctx.font = `bold 54px ${FONT}`;
+ctx.shadowColor = 'rgba(57, 211, 83, 0.5)';
+ctx.shadowBlur = 20;
+ctx.fillText('OPEN SOURCE INVADERS', W/2, 196);
+ctx.shadowBlur = 0;
+
+// Tagline
+ctx.fillStyle = '#8b949e';
+ctx.font = `20px ${FONT}`;
+ctx.fillText('turn any GitHub repo into an arcade battle', W/2, 234);
+
+// Enemy rows (small invaders) - 3 rows
+const miniInvader = [
+  ' # # ',
+  '#####',
+  '# # #',
+  ' # # ',
+];
+const miniPixel = 4;
+const enemyColors = ['#39d353', '#26a641', '#006d32'];
+const enemyRows = 3;
+const enemiesPerRow = 9;
+const enemySpacing = 110;
+const enemyStartX = W/2 - ((enemiesPerRow - 1) * enemySpacing) / 2;
+
+for (let row = 0; row < enemyRows; row++) {
+  const ey = 282 + row * 52;
+  ctx.fillStyle = enemyColors[row];
+  ctx.shadowColor = enemyColors[row];
+  ctx.shadowBlur = 6;
+  for (let col = 0; col < enemiesPerRow; col++) {
+    const ex = enemyStartX + col * enemySpacing;
+    const mW = miniInvader[0].length;
+    const mH = miniInvader.length;
+    const mOx = ex - (mW * miniPixel) / 2;
+    const mOy = ey - (mH * miniPixel) / 2;
+    for (let y = 0; y < mH; y++) {
+      for (let x = 0; x < mW; x++) {
+        if (miniInvader[y][x] === '#') {
+          ctx.fillRect(mOx + x * miniPixel, mOy + y * miniPixel, miniPixel, miniPixel);
+        }
+      }
+    }
+  }
+}
+ctx.shadowBlur = 0;
+
+// Ship (pixel art) - bottom center
+const shipPattern = [
+  '    #    ',
+  '   ###   ',
+  '   ###   ',
+  '  #####  ',
+  ' ####### ',
+  '## ### ##',
+  '## ### ##',
+  '#########',
+  ' # # # # ',
+];
+const shipPixel = 5;
+const shipW = shipPattern[0].length;
+const shipH = shipPattern.length;
+const shipOx = W/2 - (shipW * shipPixel) / 2;
+const shipOy = 500;
+ctx.fillStyle = '#58a6ff';
+ctx.shadowColor = 'rgba(88, 166, 255, 0.6)';
+ctx.shadowBlur = 14;
+for (let y = 0; y < shipH; y++) {
+  for (let x = 0; x < shipW; x++) {
+    if (shipPattern[y][x] === '#') {
+      ctx.fillRect(shipOx + x * shipPixel, shipOy + y * shipPixel, shipPixel, shipPixel);
+    }
+  }
+}
+ctx.shadowBlur = 0;
+
+// Bullets from ship
+ctx.fillStyle = '#58a6ff';
+ctx.shadowColor = 'rgba(88, 166, 255, 0.9)';
+ctx.shadowBlur = 10;
+ctx.fillRect(W/2 - 2, 458, 4, 38);
+ctx.shadowBlur = 0;
+
+// URL at bottom
+ctx.fillStyle = '#6e7681';
+ctx.font = `bold 16px ${FONT}`;
+ctx.fillText('os-invaders.com', W/2, H - 34);
+
+// Signal ready
+window.__ogReady = true;
+});
+</script>
+</body>
+</html>

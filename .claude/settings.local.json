@@ -48,7 +48,10 @@
       "Bash(netlify deploy:*)",
       "Bash(pnpm:*)",
       "Bash(npx tsc:*)",
-      "Bash(echo \"EXIT: $?\")"
+      "Bash(echo \"EXIT: $?\")",
+      "mcp__plugin_playwright_playwright__browser_run_code",
+      "Bash(node -e \"try { require\\('canvas'\\); console.log\\('canvas available'\\); } catch { console.log\\('no canvas module'\\); }\")",
+      "Bash(npm install:*)"
     ]
   }
 }
