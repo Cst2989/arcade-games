@@ -7,7 +7,7 @@ export class CanvasScaler {
     this.resize();
     window.addEventListener('resize', this.resize);
     window.addEventListener('orientationchange', this.resize);
-    (screen.orientation as any)?.lock('landscape').catch(() => {});
+    try { (screen.orientation as any)?.lock?.('landscape'); } catch { /* unsupported */ }
   }
 
   getRect(): { left: number; top: number; width: number; height: number } {
