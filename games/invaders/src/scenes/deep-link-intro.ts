@@ -82,8 +82,8 @@ export class DeepLinkIntroScene extends Scene {
     const btnY = H - btnH - 40;
 
     const btn = document.createElement('button');
-    btn.textContent = 'TAP TO START';
-    btn.style.cssText = `position:absolute;pointer-events:auto;touch-action:manipulation;width:${btnW}px;height:${btnH}px;background:#da3633;border:2px solid #f85149;color:#fff;font:bold 18px ui-monospace,Menlo,monospace;padding:0;z-index:10;-webkit-tap-highlight-color:transparent;transform-origin:top left;`;
+    btn.textContent = '';
+    btn.style.cssText = `position:absolute;pointer-events:auto;touch-action:manipulation;width:${btnW}px;height:${btnH}px;background:transparent;border:none;color:transparent;padding:0;z-index:10;-webkit-tap-highlight-color:transparent;transform-origin:top left;opacity:0.01;`;
     btn.addEventListener('pointerdown', (e) => {
       e.preventDefault();
       if (this.elapsed < 0.4 || this.fired) return;
@@ -172,26 +172,24 @@ export class DeepLinkIntroScene extends Scene {
     ctx.font = 'italic 20px ui-monospace, Menlo, monospace';
     ctx.fillText('are you ready?', W / 2, 396);
 
-    if (!this.touch) {
-      const btnW = 340;
-      const btnH = 54;
-      const btnX = W / 2 - btnW / 2;
-      const btnY = H - btnH - 40;
+    const btnW = 340;
+    const btnH = 54;
+    const btnX = W / 2 - btnW / 2;
+    const btnY = H - btnH - 40;
 
-      ctx.fillStyle = '#da3633';
-      ctx.fillRect(btnX, btnY, btnW, btnH);
-      ctx.fillStyle = `rgba(255, 255, 255, ${0.08 + 0.12 * pulse})`;
-      ctx.fillRect(btnX, btnY, btnW, btnH);
-      ctx.strokeStyle = '#f85149';
-      ctx.lineWidth = 2;
-      ctx.strokeRect(btnX + 0.5, btnY + 0.5, btnW - 1, btnH - 1);
+    ctx.fillStyle = '#da3633';
+    ctx.fillRect(btnX, btnY, btnW, btnH);
+    ctx.fillStyle = `rgba(255, 255, 255, ${0.08 + 0.12 * pulse})`;
+    ctx.fillRect(btnX, btnY, btnW, btnH);
+    ctx.strokeStyle = '#f85149';
+    ctx.lineWidth = 2;
+    ctx.strokeRect(btnX + 0.5, btnY + 0.5, btnW - 1, btnH - 1);
 
-      ctx.textBaseline = 'middle';
-      ctx.fillStyle = '#ffffff';
-      ctx.font = 'bold 18px ui-monospace, Menlo, monospace';
-      ctx.fillText('PRESS ENTER TO START', W / 2, btnY + btnH / 2 + 1);
-      ctx.textBaseline = 'alphabetic';
-    }
+    ctx.textBaseline = 'middle';
+    ctx.fillStyle = '#ffffff';
+    ctx.font = 'bold 18px ui-monospace, Menlo, monospace';
+    ctx.fillText(this.touch ? 'TAP TO START' : 'PRESS ENTER TO START', W / 2, btnY + btnH / 2 + 1);
+    ctx.textBaseline = 'alphabetic';
 
     this.renderer.endFrame();
   }
