@@ -67,6 +67,7 @@ export class TouchControls {
     btn.style.width = `${def.width}px`;
     btn.style.height = `${def.height}px`;
 
+    btn.addEventListener('touchstart', (e) => e.preventDefault(), { passive: false });
     btn.addEventListener('pointerdown', (e) => {
       e.preventDefault();
       btn.setPointerCapture(e.pointerId);

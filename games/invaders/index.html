@@ -107,16 +107,19 @@
         pointer-events: auto;
         touch-action: none;
         -webkit-tap-highlight-color: transparent;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        user-select: none;
         background: rgba(201, 209, 217, 0.15);
         border: 2px solid #30363d;
         border-radius: 8px;
         color: #ffffff;
         font: bold 14px ui-monospace, Menlo, monospace;
         opacity: 0.45;
-        user-select: none;
         padding: 0;
         outline: none;
       }
+      body.osi-in-game { touch-action: none; -webkit-user-select: none; user-select: none; }
       body.osi-in-game #touch-controls { display: flex; }
 
       .touch-menu-overlay {
