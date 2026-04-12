@@ -1,4 +1,5 @@
 import type { ContributorProfile } from '../data/contributor-profile.js';
+import { isTouchDevice } from './touch-detect.js';
 
 export interface KillStats {
   defeated: number;
@@ -13,6 +14,12 @@ const PAD_X = 22;
 const PAD_Y = 20;
 const CONTENT_X = PANEL_X + PAD_X;
 const CONTENT_W = PANEL_W - PAD_X * 2;
+
+const M_PANEL_W = 200;
+const M_PANEL_H = 180;
+const M_PAD_X = 12;
+const M_CONTENT_X = PANEL_X + M_PAD_X;
+const M_CONTENT_W = M_PANEL_W - M_PAD_X * 2;
 
 function truncate(ctx: CanvasRenderingContext2D, text: string, maxW: number): string {
   if (ctx.measureText(text).width <= maxW) return text;
@@ -148,6 +155,10 @@ export function drawContributorPanel(
   profile: ContributorProfile,
   kills: KillStats,
 ): void {
+  if (isTouchDevice()) {
+    drawContributorPanelMobile(ctx, profile, kills);
+    return;
+  }
   ctx.save();
   ctx.fillStyle = 'rgba(22, 27, 34, 0.70)';
   ctx.fillRect(PANEL_X, PANEL_Y, PANEL_W, PANEL_H);
@@ -236,6 +247,60 @@ export function drawContributorPanel(
   ctx.fillStyle = '#8b949e';
   ctx.textAlign = 'right';
   ctx.fillText(`${Math.round(pct * 100)}%`, col1 + CONTENT_W, barY + 22);
+
+  ctx.restore();
+}
+
+function drawContributorPanelMobile(
+  ctx: CanvasRenderingContext2D,
+  profile: ContributorProfile,
+  kills: KillStats,
+): void {
+  ctx.save();
+  ctx.fillStyle = 'rgba(22, 27, 34, 0.70)';
+  ctx.fillRect(PANEL_X, PANEL_Y, M_PANEL_W, M_PANEL_H);
+  ctx.strokeStyle = '#30363d';
+  ctx.lineWidth = 1;
+  ctx.strokeRect(PANEL_X, PANEL_Y, M_PANEL_W, M_PANEL_H);
+
+  let y = PANEL_Y + 14;
+
+  ctx.textAlign = 'left';
+  ctx.textBaseline = 'alphabetic';
+
+  drawAvatar(ctx, M_CONTENT_X + 14, y + 18, 14, profile.login, profile.avatarImage);
+
+  ctx.fillStyle = '#c9d1d9';
+  ctx.font = 'bold 13px ui-monospace, Menlo, monospace';
+  ctx.fillText(truncate(ctx, `@${profile.login}`, M_CONTENT_W - 38), M_CONTENT_X + 36, y + 16);
+  ctx.fillStyle = '#6e7681';
+  ctx.font = '10px ui-monospace, Menlo, monospace';
+  ctx.fillText(truncate(ctx, profile.bio, M_CONTENT_W - 38), M_CONTENT_X + 36, y + 30);
+
+  y += 50;
+  drawStatRow(ctx, M_CONTENT_X, y, 'COMMITS', profile.totalCommits.toLocaleString(), '#39d353');
+  drawStatRow(ctx, M_CONTENT_X + Math.floor(M_CONTENT_W / 2), y, 'STREAK', `${profile.longestStreak}d`);
+
+  y += 42;
+  ctx.textAlign = 'left';
+  ctx.fillStyle = '#8b949e';
+  ctx.font = '10px ui-monospace, Menlo, monospace';
+  ctx.fillText('KILL COUNT', M_CONTENT_X, y);
+
+  const pct = kills.total > 0 ? kills.defeated / kills.total : 0;
+  const barY = y + 8;
+  ctx.fillStyle = '#21262d';
+  ctx.fillRect(M_CONTENT_X, barY, M_CONTENT_W, 6);
+  ctx.fillStyle = '#f85149';
+  ctx.fillRect(M_CONTENT_X, barY, Math.round(M_CONTENT_W * pct), 6);
+
+  ctx.font = '10px ui-monospace, Menlo, monospace';
+  ctx.fillStyle = '#c9d1d9';
+  ctx.textAlign = 'left';
+  ctx.fillText(`${kills.defeated}/${kills.total}`, M_CONTENT_X, barY + 18);
+  ctx.fillStyle = '#8b949e';
+  ctx.textAlign = 'right';
+  ctx.fillText(`${Math.round(pct * 100)}%`, M_CONTENT_X + M_CONTENT_W, barY + 18);
 
   ctx.restore();
 }

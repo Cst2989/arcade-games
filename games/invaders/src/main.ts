@@ -404,13 +404,22 @@ function onLevelCleared(
   sceneManager.replace(complete);
 }
 
-window.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape') {
-    const top = sceneManager.top();
-    if (top instanceof GameplayScene || top instanceof BossScene) {
-      sceneManager.push(new PauseScene(renderer, gameLoop, () => sceneManager.pop(), touch));
-    }
+function pauseIfPlaying(): void {
+  const top = sceneManager.top();
+  if (top instanceof GameplayScene || top instanceof BossScene) {
+    sceneManager.push(new PauseScene(renderer, gameLoop, () => sceneManager.pop(), touch));
   }
+}
+
+window.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') pauseIfPlaying();
 });
+
+if (touch) {
+  const mql = window.matchMedia('(orientation: portrait)');
+  mql.addEventListener('change', (e) => {
+    if (e.matches) pauseIfPlaying();
+  });
+}
 
 void boot();

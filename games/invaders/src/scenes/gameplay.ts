@@ -7,6 +7,7 @@ import {
   Position, SpriteRef, Health, Player, Powerup, Collider, Enemy, Bullet,
 } from '../components/index.js';
 import { BALANCE } from '../config/balance.js';
+import { isTouchDevice } from '../ui/touch-detect.js';
 import { SHIP_TIERS } from '../config/ships.js';
 
 import { inputSystem } from '../systems/input.js';
@@ -252,7 +253,7 @@ export class GameplayScene extends Scene {
     const defeated = Math.max(0, total - unspawned - aliveNow);
     drawContributorPanel(main, this.ctx.level.profile, { defeated, total });
 
-    drawInstructions(main, this.atlas);
+    if (!isTouchDevice()) drawInstructions(main, this.atlas);
     if (this.ctx.state.chaosActive?.kind === 'CI_FAILED') {
       main.fillStyle = 'rgba(248, 81, 73, 0.10)';
       main.fillRect(0, 0, BALANCE.viewportWidth, BALANCE.viewportHeight);
