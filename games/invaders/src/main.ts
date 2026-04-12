@@ -30,6 +30,7 @@ import { LevelCompleteScene } from './scenes/level-complete.js';
 import { CanvasScaler } from './ui/canvas-scaler.js';
 import { TouchControls } from './ui/touch-controls.js';
 import { isTouchDevice } from './ui/touch-detect.js';
+import { trackGameStart, trackLevelComplete, trackBossDefeated, trackGameOver, trackVictory } from './ui/analytics.js';
 
 const BASE = import.meta.env.BASE_URL;
 const assetUrl = (p: string) => `${BASE}${p.replace(/^\/+/, '')}`;
@@ -176,6 +177,7 @@ async function boot(): Promise<void> {
 }
 
 function startGame(repoFullName: string): void {
+  trackGameStart(repoFullName);
   const loading = new LoadingScene(renderer, atlas, particles.stars, kb);
   sceneManager.replace(loading);
   void loadRealRepo(repoFullName, loading).catch((err) => {
@@ -328,6 +330,8 @@ function launchLevel(
               const levelScore = bossRef?.ctx.state.score ?? 0;
               stats.totalScore += levelScore;
               stats.levelsCompleted += 1;
+              trackBossDefeated(repoFullName, stats.totalScore);
+              trackVictory(repoFullName, stats.totalScore);
               const victory = new VictoryScene(renderer, repoFullName, stats, levels, () => {
                 sceneManager.clear();
                 sceneManager.push(new TitleScene(renderer, particles.stars, (r) => startGame(r), audio, touch));
@@ -335,6 +339,7 @@ function launchLevel(
               sceneManager.replace(victory);
             },
             (score, wave) => {
+              trackGameOver(repoFullName, levelIndex, score);
               const over = new GameOverScene(renderer, score, wave, sfx, () => {
                 launchLevel(levelIndex, levels, ranks, repoFullName, stats);
               }, touch);
@@ -360,6 +365,7 @@ function launchLevel(
           currentScene?.ctx.state.score ?? 0,
         ),
         (score, wave) => {
+          trackGameOver(repoFullName, levelIndex, score);
           const over = new GameOverScene(renderer, score, wave, sfx, () => {
             launchLevel(levelIndex, levels, ranks, repoFullName, stats);
           }, touch);
@@ -385,6 +391,7 @@ function onLevelCleared(
   sfx.play('level_up');
   stats.totalScore += levelScore;
   stats.levelsCompleted += 1;
+  trackLevelComplete(repoFullName, levelIndex + 1, stats.totalScore);
   const level = levels[levelIndex]!;
   const nextIndex = levelIndex + 1;
   const isBossNext = nextIndex === levels.length - 1;

@@ -1,3 +1,5 @@
+import { trackShare } from './analytics.js';
+
 export interface ShareContributor {
   login: string;
   avatarImage?: HTMLImageElement;
@@ -352,19 +354,23 @@ function buildShareText(opts: SharePanelOptions): string {
 
 function buildIntentUrls(
   opts: SharePanelOptions,
-  pageUrl: string,
+  baseUrl: string,
 ): { twitter: string; bluesky: string; linkedin: string } {
   const text = buildShareText(opts);
+  const sep = baseUrl.includes('?') ? '&' : '?';
+  const twitterUrl = `${baseUrl}${sep}utm_source=twitter&utm_medium=social&utm_campaign=share`;
+  const blueskyUrl = `${baseUrl}${sep}utm_source=bluesky&utm_medium=social&utm_campaign=share`;
+  const linkedinUrl = `${baseUrl}${sep}utm_source=linkedin&utm_medium=social&utm_campaign=share`;
   const twitter =
     'https://twitter.com/intent/tweet' +
     `?text=${encodeURIComponent(text)}` +
-    `&url=${encodeURIComponent(pageUrl)}`;
+    `&url=${encodeURIComponent(twitterUrl)}`;
   const bluesky =
     'https://bsky.app/intent/compose' +
-    `?text=${encodeURIComponent(text + ' ' + pageUrl)}`;
+    `?text=${encodeURIComponent(text + ' ' + blueskyUrl)}`;
   const linkedin =
     'https://www.linkedin.com/sharing/share-offsite/' +
-    `?url=${encodeURIComponent(pageUrl)}`;
+    `?url=${encodeURIComponent(linkedinUrl)}`;
   return { twitter, bluesky, linkedin };
 }
 
@@ -392,9 +398,10 @@ export function mountSharePanel(opts: SharePanelOptions): void {
   ensureStyle();
   document.getElementById(PANEL_ID)?.remove();
 
-  const pageUrl = opts.pageUrl ?? `https://os-invaders.com?repo=${encodeURIComponent(opts.repoName)}`;
-  const intents = buildIntentUrls(opts, pageUrl);
+  const baseUrl = opts.pageUrl ?? `https://os-invaders.com?repo=${encodeURIComponent(opts.repoName)}`;
+  const intents = buildIntentUrls(opts, baseUrl);
   const shareText = buildShareText(opts);
+  const pageUrl = `${baseUrl}${baseUrl.includes('?') ? '&' : '?'}utm_source=copy&utm_medium=link&utm_campaign=share`;
 
   const canvas = renderShareImage(opts);
   const dataUrl = (() => {
@@ -417,6 +424,7 @@ export function mountSharePanel(opts: SharePanelOptions): void {
     textContent: 'TWEET  →',
   });
   twitterLink.classList.add('osi-btn-primary');
+  twitterLink.addEventListener('click', () => trackShare(opts.repoName, 'twitter'));
 
   const blueskyLink = el('a', {
     href: intents.bluesky,
@@ -424,12 +432,14 @@ export function mountSharePanel(opts: SharePanelOptions): void {
     rel: 'noopener noreferrer',
     textContent: 'BLUESKY  →',
   });
+  blueskyLink.addEventListener('click', () => trackShare(opts.repoName, 'bluesky'));
   const linkedinLink = el('a', {
     href: intents.linkedin,
     target: '_blank',
     rel: 'noopener noreferrer',
     textContent: 'LINKEDIN  →',
   });
+  linkedinLink.addEventListener('click', () => trackShare(opts.repoName, 'linkedin'));
 
   const downloadBtn = el('button', { type: 'button', textContent: 'DOWNLOAD PNG' });
   const copyImgBtn = el('button', { type: 'button', textContent: 'COPY IMAGE' });
@@ -464,6 +474,7 @@ export function mountSharePanel(opts: SharePanelOptions): void {
   const root = el('div', { id: PANEL_ID }, [card]);
 
   downloadBtn.onclick = async () => {
+    trackShare(opts.repoName, 'download');
     const blob = await canvasToBlob(canvas);
     const href = blob ? URL.createObjectURL(blob) : dataUrl;
     if (!href) return;
@@ -479,6 +490,7 @@ export function mountSharePanel(opts: SharePanelOptions): void {
   };
 
   copyImgBtn.onclick = async () => {
+    trackShare(opts.repoName, 'copy_image');
     try {
       const blob = await canvasToBlob(canvas);
       if (!blob) throw new Error('no blob');
@@ -493,6 +505,7 @@ export function mountSharePanel(opts: SharePanelOptions): void {
   };
 
   copyLinkBtn.onclick = async () => {
+    trackShare(opts.repoName, 'copy_link');
     try {
       await navigator.clipboard.writeText(`${shareText}\n${pageUrl}`);
       showToast(root, 'LINK COPIED');
