@@ -12,6 +12,7 @@ export class GameOverScene extends Scene {
     private waveReached: number,
     private sfx: Sfx,
     private onRestart: () => void,
+    private touch = false,
   ) {
     super();
   }
@@ -19,11 +20,13 @@ export class GameOverScene extends Scene {
   override onEnter(): void {
     setInGame(false);
     window.addEventListener('keydown', this.onKey);
+    if (this.touch) window.addEventListener('pointerdown', this.onTap);
     this.sfx.play('game_over', { volume: 0.8 });
   }
 
   override onExit(): void {
     window.removeEventListener('keydown', this.onKey);
+    window.removeEventListener('pointerdown', this.onTap);
   }
 
   override update(dt: number): void {
@@ -32,6 +35,10 @@ export class GameOverScene extends Scene {
 
   private onKey = (e: KeyboardEvent) => {
     if (e.key === 'Enter' || e.key === ' ') this.onRestart();
+  };
+
+  private onTap = (_e: PointerEvent) => {
+    this.onRestart();
   };
 
   override render(): void {
@@ -59,7 +66,7 @@ export class GameOverScene extends Scene {
     const pulse = 0.5 + 0.5 * Math.sin(this.elapsed * 2.4);
     ctx.fillStyle = `rgba(57, 211, 83, ${0.75 + 0.25 * pulse})`;
     ctx.font = 'bold 18px ui-monospace, Menlo, monospace';
-    ctx.fillText('press ENTER to retry', W / 2, 380);
+    ctx.fillText(this.touch ? 'TAP TO RETRY' : 'press ENTER to retry', W / 2, 380);
 
     this.renderer.endFrame();
   }

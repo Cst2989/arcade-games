@@ -14,16 +14,19 @@ export class LevelIntroScene extends Scene {
     private profile: ContributorProfile,
     private isBossLevel: boolean,
     private onLaunch: () => void,
+    private touch = false,
   ) {
     super();
   }
 
   override onEnter(): void {
     window.addEventListener('keydown', this.onKey);
+    if (this.touch) window.addEventListener('pointerdown', this.onTap);
   }
 
   override onExit(): void {
     window.removeEventListener('keydown', this.onKey);
+    window.removeEventListener('pointerdown', this.onTap);
   }
 
   override update(dt: number): void {
@@ -37,6 +40,14 @@ export class LevelIntroScene extends Scene {
       this.fired = true;
       this.onLaunch();
     }
+  };
+
+  private onTap = (e: PointerEvent) => {
+    if (this.elapsed < 0.25 || this.fired) return;
+    if ((e.target as HTMLElement)?.closest('#touch-controls')) return;
+    e.preventDefault();
+    this.fired = true;
+    this.onLaunch();
   };
 
   override render(): void {
@@ -185,7 +196,9 @@ export class LevelIntroScene extends Scene {
     ctx.textBaseline = 'middle';
     ctx.fillStyle = '#ffffff';
     ctx.font = 'bold 16px ui-monospace, Menlo, monospace';
-    const prompt = this.isBossLevel ? 'PRESS SPACE TO CONFRONT' : 'PRESS SPACE TO ENGAGE';
+    const prompt = this.touch
+      ? (this.isBossLevel ? 'TAP TO CONFRONT' : 'TAP TO ENGAGE')
+      : (this.isBossLevel ? 'PRESS SPACE TO CONFRONT' : 'PRESS SPACE TO ENGAGE');
     ctx.fillText(prompt, W / 2, btnY + btnH / 2 + 1);
     ctx.textBaseline = 'alphabetic';
 

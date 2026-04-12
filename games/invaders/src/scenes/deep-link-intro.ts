@@ -15,12 +15,14 @@ export class DeepLinkIntroScene extends Scene {
     private sfx: Sfx,
     private audio: AudioBus,
     private onLaunch: () => void,
+    private touch = false,
   ) {
     super();
   }
 
   override onEnter(): void {
     window.addEventListener('keydown', this.onKey);
+    if (this.touch) window.addEventListener('pointerdown', this.onTap);
     const music = new AmbientMusic(this.audio);
     this.music = music;
     this.audio.onUnlocked(() => {
@@ -32,6 +34,7 @@ export class DeepLinkIntroScene extends Scene {
 
   override onExit(): void {
     window.removeEventListener('keydown', this.onKey);
+    window.removeEventListener('pointerdown', this.onTap);
     if (this.music) {
       this.music.stop();
       this.music = null;
@@ -60,6 +63,14 @@ export class DeepLinkIntroScene extends Scene {
       this.fired = true;
       this.onLaunch();
     }
+  };
+
+  private onTap = (e: PointerEvent) => {
+    if (this.elapsed < 0.4 || this.fired) return;
+    if ((e.target as HTMLElement)?.closest('#touch-controls')) return;
+    e.preventDefault();
+    this.fired = true;
+    this.onLaunch();
   };
 
   override render(): void {
@@ -130,7 +141,7 @@ export class DeepLinkIntroScene extends Scene {
     ctx.textBaseline = 'middle';
     ctx.fillStyle = '#ffffff';
     ctx.font = 'bold 18px ui-monospace, Menlo, monospace';
-    ctx.fillText('PRESS ENTER TO START', W / 2, btnY + btnH / 2 + 1);
+    ctx.fillText(this.touch ? 'TAP TO START' : 'PRESS ENTER TO START', W / 2, btnY + btnH / 2 + 1);
     ctx.textBaseline = 'alphabetic';
 
     this.renderer.endFrame();

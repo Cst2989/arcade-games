@@ -32,12 +32,14 @@ export class VictoryScene extends Scene {
     private stats: GameStats,
     private levels: Level[],
     private onReplay: () => void,
+    private touch = false,
   ) {
     super();
   }
 
   override onEnter(): void {
     window.addEventListener('keydown', this.onKey);
+    if (this.touch) window.addEventListener('pointerdown', this.onTap);
     this.spawnBurst(80);
     const contributors: ShareContributor[] = [...this.levels]
       .reverse()
@@ -62,12 +64,19 @@ export class VictoryScene extends Scene {
 
   override onExit(): void {
     window.removeEventListener('keydown', this.onKey);
+    window.removeEventListener('pointerdown', this.onTap);
     unmountSharePanel();
   }
 
   private onKey = (e: KeyboardEvent) => {
     if (this.elapsed < 0.6) return;
     if (e.key === 'Enter') this.onReplay();
+  };
+
+  private onTap = (e: PointerEvent) => {
+    if (this.elapsed < 0.6) return;
+    if ((e.target as HTMLElement)?.closest('.osi-share-panel, #touch-controls')) return;
+    this.onReplay();
   };
 
   override update(dt: number): void {
@@ -183,7 +192,7 @@ export class VictoryScene extends Scene {
     ctx.fillStyle = '#8b949e';
     ctx.font = '13px ui-monospace, Menlo, monospace';
     ctx.textAlign = 'center';
-    ctx.fillText('ENTER to play another repo', W / 2, H - 24);
+    ctx.fillText(this.touch ? 'TAP TO PLAY ANOTHER REPO' : 'ENTER to play another repo', W / 2, H - 24);
     this.renderer.endFrame();
   }
 }
