@@ -3,10 +3,13 @@ import type { Renderer, ParticleEmitter, AudioBus } from '@osi/engine';
 import { BALANCE } from '../config/balance.js';
 import { loadIndex, type RepoIndex, type RepoIndexEntry } from '../data/repos-loader.js';
 import { filterRepos, clampScroll } from '../ui/homepage-filter.js';
+import { drawBrandHeader } from '../ui/brand.js';
 
 const ROW_HEIGHT = 80;
-const HEADER_HEIGHT = 80;
-const FOOTER_HEIGHT = 40;
+const HEADER_HEIGHT = 130;
+const FOOTER_HEIGHT = 36;
+const FILTER_INPUT_TOP = 100;
+const FILTER_INPUT_HEIGHT = 24;
 const VIEWPORT_TOP = HEADER_HEIGHT;
 const VIEWPORT_HEIGHT = BALANCE.viewportHeight - HEADER_HEIGHT - FOOTER_HEIGHT;
 
@@ -37,6 +40,7 @@ export class HomepageScene extends Scene {
   private keydownHandler: ((e: KeyboardEvent) => void) | null = null;
   private wheelHandler: ((e: WheelEvent) => void) | null = null;
   private clickHandler: ((e: MouseEvent) => void) | null = null;
+  private elapsed = 0;
 
   constructor(
     private renderer: Renderer,
@@ -79,6 +83,7 @@ export class HomepageScene extends Scene {
 
   override update(dt: number): void {
     this.stars.update(dt);
+    this.elapsed += dt;
   }
 
   override render(): void {
@@ -86,20 +91,37 @@ export class HomepageScene extends Scene {
     const W = BALANCE.viewportWidth;
     const H = BALANCE.viewportHeight;
     this.renderer.beginFrame();
+
+    const grad = ctx.createRadialGradient(W / 2, 60, 60, W / 2, 60, W * 0.7);
+    grad.addColorStop(0, 'rgba(57, 211, 83, 0.10)');
+    grad.addColorStop(1, 'rgba(13, 17, 23, 0)');
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, W, H);
+
     this.stars.render(ctx);
 
-    ctx.fillStyle = '#ffffff';
-    ctx.font = 'bold 20px ui-monospace, Menlo, monospace';
-    ctx.textBaseline = 'top';
-    ctx.fillText('// pick your battle', 24, 24);
+    drawBrandHeader(ctx, {
+      cx: W / 2,
+      topY: 14,
+      elapsed: this.elapsed,
+      compact: true,
+      tagline: '// pick your battle — any GitHub repo becomes an arcade fight',
+    });
 
-    ctx.strokeStyle = '#30363d';
+    const inputW = W - 240;
+    const inputX = (W - inputW) / 2;
+    ctx.fillStyle = 'rgba(13, 17, 23, 0.6)';
+    ctx.fillRect(inputX, FILTER_INPUT_TOP, inputW, FILTER_INPUT_HEIGHT);
+    const pulse = 0.5 + 0.5 * Math.sin(this.elapsed * 2);
+    ctx.strokeStyle = `rgba(57, 211, 83, ${0.45 + 0.25 * pulse})`;
     ctx.lineWidth = 1;
-    ctx.strokeRect(24, 50, W - 48, 22);
+    ctx.strokeRect(inputX + 0.5, FILTER_INPUT_TOP + 0.5, inputW - 1, FILTER_INPUT_HEIGHT - 1);
     ctx.fillStyle = '#ffffff';
-    ctx.font = '14px ui-monospace, Menlo, monospace';
+    ctx.font = '13px ui-monospace, Menlo, monospace';
+    ctx.textBaseline = 'top';
+    ctx.textAlign = 'left';
     const filterText = this.filter.length > 0 ? this.filter : 'filter…';
-    ctx.fillText(`>_ ${filterText}`, 32, 54);
+    ctx.fillText(`>_ ${filterText}`, inputX + 10, FILTER_INPUT_TOP + 6);
 
     if (this.loadError) {
       ctx.fillStyle = '#ffffff';
