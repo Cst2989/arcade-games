@@ -36,6 +36,7 @@ export class HomepageScene extends Scene {
   private focusIndex = 0;
   private keydownHandler: ((e: KeyboardEvent) => void) | null = null;
   private wheelHandler: ((e: WheelEvent) => void) | null = null;
+  private clickHandler: ((e: MouseEvent) => void) | null = null;
 
   constructor(
     private renderer: Renderer,
@@ -208,6 +209,35 @@ export class HomepageScene extends Scene {
   private onKeyDown(e: KeyboardEvent): void {
     if (!this.index) return;
     const visible = filterRepos(this.index.repos, this.filter);
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      const target = visible[this.focusIndex];
+      if (target) this.onSelect(`${target.owner}/${target.name}`);
+      return;
+    }
+    if (e.key === 'Escape') {
+      e.preventDefault();
+      this.filter = '';
+      this.focusIndex = 0;
+      this.scroll = 0;
+      return;
+    }
+    if (e.key === 'Backspace') {
+      e.preventDefault();
+      if (this.filter.length > 0) {
+        this.filter = this.filter.slice(0, -1);
+        this.focusIndex = 0;
+        this.scroll = 0;
+      }
+      return;
+    }
+    if (e.key.length === 1 && /[\w./-]/.test(e.key) && this.filter.length < 40) {
+      e.preventDefault();
+      this.filter += e.key.toLowerCase();
+      this.focusIndex = 0;
+      this.scroll = 0;
+      return;
+    }
     if (visible.length === 0) return;
     if (e.key === 'ArrowDown' || e.key === 'PageDown') {
       e.preventDefault();
@@ -247,11 +277,30 @@ export class HomepageScene extends Scene {
     this.scroll = clampScroll(this.scroll, visibleCount * ROW_HEIGHT, VIEWPORT_HEIGHT);
   }
 
+  private onClick(e: MouseEvent): void {
+    if (!this.index) return;
+    const canvas = this.renderer.main.canvas;
+    const rect = canvas.getBoundingClientRect();
+    const dpr = parseFloat(canvas.dataset.osiDpr ?? '') || (window.devicePixelRatio || 1);
+    const scaleX = canvas.width / dpr / rect.width;
+    const scaleY = canvas.height / dpr / rect.height;
+    const cx = (e.clientX - rect.left) * scaleX;
+    const cy = (e.clientY - rect.top) * scaleY;
+    if (cy < VIEWPORT_TOP || cy > VIEWPORT_TOP + VIEWPORT_HEIGHT) return;
+    if (cx < 0 || cx > BALANCE.viewportWidth) return;
+    const visible = filterRepos(this.index.repos, this.filter);
+    const i = Math.floor((cy - VIEWPORT_TOP + this.scroll) / ROW_HEIGHT);
+    const target = visible[i];
+    if (target) this.onSelect(`${target.owner}/${target.name}`);
+  }
+
   override onEnter(): void {
     this.keydownHandler = (e: KeyboardEvent) => this.onKeyDown(e);
     this.wheelHandler = (e: WheelEvent) => this.onWheel(e);
+    this.clickHandler = (e: MouseEvent) => this.onClick(e);
     window.addEventListener('keydown', this.keydownHandler);
     this.renderer.main.canvas.addEventListener('wheel', this.wheelHandler, { passive: false });
+    this.renderer.main.canvas.addEventListener('click', this.clickHandler);
   }
 
   override onExit(): void {
@@ -262,6 +311,10 @@ export class HomepageScene extends Scene {
     if (this.wheelHandler) {
       this.renderer.main.canvas.removeEventListener('wheel', this.wheelHandler);
       this.wheelHandler = null;
+    }
+    if (this.clickHandler) {
+      this.renderer.main.canvas.removeEventListener('click', this.clickHandler);
+      this.clickHandler = null;
     }
   }
 }
