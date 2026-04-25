@@ -4,6 +4,7 @@ export interface ShareContributor {
   login: string;
   avatarImage?: HTMLImageElement;
   totalCommits: number;
+  isBoss?: boolean;
 }
 
 export interface SharePanelOptions {
@@ -41,11 +42,128 @@ const STYLE_CSS = `
   border: 2px solid #2ea043;
   box-shadow: 0 0 40px rgba(57, 211, 83, 0.28), 0 20px 60px rgba(0, 0, 0, 0.7);
   width: 100%;
-  max-width: 720px;
+  max-width: 1020px;
   max-height: 92vh;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
+}
+#osi-share-panel .osi-share-layout {
+  display: flex;
+  gap: 0;
+  align-items: stretch;
+}
+#osi-share-panel .osi-share-main {
+  flex: 1;
+  min-width: 0;
+}
+#osi-share-panel .osi-share-sidebar {
+  width: 280px;
+  flex-shrink: 0;
+  border-left: 1px solid #30363d;
+  background: #0d1117;
+  padding: 18px 18px 18px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+#osi-share-panel .osi-share-sidebar h3 {
+  margin: 0 0 4px 0;
+  font-size: 12px;
+  letter-spacing: 0.4px;
+  color: #39d353;
+}
+#osi-share-panel .osi-contrib {
+  display: flex;
+  gap: 10px;
+  padding: 8px;
+  border: 1px solid #21262d;
+  background: #161b22;
+}
+#osi-share-panel .osi-contrib.boss {
+  border-color: #d29922;
+  box-shadow: 0 0 0 1px rgba(210, 153, 34, 0.25);
+}
+#osi-share-panel .osi-contrib-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background: #21262d;
+  border: 2px solid #30363d;
+  object-fit: cover;
+  display: block;
+}
+#osi-share-panel .osi-contrib.boss .osi-contrib-avatar {
+  width: 56px;
+  height: 56px;
+  border-color: #d29922;
+}
+#osi-share-panel .osi-contrib-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+  flex: 1;
+}
+#osi-share-panel .osi-contrib-name {
+  font: bold 12px ui-monospace, Menlo, monospace;
+  color: #ffffff;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+#osi-share-panel .osi-contrib-name .osi-boss-tag {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 1px 5px;
+  font-size: 9px;
+  color: #0d1117;
+  background: #d29922;
+  vertical-align: middle;
+}
+#osi-share-panel .osi-contrib-meta {
+  font-size: 10px;
+  color: #ffffff;
+}
+#osi-share-panel .osi-contrib-actions {
+  display: flex;
+  gap: 4px;
+  margin-top: 2px;
+}
+#osi-share-panel .osi-contrib-actions a {
+  flex: 1;
+  text-align: center;
+  font: bold 9px ui-monospace, Menlo, monospace;
+  text-decoration: none;
+  padding: 5px 4px;
+  border: 1px solid #30363d;
+  background: #21262d;
+  color: #ffffff;
+  letter-spacing: 0.3px;
+  transition: background 0.12s ease, border-color 0.12s ease;
+}
+#osi-share-panel .osi-contrib-actions a:hover {
+  background: #30363d;
+  border-color: #58a6ff;
+}
+#osi-share-panel .osi-contrib-actions a.osi-sponsor {
+  background: #2d1620;
+  border-color: #6e2638;
+  color: #ff9eb1;
+}
+#osi-share-panel .osi-contrib-actions a.osi-sponsor:hover {
+  background: #4a1f30;
+  border-color: #db61a2;
+  color: #ffc8d4;
+}
+#osi-share-panel .osi-sidebar-footer {
+  margin-top: 4px;
+  padding-top: 12px;
+  border-top: 1px solid #21262d;
+  font-size: 11px;
+  line-height: 1.45;
+  color: #ffffff;
 }
 #osi-share-panel .osi-share-header {
   padding: 14px 20px;
@@ -427,6 +545,73 @@ function canvasToBlob(canvas: HTMLCanvasElement): Promise<Blob | null> {
   });
 }
 
+function renderContributorSidebar(contributors: ShareContributor[]): HTMLDivElement {
+  const sidebar = el('aside', { className: 'osi-share-sidebar' }) as unknown as HTMLDivElement;
+  sidebar.append(el('h3', { textContent: 'CONTRIBUTORS' }));
+
+  for (const c of contributors) {
+    const profileUrl = `https://github.com/${encodeURIComponent(c.login)}`;
+    const sponsorUrl = `https://github.com/sponsors/${encodeURIComponent(c.login)}`;
+    const fallbackAvatar =
+      `https://github.com/${encodeURIComponent(c.login)}.png?size=80`;
+
+    const row = el('div', { className: `osi-contrib${c.isBoss ? ' boss' : ''}` });
+    const avatar = el('img', {
+      className: 'osi-contrib-avatar',
+      alt: `${c.login} avatar`,
+    }) as HTMLImageElement;
+    if (c.avatarImage?.src) {
+      avatar.src = c.avatarImage.src;
+    } else {
+      avatar.src = fallbackAvatar;
+    }
+    avatar.onerror = () => {
+      avatar.style.visibility = 'hidden';
+    };
+
+    const info = el('div', { className: 'osi-contrib-info' });
+    const name = el('div', { className: 'osi-contrib-name' });
+    name.append(c.login);
+    if (c.isBoss) {
+      const tag = el('span', { className: 'osi-boss-tag', textContent: 'BOSS' });
+      name.append(tag);
+    }
+    const meta = el('div', {
+      className: 'osi-contrib-meta',
+      textContent: `${c.totalCommits.toLocaleString()} commits · last year`,
+    });
+    const actions = el('div', { className: 'osi-contrib-actions' });
+    const profileLink = el('a', {
+      href: profileUrl,
+      target: '_blank',
+      rel: 'noopener noreferrer',
+      textContent: 'GITHUB →',
+      title: `Open ${c.login}'s GitHub profile`,
+    });
+    const sponsorLink = el('a', {
+      href: sponsorUrl,
+      target: '_blank',
+      rel: 'noopener noreferrer',
+      className: 'osi-sponsor',
+      textContent: '♥ SPONSOR',
+      title: `Sponsor ${c.login} on GitHub`,
+    });
+    actions.append(profileLink, sponsorLink);
+    info.append(name, meta, actions);
+    row.append(avatar, info);
+    sidebar.append(row);
+  }
+
+  const footer = el('div', {
+    className: 'osi-sidebar-footer',
+    textContent:
+      'These people are keeping the library alive — let\'s contribute.',
+  });
+  sidebar.append(footer);
+
+  return sidebar;
+}
+
 export function mountSharePanel(opts: SharePanelOptions): void {
   ensureStyle();
   document.getElementById(PANEL_ID)?.remove();
@@ -503,7 +688,12 @@ export function mountSharePanel(opts: SharePanelOptions): void {
   const body = el('div', { className: 'osi-share-body' }, [
     preview, msg, row1, row2, actions,
   ]);
-  const card = el('div', { className: 'osi-share-card' }, [header, body]);
+  const sidebar = renderContributorSidebar(opts.contributors);
+  const layout = el('div', { className: 'osi-share-layout' }, [
+    el('div', { className: 'osi-share-main' }, [body]),
+    sidebar,
+  ]);
+  const card = el('div', { className: 'osi-share-card' }, [header, layout]);
   const root = el('div', { id: PANEL_ID }, [card]);
 
   downloadBtn.onclick = async () => {

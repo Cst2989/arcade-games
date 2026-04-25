@@ -42,10 +42,11 @@ export class VictoryScene extends Scene {
     this.spawnBurst(80);
     const contributors: ShareContributor[] = [...this.levels]
       .reverse()
-      .map((lv) => {
+      .map((lv, idx) => {
         const base: ShareContributor = {
           login: lv.contributor.login,
           totalCommits: lv.contributor.totalCommits ?? lv.profile.totalCommits ?? 0,
+          isBoss: idx === 0,
         };
         return lv.profile.avatarImage
           ? { ...base, avatarImage: lv.profile.avatarImage }
