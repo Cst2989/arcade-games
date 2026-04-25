@@ -1,0 +1,6 @@
+# One owner/name per line. Lines starting with # are ignored.
+# Run scripts/fetch-repos.sh after editing this file.
+# Example entries (uncomment to test):
+# facebook/react
+# vitejs/vite
+# microsoft/typescript
