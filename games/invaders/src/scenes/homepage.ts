@@ -195,7 +195,11 @@ export class HomepageScene extends Scene {
     }
   }
 
-  dispose(): void {
-    // No DOM listeners attached yet — Task 6 wires keyboard/wheel.
+  override onEnter(): void {
+    // Task 6 will attach keyboard/wheel listeners here.
+  }
+
+  override onExit(): void {
+    // Task 6 will detach the listeners attached in onEnter.
   }
 }
