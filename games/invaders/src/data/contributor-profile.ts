@@ -1,5 +1,4 @@
 import type { ContributorStats } from './contributor-stats.js';
-import type { GitHubUser } from './github-client.js';
 
 export interface BiggestContribution {
   date: string;
@@ -30,8 +29,20 @@ export interface ContributorProfile {
   biggestContribution: BiggestContribution;
 }
 
+// Minimal subset of fields used to override profile defaults. Field names
+// match the GitHub REST `/users/:login` response so existing callers and
+// the bash fetch script can pass values through without remapping.
+export interface ContributorUserOverride {
+  avatar_url?: string;
+  location?: string | null;
+  followers?: number;
+  public_repos?: number;
+  created_at?: string; // ISO 8601
+  bio?: string | null;
+}
+
 export interface ProfileOverrides {
-  user?: GitHubUser;
+  user?: ContributorUserOverride;
   language?: string | null;
   avatarImage?: HTMLImageElement;
 }
