@@ -33,6 +33,9 @@ export class HomepageScene extends Scene {
   private scroll = 0;
   private avatars = new Map<string, HTMLImageElement>();
   private loadError: string | null = null;
+  private focusIndex = 0;
+  private keydownHandler: ((e: KeyboardEvent) => void) | null = null;
+  private wheelHandler: ((e: WheelEvent) => void) | null = null;
 
   constructor(
     private renderer: Renderer,
@@ -128,7 +131,7 @@ export class HomepageScene extends Scene {
       const y = VIEWPORT_TOP + i * ROW_HEIGHT - this.scroll;
       if (y + ROW_HEIGHT < VIEWPORT_TOP) continue;
       if (y > VIEWPORT_TOP + VIEWPORT_HEIGHT) break;
-      this.drawRow(repo, y);
+      this.drawRow(repo, y, i === this.focusIndex);
     }
     ctx.restore();
 
@@ -141,9 +144,16 @@ export class HomepageScene extends Scene {
     this.renderer.endFrame();
   }
 
-  private drawRow(repo: RepoIndexEntry, y: number): void {
+  private drawRow(repo: RepoIndexEntry, y: number, focused: boolean): void {
     const ctx = this.renderer.main;
     const W = BALANCE.viewportWidth;
+    if (focused) {
+      ctx.fillStyle = 'rgba(57, 211, 83, 0.10)';
+      ctx.fillRect(8, y + 4, W - 16, ROW_HEIGHT - 8);
+      ctx.strokeStyle = '#39d353';
+      ctx.lineWidth = 1.5;
+      ctx.strokeRect(8, y + 4, W - 16, ROW_HEIGHT - 8);
+    }
     ctx.fillStyle = '#ffffff';
     ctx.font = 'bold 16px ui-monospace, Menlo, monospace';
     ctx.fillText(`${repo.owner}/${repo.name}`, 24, y + 16);
@@ -195,11 +205,63 @@ export class HomepageScene extends Scene {
     }
   }
 
+  private onKeyDown(e: KeyboardEvent): void {
+    if (!this.index) return;
+    const visible = filterRepos(this.index.repos, this.filter);
+    if (visible.length === 0) return;
+    if (e.key === 'ArrowDown' || e.key === 'PageDown') {
+      e.preventDefault();
+      const step = e.key === 'PageDown' ? Math.floor(VIEWPORT_HEIGHT / ROW_HEIGHT) : 1;
+      this.focusIndex = Math.min(visible.length - 1, this.focusIndex + step);
+      this.ensureFocusVisible(visible.length);
+    } else if (e.key === 'ArrowUp' || e.key === 'PageUp') {
+      e.preventDefault();
+      const step = e.key === 'PageUp' ? Math.floor(VIEWPORT_HEIGHT / ROW_HEIGHT) : 1;
+      this.focusIndex = Math.max(0, this.focusIndex - step);
+      this.ensureFocusVisible(visible.length);
+    } else if (e.key === 'Home') {
+      e.preventDefault();
+      this.focusIndex = 0;
+      this.scroll = 0;
+    } else if (e.key === 'End') {
+      e.preventDefault();
+      this.focusIndex = visible.length - 1;
+      this.scroll = clampScroll(visible.length * ROW_HEIGHT, visible.length * ROW_HEIGHT, VIEWPORT_HEIGHT);
+    }
+  }
+
+  private onWheel(e: WheelEvent): void {
+    e.preventDefault();
+    if (!this.index) return;
+    const visible = filterRepos(this.index.repos, this.filter);
+    this.scroll = clampScroll(this.scroll + e.deltaY, visible.length * ROW_HEIGHT, VIEWPORT_HEIGHT);
+  }
+
+  private ensureFocusVisible(visibleCount: number): void {
+    const focusY = this.focusIndex * ROW_HEIGHT;
+    if (focusY < this.scroll) {
+      this.scroll = focusY;
+    } else if (focusY + ROW_HEIGHT > this.scroll + VIEWPORT_HEIGHT) {
+      this.scroll = focusY + ROW_HEIGHT - VIEWPORT_HEIGHT;
+    }
+    this.scroll = clampScroll(this.scroll, visibleCount * ROW_HEIGHT, VIEWPORT_HEIGHT);
+  }
+
   override onEnter(): void {
-    // Task 6 will attach keyboard/wheel listeners here.
+    this.keydownHandler = (e: KeyboardEvent) => this.onKeyDown(e);
+    this.wheelHandler = (e: WheelEvent) => this.onWheel(e);
+    window.addEventListener('keydown', this.keydownHandler);
+    this.renderer.main.canvas.addEventListener('wheel', this.wheelHandler, { passive: false });
   }
 
   override onExit(): void {
-    // Task 6 will detach the listeners attached in onEnter.
+    if (this.keydownHandler) {
+      window.removeEventListener('keydown', this.keydownHandler);
+      this.keydownHandler = null;
+    }
+    if (this.wheelHandler) {
+      this.renderer.main.canvas.removeEventListener('wheel', this.wheelHandler);
+      this.wheelHandler = null;
+    }
   }
 }
