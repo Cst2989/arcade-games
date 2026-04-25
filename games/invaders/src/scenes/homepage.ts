@@ -3,13 +3,13 @@ import type { Renderer, ParticleEmitter, AudioBus } from '@osi/engine';
 import { BALANCE } from '../config/balance.js';
 import { loadIndex, type RepoIndex, type RepoIndexEntry } from '../data/repos-loader.js';
 import { filterRepos, clampScroll } from '../ui/homepage-filter.js';
-import { drawBrandHeader } from '../ui/brand.js';
+import { drawInvaderLogo } from '../ui/brand.js';
 
 const ROW_HEIGHT = 80;
-const HEADER_HEIGHT = 130;
+const HEADER_HEIGHT = 200;
 const FOOTER_HEIGHT = 36;
-const FILTER_INPUT_TOP = 100;
-const FILTER_INPUT_HEIGHT = 24;
+const FILTER_INPUT_TOP = 168;
+const FILTER_INPUT_HEIGHT = 26;
 const VIEWPORT_TOP = HEADER_HEIGHT;
 const VIEWPORT_HEIGHT = BALANCE.viewportHeight - HEADER_HEIGHT - FOOTER_HEIGHT;
 
@@ -100,13 +100,25 @@ export class HomepageScene extends Scene {
 
     this.stars.render(ctx);
 
-    drawBrandHeader(ctx, {
-      cx: W / 2,
-      topY: 14,
-      elapsed: this.elapsed,
-      compact: true,
-      tagline: '// pick your battle — any GitHub repo becomes an arcade fight',
-    });
+    const bob = Math.sin(this.elapsed * 1.6) * 4;
+    drawInvaderLogo(ctx, W / 2, 40 + bob, 6);
+
+    const titleY = 118;
+    ctx.save();
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'alphabetic';
+    const titlePulse = 0.5 + 0.5 * Math.sin(this.elapsed * 2);
+    ctx.fillStyle = `rgba(57, 211, 83, ${0.85 + 0.15 * titlePulse})`;
+    ctx.font = 'bold 32px ui-monospace, Menlo, monospace';
+    ctx.fillText('OPEN SOURCE INVADERS', W / 2, titleY);
+    ctx.shadowColor = 'rgba(57, 211, 83, 0.4)';
+    ctx.shadowBlur = 10;
+    ctx.fillText('OPEN SOURCE INVADERS', W / 2, titleY);
+    ctx.shadowBlur = 0;
+    ctx.fillStyle = '#ffffff';
+    ctx.font = '12px ui-monospace, Menlo, monospace';
+    ctx.fillText('// pick your battle — any GitHub repo becomes an arcade fight', W / 2, titleY + 20);
+    ctx.restore();
 
     const inputW = W - 240;
     const inputX = (W - inputW) / 2;
