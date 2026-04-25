@@ -136,6 +136,11 @@ const STYLE_CSS = `
   color: #39d353;
   font-weight: bold;
 }
+#osi-leaderboard .osi-lb-substats {
+  font-size: 10px;
+  color: #ffffff;
+  margin-top: 2px;
+}
 #osi-leaderboard .osi-lb-link {
   font: bold 10px ui-monospace, Menlo, monospace;
   text-decoration: none;
@@ -204,7 +209,7 @@ export function buildLeaderboard(repos: RepoIndexEntry[], limit = 100): Leaderbo
       totalCommits: a.totalCommits,
       bossCount: a.bossCount,
     }))
-    .sort((x, y) => y.repoCount - x.repoCount || y.totalCommits - x.totalCommits)
+    .sort((x, y) => y.totalCommits - x.totalCommits || y.repoCount - x.repoCount)
     .slice(0, limit);
 }
 
@@ -225,7 +230,7 @@ export function mountLeaderboard(repos: RepoIndexEntry[]): void {
     el('h2', { textContent: '🏆 LEADERBOARD — TOP CONTRIBUTORS' }),
     el('div', {
       className: 'osi-lb-subtitle',
-      textContent: `Across ${totalRepos} curated repos · ranked by repos active in`,
+      textContent: `Across ${totalRepos} curated repos · ranked by total commits`,
     }),
   ]);
   const header = el('div', { className: 'osi-lb-header' }, [headerTitle, closeBtn]);
@@ -268,8 +273,12 @@ export function mountLeaderboard(repos: RepoIndexEntry[]): void {
     info.append(loginEl, meta);
 
     const stats = el('div', { className: 'osi-lb-stats' });
-    const repoCountEl = el('strong', { textContent: String(entry.repoCount) });
-    stats.append(repoCountEl, ` repo${entry.repoCount > 1 ? 's' : ''}`);
+    const commitsEl = el('strong', { textContent: entry.totalCommits.toLocaleString() });
+    const repoLine = el('div', {
+      className: 'osi-lb-substats',
+      textContent: `${entry.repoCount} repo${entry.repoCount > 1 ? 's' : ''}`,
+    });
+    stats.append(commitsEl, ' commits', repoLine);
 
     const link = el('a', {
       className: 'osi-lb-link',

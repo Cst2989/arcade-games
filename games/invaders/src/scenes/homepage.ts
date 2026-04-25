@@ -13,7 +13,8 @@ const FILTER_INPUT_TOP = 168;
 const FILTER_INPUT_HEIGHT = 26;
 const VIEWPORT_TOP = HEADER_HEIGHT;
 const VIEWPORT_HEIGHT = BALANCE.viewportHeight - HEADER_HEIGHT - FOOTER_HEIGHT;
-const TROPHY_BTN = { y: 18, w: 60, h: 56 } as const; // x is W - w - 18 per render
+// Easter-egg trophy tucked in the bottom-right corner. No box, no label.
+const TROPHY_BTN = { w: 32, h: 32, margin: 8 } as const;
 
 const LANGUAGE_COLORS: Record<string, string> = {
   JavaScript: '#f1e05a',
@@ -122,23 +123,15 @@ export class HomepageScene extends Scene {
     ctx.fillText('// pick your battle — any GitHub repo becomes an arcade fight', W / 2, titleY + 20);
     ctx.restore();
 
-    // Trophy button (top-right). Hit-tested in onClick.
-    const tx = W - TROPHY_BTN.w - 18;
-    const ty = TROPHY_BTN.y;
-    const trophyPulse = 0.5 + 0.5 * Math.sin(this.elapsed * 2.2);
+    // Easter-egg trophy in the bottom-right corner. Just the emoji, slightly faded.
+    const tx = W - TROPHY_BTN.w - TROPHY_BTN.margin;
+    const ty = H - TROPHY_BTN.h - TROPHY_BTN.margin;
     ctx.save();
-    ctx.fillStyle = 'rgba(13, 17, 23, 0.65)';
-    ctx.fillRect(tx, ty, TROPHY_BTN.w, TROPHY_BTN.h);
-    ctx.strokeStyle = `rgba(210, 153, 34, ${0.55 + 0.30 * trophyPulse})`;
-    ctx.lineWidth = 1.5;
-    ctx.strokeRect(tx + 0.5, ty + 0.5, TROPHY_BTN.w - 1, TROPHY_BTN.h - 1);
     ctx.textAlign = 'center';
-    ctx.textBaseline = 'alphabetic';
-    ctx.font = '26px ui-monospace, Menlo, monospace';
-    ctx.fillText('🏆', tx + TROPHY_BTN.w / 2, ty + 32);
-    ctx.font = 'bold 8px ui-monospace, Menlo, monospace';
-    ctx.fillStyle = '#ffd24a';
-    ctx.fillText('LEADERBOARD', tx + TROPHY_BTN.w / 2, ty + TROPHY_BTN.h - 8);
+    ctx.textBaseline = 'middle';
+    ctx.font = '22px ui-monospace, Menlo, monospace';
+    ctx.globalAlpha = 0.5;
+    ctx.fillText('🏆', tx + TROPHY_BTN.w / 2, ty + TROPHY_BTN.h / 2);
     ctx.restore();
     ctx.textAlign = 'left';
     ctx.textBaseline = 'top';
@@ -345,11 +338,12 @@ export class HomepageScene extends Scene {
     const cx = (e.clientX - rect.left) * scaleX;
     const cy = (e.clientY - rect.top) * scaleY;
 
-    // Trophy button hit-test (top-right).
-    const tx = BALANCE.viewportWidth - TROPHY_BTN.w - 18;
+    // Trophy easter-egg hit-test (bottom-right).
+    const tx = BALANCE.viewportWidth - TROPHY_BTN.w - TROPHY_BTN.margin;
+    const ty = BALANCE.viewportHeight - TROPHY_BTN.h - TROPHY_BTN.margin;
     if (
       cx >= tx && cx <= tx + TROPHY_BTN.w &&
-      cy >= TROPHY_BTN.y && cy <= TROPHY_BTN.y + TROPHY_BTN.h
+      cy >= ty && cy <= ty + TROPHY_BTN.h
     ) {
       mountLeaderboard(this.index.repos);
       return;
