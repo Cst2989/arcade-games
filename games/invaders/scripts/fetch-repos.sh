@@ -70,12 +70,18 @@ download_avatar() {
   }
 }
 
+urlenc() {
+  jq -rn --arg s "$1" '$s | @uri'
+}
+
 fetch_commits() {
   local owner="$1" name="$2" login="$3"
+  local elogin
+  elogin="$(urlenc "$login")"
   local page=1 acc='[]'
   while [[ $page -le 3 ]]; do
     local resp
-    resp="$(api "/repos/$owner/$name/commits?author=$login&since=$since_iso&per_page=100&page=$page" || echo '[]')"
+    resp="$(api "/repos/$owner/$name/commits?author=$elogin&since=$since_iso&per_page=100&page=$page" || echo '[]')"
     local count
     count="$(echo "$resp" | jq 'length')"
     acc="$(jq -s '.[0] + .[1]' <(echo "$acc") <(echo "$resp"))"
@@ -140,24 +146,39 @@ while IFS= read -r line; do
   fi
 
   echo "[$owner/$name] fetching repo metadata"
-  repo_json="$(api "/repos/$owner/$name")"
+  repo_json="$(api "/repos/$owner/$name" 2>/dev/null || echo '')"
+  if [[ -z "$repo_json" ]] || ! echo "$repo_json" | jq -e '.full_name' >/dev/null 2>&1; then
+    echo "[$owner/$name] WARN: repo metadata fetch failed (404 or moved), skipping" >&2
+    continue
+  fi
   language="$(echo "$repo_json" | jq -r '.language // ""')"
 
   echo "[$owner/$name] fetching contributors"
-  contribs="$(api "/repos/$owner/$name/contributors?per_page=30")"
+  contribs="$(api "/repos/$owner/$name/contributors?per_page=30" 2>/dev/null || echo '[]')"
+  if ! echo "$contribs" | jq -e 'type == "array"' >/dev/null 2>&1; then
+    echo "[$owner/$name] WARN: contributors fetch failed, skipping" >&2
+    continue
+  fi
   candidates="$(echo "$contribs" | jq -c '.[:10] | map({login, avatar_url})')"
 
   ranked='[]'
   for row in $(echo "$candidates" | jq -c '.[]'); do
     login="$(echo "$row" | jq -r '.login')"
     avatar_url="$(echo "$row" | jq -r '.avatar_url')"
+    # Skip GitHub bot accounts — they aren't fun "boss" opponents and their
+    # logins (e.g. "autofix-ci[bot]") need extra encoding everywhere.
+    if [[ "$login" == *"[bot]" ]]; then
+      echo "  · $login: skipped (bot)"
+      continue
+    fi
+    elogin="$(urlenc "$login")"
     echo "  · $login: commits"
     commits="$(fetch_commits "$owner" "$name" "$login")"
     aggregated="$(echo "$commits" | jq "$aggregate_jq")"
     total="$(echo "$aggregated" | jq '[.daily[].count] | add')"
     if [[ "$total" -le 0 ]]; then continue; fi
     echo "  · $login: profile + avatar"
-    user="$(api "/users/$login" || echo '{}')"
+    user="$(api "/users/$elogin" 2>/dev/null || echo '{}')"
     download_avatar "$login" "$avatar_url"
     profile="$(echo "$user" | jq '{
       location: (.location // ""),
