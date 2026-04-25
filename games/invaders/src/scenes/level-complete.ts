@@ -138,8 +138,9 @@ export class LevelCompleteScene extends Scene {
   private onMouseMove = (e: MouseEvent) => {
     const canvas = this.renderer.main.canvas;
     const rect = canvas.getBoundingClientRect();
-    const scaleX = canvas.width / rect.width;
-    const scaleY = canvas.height / rect.height;
+    const dpr = parseFloat(canvas.dataset.osiDpr ?? '') || (window.devicePixelRatio || 1);
+    const scaleX = canvas.width / dpr / rect.width;
+    const scaleY = canvas.height / dpr / rect.height;
     this.mouseX = (e.clientX - rect.left) * scaleX;
     this.mouseY = (e.clientY - rect.top) * scaleY;
     this.hover = this.hitTest(this.mouseX, this.mouseY);
@@ -158,8 +159,9 @@ export class LevelCompleteScene extends Scene {
     if (this.elapsed < 0.4) return;
     const canvas = this.renderer.main.canvas;
     const rect = canvas.getBoundingClientRect();
-    const scaleX = canvas.width / rect.width;
-    const scaleY = canvas.height / rect.height;
+    const dpr = parseFloat(canvas.dataset.osiDpr ?? '') || (window.devicePixelRatio || 1);
+    const scaleX = canvas.width / dpr / rect.width;
+    const scaleY = canvas.height / dpr / rect.height;
     const x = (e.clientX - rect.left) * scaleX;
     const y = (e.clientY - rect.top) * scaleY;
     const key = this.hitTest(x, y);
@@ -260,7 +262,7 @@ export class LevelCompleteScene extends Scene {
     drawAvatar(ctx, W / 2, card.y + 58, 36, this.profile.login, this.profile.avatarImage);
 
     ctx.textAlign = 'center';
-    ctx.fillStyle = '#8b949e';
+    ctx.fillStyle = '#ffffff';
     ctx.font = '13px ui-monospace, Menlo, monospace';
     ctx.fillText('YOU HAVE DEFEATED', W / 2, card.y + 114);
 
@@ -268,7 +270,7 @@ export class LevelCompleteScene extends Scene {
     ctx.font = 'bold 24px ui-monospace, Menlo, monospace';
     ctx.fillText(`@${this.profile.login}`, W / 2, card.y + 142);
 
-    ctx.fillStyle = '#6e7681';
+    ctx.fillStyle = '#ffffff';
     ctx.font = '10px ui-monospace, Menlo, monospace';
     ctx.fillText(
       `${this.profile.totalCommits.toLocaleString()} commits defeated`,
@@ -279,7 +281,7 @@ export class LevelCompleteScene extends Scene {
     const scoreGap = 150;
     ctx.textAlign = 'center';
     ctx.font = '10px ui-monospace, Menlo, monospace';
-    ctx.fillStyle = '#6e7681';
+    ctx.fillStyle = '#ffffff';
     ctx.fillText('LEVEL SCORE', W / 2 - scoreGap, scoreRowY);
     ctx.fillText('TOTAL SCORE', W / 2 + scoreGap, scoreRowY);
     ctx.font = 'bold 22px ui-monospace, Menlo, monospace';
@@ -292,7 +294,7 @@ export class LevelCompleteScene extends Scene {
     const commitY = card.y + 226;
 
     ctx.textAlign = 'left';
-    ctx.fillStyle = '#8b949e';
+    ctx.fillStyle = '#ffffff';
     ctx.font = '10px ui-monospace, Menlo, monospace';
     ctx.fillText('THEIR BIGGEST CONTRIBUTION', card.x + 32, commitY);
 
@@ -304,7 +306,7 @@ export class LevelCompleteScene extends Scene {
     }
     const metaY = commitY + 22 + msgLines.length * 18 + 6;
 
-    ctx.fillStyle = '#8b949e';
+    ctx.fillStyle = '#ffffff';
     ctx.font = '11px ui-monospace, Menlo, monospace';
     ctx.fillText(`${commit.sha}  ${commit.date}`, card.x + 32, metaY);
 
@@ -312,7 +314,7 @@ export class LevelCompleteScene extends Scene {
     ctx.fillText(`+${commit.additions.toLocaleString()}`, card.x + 32, metaY + 18);
     ctx.fillStyle = BALANCE.accentRed;
     ctx.fillText(`-${commit.deletions.toLocaleString()}`, card.x + 100, metaY + 18);
-    ctx.fillStyle = '#6e7681';
+    ctx.fillStyle = '#ffffff';
     ctx.fillText(`${commit.commits} commits that day`, card.x + 170, metaY + 18);
 
     const rects = this.buttonRects();

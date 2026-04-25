@@ -63,7 +63,7 @@ const STYLE_CSS = `
 }
 #osi-share-panel .osi-share-close {
   background: transparent;
-  color: #8b949e;
+  color: #ffffff;
   border: 1px solid #30363d;
   padding: 4px 10px;
   font: bold 11px ui-monospace, Menlo, monospace;
@@ -90,7 +90,7 @@ const STYLE_CSS = `
 }
 #osi-share-panel .osi-share-msg {
   font-size: 12px;
-  color: #8b949e;
+  color: #ffffff;
   line-height: 1.5;
   margin: 0;
   padding: 10px 12px;
@@ -324,7 +324,7 @@ function renderShareImage(opts: SharePanelOptions): HTMLCanvasElement {
   ctx.fillText(`I defeated ${opts.repoName}`, W / 2, 158);
 
   const totalCommits = opts.contributors.reduce((n, c) => n + c.totalCommits, 0);
-  ctx.fillStyle = '#8b949e';
+  ctx.fillStyle = '#ffffff';
   ctx.font = '22px ui-monospace, Menlo, monospace';
   ctx.fillText(
     `${totalCommits.toLocaleString()} contributions in the past year`,
@@ -356,19 +356,19 @@ function renderShareImage(opts: SharePanelOptions): HTMLCanvasElement {
     ctx.font = 'bold 16px ui-monospace, Menlo, monospace';
     const label = c.login.length > 14 ? c.login.slice(0, 13) + '…' : c.login;
     ctx.fillText(label, cx, rowY + radius + 26);
-    ctx.fillStyle = '#8b949e';
+    ctx.fillStyle = '#ffffff';
     ctx.font = '13px ui-monospace, Menlo, monospace';
     ctx.fillText(`${c.totalCommits} commits`, cx, rowY + radius + 46);
   }
 
-  ctx.fillStyle = '#6e7681';
+  ctx.fillStyle = '#ffffff';
   ctx.font = '14px ui-monospace, Menlo, monospace';
   ctx.fillText('FINAL SCORE', W / 2, 508);
   ctx.fillStyle = '#39d353';
   ctx.font = 'bold 52px ui-monospace, Menlo, monospace';
   ctx.fillText(opts.finalScore.toLocaleString(), W / 2, 562);
 
-  ctx.fillStyle = '#8b949e';
+  ctx.fillStyle = '#ffffff';
   ctx.font = 'bold 16px ui-monospace, Menlo, monospace';
   ctx.fillText('OPEN SOURCE INVADERS · play any repo', W / 2, H - 34);
 

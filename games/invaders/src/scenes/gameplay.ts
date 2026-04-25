@@ -343,7 +343,7 @@ function drawInstructions(ctx: CanvasRenderingContext2D, atlas: SpriteAtlas, mob
 
   ctx.textAlign = 'left';
   ctx.textBaseline = 'alphabetic';
-  ctx.fillStyle = '#8b949e';
+  ctx.fillStyle = '#ffffff';
   ctx.font = '10px ui-monospace, Menlo, monospace';
   ctx.fillText('HOW TO PLAY', contentX, boxY + padY + 2);
 
@@ -358,13 +358,13 @@ function drawInstructions(ctx: CanvasRenderingContext2D, atlas: SpriteAtlas, mob
   for (const [key, desc] of controls) {
     ctx.fillStyle = '#58a6ff';
     ctx.fillText(key, contentX, y);
-    ctx.fillStyle = '#8b949e';
+    ctx.fillStyle = '#ffffff';
     ctx.fillText(desc, contentX + 110, y);
     y += 18;
   }
 
   y += 14;
-  ctx.fillStyle = '#8b949e';
+  ctx.fillStyle = '#ffffff';
   ctx.font = '10px ui-monospace, Menlo, monospace';
   ctx.fillText('POWER-UPS  (auto on pickup)', contentX, y);
   y += 22;
@@ -389,13 +389,13 @@ function drawInstructions(ctx: CanvasRenderingContext2D, atlas: SpriteAtlas, mob
     }
     ctx.fillStyle = '#c9d1d9';
     ctx.fillText(def.label, contentX + 28, y);
-    ctx.fillStyle = '#8b949e';
+    ctx.fillStyle = '#ffffff';
     ctx.fillText(effects[def.kind] ?? '', contentX + 140, y);
     y += 22;
   }
 
   y += 6;
-  ctx.fillStyle = '#484f58';
+  ctx.fillStyle = '#ffffff';
   ctx.font = '10px ui-monospace, Menlo, monospace';
   ctx.fillText('squash = queued; fires on', contentX, y); y += 12;
   ctx.fillText('your next SPACE shot', contentX, y);
@@ -422,7 +422,7 @@ function drawInstructionsMobile(ctx: CanvasRenderingContext2D, atlas: SpriteAtla
 
   ctx.textAlign = 'left';
   ctx.textBaseline = 'alphabetic';
-  ctx.fillStyle = '#8b949e';
+  ctx.fillStyle = '#ffffff';
   ctx.font = '9px ui-monospace, Menlo, monospace';
   ctx.fillText('POWER-UPS', contentX, boxY + 14);
 
@@ -447,7 +447,7 @@ function drawInstructionsMobile(ctx: CanvasRenderingContext2D, atlas: SpriteAtla
     }
     ctx.fillStyle = '#c9d1d9';
     ctx.fillText(def.label, contentX + 22, y);
-    ctx.fillStyle = '#8b949e';
+    ctx.fillStyle = '#ffffff';
     ctx.font = '10px ui-monospace, Menlo, monospace';
     ctx.fillText(effects[def.kind] ?? '', contentX + 100, y);
     ctx.font = '11px ui-monospace, Menlo, monospace';
@@ -467,7 +467,7 @@ function drawGridHeader(ctx: CanvasRenderingContext2D, totalCommits: number, wee
     `${totalCommits.toLocaleString()} contributions in the last year`,
     cx, 30,
   );
-  ctx.fillStyle = '#8b949e';
+  ctx.fillStyle = '#ffffff';
   ctx.font = '10px ui-monospace, Menlo, monospace';
   ctx.fillText(`weeks defended: ${weeksSeen}`, cx, 46);
 
@@ -475,7 +475,7 @@ function drawGridHeader(ctx: CanvasRenderingContext2D, totalCommits: number, wee
   const legendY = 58;
   const legendCell = 10;
   const legendGap = 3;
-  ctx.fillStyle = '#8b949e';
+  ctx.fillStyle = '#ffffff';
   ctx.font = '10px ui-monospace, Menlo, monospace';
   ctx.textAlign = 'right';
   ctx.fillText('Less', legendX - 4, legendY + 8);

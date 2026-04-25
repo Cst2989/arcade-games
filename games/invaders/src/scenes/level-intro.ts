@@ -65,7 +65,7 @@ export class LevelIntroScene extends Scene {
     const heading = this.isBossLevel ? 'FINAL BOSS' : `LEVEL ${this.levelIndex + 1}`;
     ctx.fillText(heading, 40, 52);
 
-    ctx.fillStyle = '#6e7681';
+    ctx.fillStyle = '#ffffff';
     ctx.font = '11px ui-monospace, Menlo, monospace';
     ctx.fillText(`rank #${this.rank} · git blame target`, 40, 72);
 
@@ -87,7 +87,7 @@ export class LevelIntroScene extends Scene {
     const login = truncate(ctx, `@${this.profile.login}`, leftW - 40);
     ctx.fillText(login, leftX + leftW / 2, leftY + 220);
 
-    ctx.fillStyle = this.isBossLevel ? '#ffa657' : '#8b949e';
+    ctx.fillStyle = this.isBossLevel ? '#ffa657' : '#ffffff';
     ctx.font = '11px ui-monospace, Menlo, monospace';
     ctx.fillText(
       this.isBossLevel ? 'the most active committer this year' : `rank #${this.rank} by recent commits`,
@@ -96,7 +96,7 @@ export class LevelIntroScene extends Scene {
     );
 
     ctx.textAlign = 'left';
-    ctx.fillStyle = '#8b949e';
+    ctx.fillStyle = '#ffffff';
     ctx.font = '12px ui-monospace, Menlo, monospace';
     const bioLines = wrap(ctx, this.profile.bio || '—', leftW - 48, 3);
     for (let i = 0; i < bioLines.length; i++) {
@@ -104,7 +104,7 @@ export class LevelIntroScene extends Scene {
     }
 
     const metaY = leftY + 280 + bioLines.length * 18 + 20;
-    ctx.fillStyle = '#6e7681';
+    ctx.fillStyle = '#ffffff';
     ctx.font = '11px ui-monospace, Menlo, monospace';
     const locText = truncate(ctx, this.profile.location || 'unknown', leftW - 60);
     ctx.fillText(`📍 ${locText}`, leftX + 24, metaY);
@@ -130,7 +130,7 @@ export class LevelIntroScene extends Scene {
     ctx.strokeRect(rightX, rightY, rightW, rightH);
 
     ctx.textAlign = 'left';
-    ctx.fillStyle = '#6e7681';
+    ctx.fillStyle = '#ffffff';
     ctx.font = '11px ui-monospace, Menlo, monospace';
     ctx.fillText('DOSSIER  //  last 12 months', rightX + padX, rightY + 26);
 
@@ -159,7 +159,7 @@ export class LevelIntroScene extends Scene {
     y += 18;
 
     const commit = this.profile.biggestContribution;
-    ctx.fillStyle = '#6e7681';
+    ctx.fillStyle = '#ffffff';
     ctx.font = '10px ui-monospace, Menlo, monospace';
     ctx.fillText(`BIGGEST COMMIT  ·  ${commit.date}`, statX, y);
     y += 18;
@@ -172,7 +172,7 @@ export class LevelIntroScene extends Scene {
     }
     y += msgLines.length * 18 + 6;
 
-    ctx.fillStyle = '#6e7681';
+    ctx.fillStyle = '#ffffff';
     ctx.font = '10px ui-monospace, Menlo, monospace';
     ctx.fillText(`${commit.sha}  ·  ${commit.commits} commits that day`, statX, y);
 
@@ -215,7 +215,7 @@ function drawBigStat(
   color = '#c9d1d9',
 ): void {
   ctx.textAlign = 'left';
-  ctx.fillStyle = '#6e7681';
+  ctx.fillStyle = '#ffffff';
   ctx.font = '10px ui-monospace, Menlo, monospace';
   ctx.fillText(label.toUpperCase(), x, y);
   ctx.fillStyle = color;

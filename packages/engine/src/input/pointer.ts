@@ -9,10 +9,11 @@ export class Pointer {
   attach(canvas: HTMLCanvasElement): void {
     canvas.addEventListener('pointermove', (e) => {
       const r = canvas.getBoundingClientRect();
-      // Translate client coords into the canvas drawing buffer, so CSS
-      // scaling (HiDPI, responsive layouts) does not desync hit-testing.
-      const sx = canvas.width / r.width;
-      const sy = canvas.height / r.height;
+      // canvas.width is the physical drawing buffer (logical * dpr). Divide by
+      // dpr so hit-testing stays in the game's logical coordinate space.
+      const dpr = parseFloat(canvas.dataset.osiDpr ?? '') || (window.devicePixelRatio || 1);
+      const sx = canvas.width / dpr / r.width;
+      const sy = canvas.height / dpr / r.height;
       this.x = (e.clientX - r.left) * sx;
       this.y = (e.clientY - r.top) * sy;
     });

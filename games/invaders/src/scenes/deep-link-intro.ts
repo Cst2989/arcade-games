@@ -159,7 +159,7 @@ export class DeepLinkIntroScene extends Scene {
     ctx.font = 'bold 50px ui-monospace, Menlo, monospace';
     ctx.fillText('THE 5 BOSSES', W / 2, 256);
 
-    ctx.fillStyle = '#8b949e';
+    ctx.fillStyle = '#ffffff';
     ctx.font = '18px ui-monospace, Menlo, monospace';
     ctx.fillText('OF', W / 2, 290);
 

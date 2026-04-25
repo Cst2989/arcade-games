@@ -32,7 +32,7 @@ export function drawHud(renderer: Renderer, hud: HudState): void {
   ctx.fillStyle = BALANCE.accentGreen;
   const r = hud.playerMaxHp > 0 ? hud.playerHp / hud.playerMaxHp : 0;
   ctx.fillRect(W - hpW - 20, 16, hpW * r, mobile ? 8 : 12);
-  ctx.fillStyle = '#8b949e';
+  ctx.fillStyle = '#ffffff';
   ctx.textAlign = 'right';
   ctx.font = mobile ? '10px ui-monospace, Menlo, monospace' : '14px ui-monospace, Menlo, monospace';
   ctx.fillText(`HP ${hud.playerHp}/${hud.playerMaxHp}`, W - 20, mobile ? 38 : 44);
@@ -40,7 +40,7 @@ export function drawHud(renderer: Renderer, hud: HudState): void {
   if (!mobile) {
     ctx.font = '12px ui-monospace, Menlo, monospace';
     ctx.textAlign = 'right';
-    ctx.fillStyle = hud.bombsLeft > 0 ? '#f85149' : '#484f58';
+    ctx.fillStyle = hud.bombsLeft > 0 ? '#f85149' : '#ffffff';
     ctx.fillText(`BOMB x${hud.bombsLeft}  [X]`, W - 20, 64);
 
     let chipX = W - 20;

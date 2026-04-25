@@ -54,7 +54,7 @@ const STYLE_CSS = `
   margin: 0 0 14px 0;
   font-size: 12.5px;
   line-height: 1.6;
-  color: #8b949e;
+  color: #ffffff;
 }
 #osi-token-dialog p code {
   background: #0d1117;
@@ -95,13 +95,13 @@ const STYLE_CSS = `
 }
 #osi-token-dialog button:hover { transform: translateY(-1px); }
 #osi-token-dialog button[data-action="cancel"] {
-  background: #21262d; color: #8b949e; border-color: #30363d;
+  background: #21262d; color: #ffffff; border-color: #30363d;
 }
 #osi-token-dialog button[data-action="save"] {
   background: #238636; color: #ffffff; border-color: #2ea043;
 }
 #osi-token-dialog .osi-foot {
-  margin: 12px 0 0 0; font-size: 10.5px; color: #6e7681;
+  margin: 12px 0 0 0; font-size: 10.5px; color: #ffffff;
 }
 `;
 

@@ -113,7 +113,7 @@ function drawStatRow(
 ): void {
   ctx.textAlign = 'left';
   ctx.font = '10px ui-monospace, Menlo, monospace';
-  ctx.fillStyle = '#6e7681';
+  ctx.fillStyle = '#ffffff';
   ctx.fillText(label, x, y);
   ctx.font = '13px ui-monospace, Menlo, monospace';
   ctx.fillStyle = accent;
@@ -142,7 +142,7 @@ function drawWeekdayBars(
     ctx.fillRect(bx, y, barW, height);
     ctx.fillStyle = v > 0 ? '#26a641' : '#30363d';
     ctx.fillRect(bx, by, barW, h);
-    ctx.fillStyle = '#6e7681';
+    ctx.fillStyle = '#ffffff';
     ctx.font = '9px ui-monospace, Menlo, monospace';
     ctx.textAlign = 'center';
     ctx.fillText(labels[i]!, bx + barW / 2, y + height + 11);
@@ -170,7 +170,7 @@ export function drawContributorPanel(
 
   ctx.textAlign = 'left';
   ctx.textBaseline = 'alphabetic';
-  ctx.fillStyle = '#8b949e';
+  ctx.fillStyle = '#ffffff';
   ctx.font = '10px ui-monospace, Menlo, monospace';
   ctx.fillText('TARGET  // git blame', CONTENT_X, y);
 
@@ -181,7 +181,7 @@ export function drawContributorPanel(
   ctx.font = 'bold 18px ui-monospace, Menlo, monospace';
   const loginLabel = truncate(ctx, `@${profile.login}`, CONTENT_W - 56);
   ctx.fillText(loginLabel, CONTENT_X + 56, y + 34);
-  ctx.fillStyle = '#8b949e';
+  ctx.fillStyle = '#ffffff';
   ctx.font = '11px ui-monospace, Menlo, monospace';
   const bioLines = wrap(ctx, profile.bio, CONTENT_W - 56, 2);
   for (let i = 0; i < bioLines.length; i++) {
@@ -189,11 +189,11 @@ export function drawContributorPanel(
   }
 
   y += 86;
-  ctx.fillStyle = '#8b949e';
+  ctx.fillStyle = '#ffffff';
   ctx.font = '11px ui-monospace, Menlo, monospace';
   ctx.fillText(truncate(ctx, profile.location, CONTENT_W), CONTENT_X, y);
   y += 16;
-  ctx.fillStyle = '#6e7681';
+  ctx.fillStyle = '#ffffff';
   ctx.fillText(
     `joined ${profile.joinedYear}  ·  ${profile.publicRepos} repos  ·  ${profile.followers.toLocaleString()} followers`,
     CONTENT_X, y,
@@ -221,14 +221,14 @@ export function drawContributorPanel(
   drawStatRow(ctx, col1, y, 'TOP LANGUAGE', profile.topLanguage, '#58a6ff');
 
   y += 34;
-  ctx.fillStyle = '#8b949e';
+  ctx.fillStyle = '#ffffff';
   ctx.font = '10px ui-monospace, Menlo, monospace';
   ctx.fillText('COMMITS BY WEEKDAY', col1, y);
   drawWeekdayBars(ctx, col1, y + 6, CONTENT_W, 36, profile.weekdayCounts);
 
   y += 64;
   ctx.textAlign = 'left';
-  ctx.fillStyle = '#8b949e';
+  ctx.fillStyle = '#ffffff';
   ctx.font = '10px ui-monospace, Menlo, monospace';
   ctx.fillText('KILL COUNT', col1, y);
 
@@ -244,7 +244,7 @@ export function drawContributorPanel(
   ctx.fillStyle = '#c9d1d9';
   ctx.textAlign = 'left';
   ctx.fillText(`${kills.defeated} / ${kills.total} defeated`, col1, barY + 22);
-  ctx.fillStyle = '#8b949e';
+  ctx.fillStyle = '#ffffff';
   ctx.textAlign = 'right';
   ctx.fillText(`${Math.round(pct * 100)}%`, col1 + CONTENT_W, barY + 22);
 
@@ -270,7 +270,7 @@ function drawContributorPanelMobile(
   ctx.textAlign = 'left';
   ctx.textBaseline = 'alphabetic';
 
-  ctx.fillStyle = '#8b949e';
+  ctx.fillStyle = '#ffffff';
   ctx.font = '9px ui-monospace, Menlo, monospace';
   ctx.fillText('TARGET', col1, y);
 
@@ -280,7 +280,7 @@ function drawContributorPanelMobile(
   ctx.fillStyle = '#c9d1d9';
   ctx.font = 'bold 13px ui-monospace, Menlo, monospace';
   ctx.fillText(truncate(ctx, `@${profile.login}`, M_CONTENT_W - 38), col1 + 36, y + 16);
-  ctx.fillStyle = '#6e7681';
+  ctx.fillStyle = '#ffffff';
   ctx.font = '10px ui-monospace, Menlo, monospace';
   ctx.fillText(truncate(ctx, profile.bio, M_CONTENT_W - 38), col1 + 36, y + 30);
 
@@ -298,7 +298,7 @@ function drawContributorPanelMobile(
 
   y += 40;
   ctx.textAlign = 'left';
-  ctx.fillStyle = '#8b949e';
+  ctx.fillStyle = '#ffffff';
   ctx.font = '9px ui-monospace, Menlo, monospace';
   ctx.fillText('KILL COUNT', col1, y);
 
@@ -313,7 +313,7 @@ function drawContributorPanelMobile(
   ctx.fillStyle = '#c9d1d9';
   ctx.textAlign = 'left';
   ctx.fillText(`${kills.defeated}/${kills.total}`, col1, barY + 18);
-  ctx.fillStyle = '#8b949e';
+  ctx.fillStyle = '#ffffff';
   ctx.textAlign = 'right';
   ctx.fillText(`${Math.round(pct * 100)}%`, col1 + M_CONTENT_W, barY + 18);
 

@@ -138,7 +138,7 @@ export class VictoryScene extends Scene {
     ctx.textAlign = 'center';
     ctx.fillText('MAIN BRANCH GREEN', W / 2, 90);
     ctx.font = '16px ui-monospace, Menlo, monospace';
-    ctx.fillStyle = '#8b949e';
+    ctx.fillStyle = '#ffffff';
     ctx.fillText(`${this.repoName} — shipped`, W / 2, 118);
 
     const card = { x: W / 2 - 320, y: 150, w: 640, h: 380 };
@@ -149,7 +149,7 @@ export class VictoryScene extends Scene {
     ctx.strokeRect(card.x, card.y, card.w, card.h);
 
     ctx.textAlign = 'center';
-    ctx.fillStyle = '#6e7681';
+    ctx.fillStyle = '#ffffff';
     ctx.font = '11px ui-monospace, Menlo, monospace';
     ctx.fillText('FINAL SCORE', W / 2, card.y + 36);
     ctx.font = 'bold 56px ui-monospace, Menlo, monospace';
@@ -181,7 +181,7 @@ export class VictoryScene extends Scene {
     drawStat(ctx, col1X, row, 'POWER-UPS USED', powerupsCollected.toLocaleString(), '#a371f7');
     drawStat(ctx, col2X, row, 'BOMBS DETONATED', bombsUsed.toLocaleString(), '#f85149');
 
-    ctx.fillStyle = '#8b949e';
+    ctx.fillStyle = '#ffffff';
     ctx.font = '13px ui-monospace, Menlo, monospace';
     ctx.textAlign = 'center';
     ctx.fillText(this.touch ? 'TAP TO PLAY ANOTHER REPO' : 'ENTER to play another repo', W / 2, H - 24);
@@ -198,7 +198,7 @@ function drawStat(
   color: string,
 ): void {
   ctx.textAlign = 'left';
-  ctx.fillStyle = '#6e7681';
+  ctx.fillStyle = '#ffffff';
   ctx.font = '10px ui-monospace, Menlo, monospace';
   ctx.fillText(label, x, y);
   ctx.fillStyle = color;

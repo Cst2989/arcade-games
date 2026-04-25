@@ -65,7 +65,7 @@ export function drawBrandHeader(
   ctx.shadowBlur = 0;
 
   if (tagline) {
-    ctx.fillStyle = '#8b949e';
+    ctx.fillStyle = '#ffffff';
     ctx.font = `${compact ? 11 : 13}px ui-monospace, Menlo, monospace`;
     ctx.fillText(tagline, cx, titleY + (compact ? 18 : 24));
   }

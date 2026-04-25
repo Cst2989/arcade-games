@@ -135,7 +135,7 @@ export class TitleScene extends Scene {
       const cx = chipStartX + i * chipSpacing;
       const chipW = 160;
       const chipH = 28;
-      btn.style.cssText = `position:absolute;pointer-events:auto;touch-action:manipulation;left:${cx - chipW / 2}px;top:${chipY - chipH / 2}px;width:${chipW}px;height:${chipH}px;background:rgba(22,27,34,0.85);border:1px solid #30363d;color:#8b949e;font:12px ui-monospace,Menlo,monospace;padding:0;-webkit-tap-highlight-color:transparent;`;
+      btn.style.cssText = `position:absolute;pointer-events:auto;touch-action:manipulation;left:${cx - chipW / 2}px;top:${chipY - chipH / 2}px;width:${chipW}px;height:${chipH}px;background:rgba(22,27,34,0.85);border:1px solid #30363d;color:#ffffff;font:12px ui-monospace,Menlo,monospace;padding:0;-webkit-tap-highlight-color:transparent;`;
       btn.addEventListener('pointerdown', (e) => {
         e.preventDefault();
         this.onStart(name);
@@ -217,12 +217,12 @@ export class TitleScene extends Scene {
       'Top 5 contributors become 5 levels. The #1 committer is the final boss.',
       W / 2, card.y + 32,
     );
-    ctx.fillStyle = '#8b949e';
+    ctx.fillStyle = '#ffffff';
     ctx.fillText(
       '← → move · SPACE fire · X bomb · ESC pause',
       W / 2, card.y + 56,
     );
-    ctx.fillStyle = '#6e7681';
+    ctx.fillStyle = '#ffffff';
     ctx.font = '11px ui-monospace, Menlo, monospace';
     ctx.fillText(
       'Share a battle with  ?repo=owner/name',
@@ -231,7 +231,7 @@ export class TitleScene extends Scene {
 
     if (!this.touch) {
       ctx.font = '12px ui-monospace, Menlo, monospace';
-      ctx.fillStyle = '#8b949e';
+      ctx.fillStyle = '#ffffff';
       ctx.textAlign = 'center';
       ctx.fillText('ENTER A REPO — owner/name', W / 2, 300);
 
@@ -255,12 +255,12 @@ export class TitleScene extends Scene {
       ctx.font = '22px ui-monospace, Menlo, monospace';
       const cursor = Math.floor(this.blinkT * 2) % 2 === 0 ? '_' : ' ';
       const placeholder = this.inputValue === '';
-      ctx.fillStyle = placeholder ? '#484f58' : '#c9d1d9';
+      ctx.fillStyle = placeholder ? '#ffffff' : '#c9d1d9';
       const displayText = placeholder ? 'facebook/react' : this.inputValue;
       ctx.fillText(displayText + (placeholder ? '' : cursor), inputX + 30, inputY + 34);
 
       ctx.textAlign = 'center';
-      ctx.fillStyle = '#6e7681';
+      ctx.fillStyle = '#ffffff';
       ctx.font = '11px ui-monospace, Menlo, monospace';
       ctx.fillText('// or pick a featured repo with TAB', W / 2, 387);
 
@@ -279,7 +279,7 @@ export class TitleScene extends Scene {
         ctx.strokeStyle = selected ? '#39d353' : '#30363d';
         ctx.lineWidth = selected ? 2 : 1;
         ctx.strokeRect(cx - chipW / 2 + 0.5, cy - chipH / 2 + 0.5, chipW - 1, chipH - 1);
-        ctx.fillStyle = selected ? '#39d353' : '#8b949e';
+        ctx.fillStyle = selected ? '#39d353' : '#ffffff';
         ctx.font = '12px ui-monospace, Menlo, monospace';
         ctx.fillText(name, cx, cy + 4);
       });

@@ -42,7 +42,7 @@ export function drawContributorCard(
   ctx.textAlign = 'center';
   ctx.fillText(`@${data.login}`, x + w / 2, y + 220);
   ctx.font = '14px ui-monospace, Menlo, monospace';
-  ctx.fillStyle = '#8b949e';
+  ctx.fillStyle = '#ffffff';
   ctx.fillText(`rank #${data.rank}`, x + w / 2, y + 244);
   ctx.fillStyle = BALANCE.accentGreen;
   ctx.font = '18px ui-monospace, Menlo, monospace';

@@ -60,7 +60,7 @@ export class GameOverScene extends Scene {
     ctx.fillStyle = '#c9d1d9';
     ctx.font = '18px ui-monospace, Menlo, monospace';
     ctx.fillText(`final score  ${this.score}`, W / 2, 270);
-    ctx.fillStyle = '#8b949e';
+    ctx.fillStyle = '#ffffff';
     ctx.fillText(`weeks defended  ${this.waveReached}`, W / 2, 296);
 
     const pulse = 0.5 + 0.5 * Math.sin(this.elapsed * 2.4);

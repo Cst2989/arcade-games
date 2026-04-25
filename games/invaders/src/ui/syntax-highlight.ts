@@ -104,7 +104,7 @@ export function kindColor(kind: TokenKind): string {
   switch (kind) {
     case 'keyword': return '#ff7b72';
     case 'string': return '#a5d6ff';
-    case 'comment': return '#8b949e';
+    case 'comment': return '#ffffff';
     case 'number': return '#d2a8ff';
     default: return '#c9d1d9';
   }

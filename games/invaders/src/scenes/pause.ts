@@ -41,7 +41,7 @@ export class PauseScene extends Scene {
     ctx.textAlign = 'center';
     ctx.fillText('PAUSED', BALANCE.viewportWidth / 2, BALANCE.viewportHeight / 2);
     ctx.font = '14px ui-monospace, Menlo, monospace';
-    ctx.fillStyle = '#8b949e';
+    ctx.fillStyle = '#ffffff';
     ctx.fillText(this.touch ? 'TAP TO RESUME' : 'ESC to resume', BALANCE.viewportWidth / 2, BALANCE.viewportHeight / 2 + 30);
     ctx.restore();
   }
