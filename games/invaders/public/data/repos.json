@@ -1,0 +1,3905 @@
+{
+  "generatedAt": "2026-04-25T18:54:16Z",
+  "repos": [
+    {
+      "owner": "microsoft",
+      "name": "vscode",
+      "language": "TypeScript",
+      "description": "",
+      "totalContributions": 1500,
+      "top5": [
+        {
+          "login": "sandy081",
+          "avatarPath": "avatars/sandy081.png",
+          "contributions": 300,
+          "isBoss": true
+        },
+        {
+          "login": "mjbvz",
+          "avatarPath": "avatars/mjbvz.png",
+          "contributions": 300,
+          "isBoss": false
+        },
+        {
+          "login": "Tyriar",
+          "avatarPath": "avatars/Tyriar.png",
+          "contributions": 300,
+          "isBoss": false
+        },
+        {
+          "login": "jrieken",
+          "avatarPath": "avatars/jrieken.png",
+          "contributions": 300,
+          "isBoss": false
+        },
+        {
+          "login": "bpasero",
+          "avatarPath": "avatars/bpasero.png",
+          "contributions": 300,
+          "isBoss": false
+        }
+      ]
+    },
+    {
+      "owner": "storybookjs",
+      "name": "storybook",
+      "language": "TypeScript",
+      "description": "",
+      "totalContributions": 1500,
+      "top5": [
+        {
+          "login": "kasperpeulen",
+          "avatarPath": "avatars/kasperpeulen.png",
+          "contributions": 300,
+          "isBoss": true
+        },
+        {
+          "login": "JReinhold",
+          "avatarPath": "avatars/JReinhold.png",
+          "contributions": 300,
+          "isBoss": false
+        },
+        {
+          "login": "yannbf",
+          "avatarPath": "avatars/yannbf.png",
+          "contributions": 300,
+          "isBoss": false
+        },
+        {
+          "login": "valentinpalkovic",
+          "avatarPath": "avatars/valentinpalkovic.png",
+          "contributions": 300,
+          "isBoss": false
+        },
+        {
+          "login": "ndelangen",
+          "avatarPath": "avatars/ndelangen.png",
+          "contributions": 300,
+          "isBoss": false
+        }
+      ]
+    },
+    {
+      "owner": "nocodb",
+      "name": "nocodb",
+      "language": "TypeScript",
+      "description": "",
+      "totalContributions": 1500,
+      "top5": [
+        {
+          "login": "DarkPhoenix2704",
+          "avatarPath": "avatars/DarkPhoenix2704.png",
+          "contributions": 300,
+          "isBoss": true
+        },
+        {
+          "login": "dstala",
+          "avatarPath": "avatars/dstala.png",
+          "contributions": 300,
+          "isBoss": false
+        },
+        {
+          "login": "rameshmane7218",
+          "avatarPath": "avatars/rameshmane7218.png",
+          "contributions": 300,
+          "isBoss": false
+        },
+        {
+          "login": "pranavxc",
+          "avatarPath": "avatars/pranavxc.png",
+          "contributions": 300,
+          "isBoss": false
+        },
+        {
+          "login": "o1lab",
+          "avatarPath": "avatars/o1lab.png",
+          "contributions": 300,
+          "isBoss": false
+        }
+      ]
+    },
+    {
+      "owner": "ClickHouse",
+      "name": "ClickHouse",
+      "language": "C++",
+      "description": "",
+      "totalContributions": 1500,
+      "top5": [
+        {
+          "login": "Avogar",
+          "avatarPath": "avatars/Avogar.png",
+          "contributions": 300,
+          "isBoss": true
+        },
+        {
+          "login": "KochetovNicolai",
+          "avatarPath": "avatars/KochetovNicolai.png",
+          "contributions": 300,
+          "isBoss": false
+        },
+        {
+          "login": "kssenii",
+          "avatarPath": "avatars/kssenii.png",
+          "contributions": 300,
+          "isBoss": false
+        },
+        {
+          "login": "alesapin",
+          "avatarPath": "avatars/alesapin.png",
+          "contributions": 300,
+          "isBoss": false
+        },
+        {
+          "login": "alexey-milovidov",
+          "avatarPath": "avatars/alexey-milovidov.png",
+          "contributions": 300,
+          "isBoss": false
+        }
+      ]
+    },
+    {
+      "owner": "duckdb",
+      "name": "duckdb",
+      "language": "C++",
+      "description": "",
+      "totalContributions": 1500,
+      "top5": [
+        {
+          "login": "taniabogatsch",
+          "avatarPath": "avatars/taniabogatsch.png",
+          "contributions": 300,
+          "isBoss": true
+        },
+        {
+          "login": "hannes",
+          "avatarPath": "avatars/hannes.png",
+          "contributions": 300,
+          "isBoss": false
+        },
+        {
+          "login": "pdet",
+          "avatarPath": "avatars/pdet.png",
+          "contributions": 300,
+          "isBoss": false
+        },
+        {
+          "login": "Tishj",
+          "avatarPath": "avatars/Tishj.png",
+          "contributions": 300,
+          "isBoss": false
+        },
+        {
+          "login": "Mytherin",
+          "avatarPath": "avatars/Mytherin.png",
+          "contributions": 300,
+          "isBoss": false
+        }
+      ]
+    },
+    {
+      "owner": "home-assistant",
+      "name": "core",
+      "language": "Python",
+      "description": "",
+      "totalContributions": 1500,
+      "top5": [
+        {
+          "login": "joostlek",
+          "avatarPath": "avatars/joostlek.png",
+          "contributions": 300,
+          "isBoss": true
+        },
+        {
+          "login": "frenck",
+          "avatarPath": "avatars/frenck.png",
+          "contributions": 300,
+          "isBoss": false
+        },
+        {
+          "login": "emontnemery",
+          "avatarPath": "avatars/emontnemery.png",
+          "contributions": 300,
+          "isBoss": false
+        },
+        {
+          "login": "epenet",
+          "avatarPath": "avatars/epenet.png",
+          "contributions": 300,
+          "isBoss": false
+        },
+        {
+          "login": "bdraco",
+          "avatarPath": "avatars/bdraco.png",
+          "contributions": 300,
+          "isBoss": false
+        }
+      ]
+    },
+    {
+      "owner": "appwrite",
+      "name": "appwrite",
+      "language": "TypeScript",
+      "description": "",
+      "totalContributions": 1498,
+      "top5": [
+        {
+          "login": "ChiragAgg5k",
+          "avatarPath": "avatars/ChiragAgg5k.png",
+          "contributions": 300,
+          "isBoss": true
+        },
+        {
+          "login": "lohanidamodar",
+          "avatarPath": "avatars/lohanidamodar.png",
+          "contributions": 300,
+          "isBoss": false
+        },
+        {
+          "login": "Meldiron",
+          "avatarPath": "avatars/Meldiron.png",
+          "contributions": 300,
+          "isBoss": false
+        },
+        {
+          "login": "abnegate",
+          "avatarPath": "avatars/abnegate.png",
+          "contributions": 300,
+          "isBoss": false
+        },
+        {
+          "login": "fogelito",
+          "avatarPath": "avatars/fogelito.png",
+          "contributions": 298,
+          "isBoss": false
+        }
+      ]
+    },
+    {
+      "owner": "getsentry",
+      "name": "sentry",
+      "language": "Python",
+      "description": "",
+      "totalContributions": 1461,
+      "top5": [
+        {
+          "login": "priscilawebdev",
+          "avatarPath": "avatars/priscilawebdev.png",
+          "contributions": 300,
+          "isBoss": true
+        },
+        {
+          "login": "Zylphrex",
+          "avatarPath": "avatars/Zylphrex.png",
+          "contributions": 300,
+          "isBoss": false
+        },
+        {
+          "login": "scttcper",
+          "avatarPath": "avatars/scttcper.png",
+          "contributions": 300,
+          "isBoss": false
+        },
+        {
+          "login": "evanpurkhiser",
+          "avatarPath": "avatars/evanpurkhiser.png",
+          "contributions": 300,
+          "isBoss": false
+        },
+        {
+          "login": "asottile-sentry",
+          "avatarPath": "avatars/asottile-sentry.png",
+          "contributions": 261,
+          "isBoss": false
+        }
+      ]
+    },
+    {
+      "owner": "twentyhq",
+      "name": "twenty",
+      "language": "TypeScript",
+      "description": "",
+      "totalContributions": 1460,
+      "top5": [
+        {
+          "login": "prastoin",
+          "avatarPath": "avatars/prastoin.png",
+          "contributions": 300,
+          "isBoss": true
+        },
+        {
+          "login": "FelixMalfait",
+          "avatarPath": "avatars/FelixMalfait.png",
+          "contributions": 300,
+          "isBoss": false
+        },
+        {
+          "login": "charlesBochet",
+          "avatarPath": "avatars/charlesBochet.png",
+          "contributions": 300,
+          "isBoss": false
+        },
+        {
+          "login": "martmull",
+          "avatarPath": "avatars/martmull.png",
+          "contributions": 283,
+          "isBoss": false
+        },
+        {
+          "login": "thomtrp",
+          "avatarPath": "avatars/thomtrp.png",
+          "contributions": 277,
+          "isBoss": false
+        }
+      ]
+    },
+    {
+      "owner": "discourse",
+      "name": "discourse",
+      "language": "Ruby",
+      "description": "",
+      "totalContributions": 1415,
+      "top5": [
+        {
+          "login": "awesomerobot",
+          "avatarPath": "avatars/awesomerobot.png",
+          "contributions": 300,
+          "isBoss": true
+        },
+        {
+          "login": "davidtaylorhq",
+          "avatarPath": "avatars/davidtaylorhq.png",
+          "contributions": 300,
+          "isBoss": false
+        },
+        {
+          "login": "ZogStriP",
+          "avatarPath": "avatars/ZogStriP.png",
+          "contributions": 300,
+          "isBoss": false
+        },
+        {
+          "login": "jjaffeux",
+          "avatarPath": "avatars/jjaffeux.png",
+          "contributions": 283,
+          "isBoss": false
+        },
+        {
+          "login": "tgxworld",
+          "avatarPath": "avatars/tgxworld.png",
+          "contributions": 232,
+          "isBoss": false
+        }
+      ]
+    },
+    {
+      "owner": "angular",
+      "name": "angular",
+      "language": "TypeScript",
+      "description": "",
+      "totalContributions": 1396,
+      "top5": [
+        {
+          "login": "angular-robot",
+          "avatarPath": "avatars/angular-robot.png",
+          "contributions": 300,
+          "isBoss": true
+        },
+        {
+          "login": "crisbeto",
+          "avatarPath": "avatars/crisbeto.png",
+          "contributions": 299,
+          "isBoss": false
+        },
+        {
+          "login": "JeanMeche",
+          "avatarPath": "avatars/JeanMeche.png",
+          "contributions": 296,
+          "isBoss": false
+        },
+        {
+          "login": "atscott",
+          "avatarPath": "avatars/atscott.png",
+          "contributions": 258,
+          "isBoss": false
+        },
+        {
+          "login": "alan-agius4",
+          "avatarPath": "avatars/alan-agius4.png",
+          "contributions": 243,
+          "isBoss": false
+        }
+      ]
+    },
+    {
+      "owner": "penpot",
+      "name": "penpot",
+      "language": "Clojure",
+      "description": "",
+      "totalContributions": 1344,
+      "top5": [
+        {
+          "login": "elenatorro",
+          "avatarPath": "avatars/elenatorro.png",
+          "contributions": 300,
+          "isBoss": true
+        },
+        {
+          "login": "superalex",
+          "avatarPath": "avatars/superalex.png",
+          "contributions": 300,
+          "isBoss": false
+        },
+        {
+          "login": "niwinz",
+          "avatarPath": "avatars/niwinz.png",
+          "contributions": 300,
+          "isBoss": false
+        },
+        {
+          "login": "Alotor",
+          "avatarPath": "avatars/Alotor.png",
+          "contributions": 243,
+          "isBoss": false
+        },
+        {
+          "login": "EvaMarco",
+          "avatarPath": "avatars/EvaMarco.png",
+          "contributions": 201,
+          "isBoss": false
+        }
+      ]
+    },
+    {
+      "owner": "expo",
+      "name": "expo",
+      "language": "TypeScript",
+      "description": "",
+      "totalContributions": 1329,
+      "top5": [
+        {
+          "login": "alanjhughes",
+          "avatarPath": "avatars/alanjhughes.png",
+          "contributions": 300,
+          "isBoss": true
+        },
+        {
+          "login": "amandeepmittal",
+          "avatarPath": "avatars/amandeepmittal.png",
+          "contributions": 300,
+          "isBoss": false
+        },
+        {
+          "login": "lukmccall",
+          "avatarPath": "avatars/lukmccall.png",
+          "contributions": 300,
+          "isBoss": false
+        },
+        {
+          "login": "brentvatne",
+          "avatarPath": "avatars/brentvatne.png",
+          "contributions": 240,
+          "isBoss": false
+        },
+        {
+          "login": "Kudo",
+          "avatarPath": "avatars/Kudo.png",
+          "contributions": 189,
+          "isBoss": false
+        }
+      ]
+    },
+    {
+      "owner": "nrwl",
+      "name": "nx",
+      "language": "TypeScript",
+      "description": "",
+      "totalContributions": 1327,
+      "top5": [
+        {
+          "login": "jaysoo",
+          "avatarPath": "avatars/jaysoo.png",
+          "contributions": 300,
+          "isBoss": true
+        },
+        {
+          "login": "FrozenPandaz",
+          "avatarPath": "avatars/FrozenPandaz.png",
+          "contributions": 300,
+          "isBoss": false
+        },
+        {
+          "login": "leosvelperez",
+          "avatarPath": "avatars/leosvelperez.png",
+          "contributions": 290,
+          "isBoss": false
+        },
+        {
+          "login": "Coly010",
+          "avatarPath": "avatars/Coly010.png",
+          "contributions": 259,
+          "isBoss": false
+        },
+        {
+          "login": "AgentEnder",
+          "avatarPath": "avatars/AgentEnder.png",
+          "contributions": 178,
+          "isBoss": false
+        }
+      ]
+    },
+    {
+      "owner": "vercel",
+      "name": "next.js",
+      "language": "JavaScript",
+      "description": "",
+      "totalContributions": 1289,
+      "top5": [
+        {
+          "login": "eps1lon",
+          "avatarPath": "avatars/eps1lon.png",
+          "contributions": 300,
+          "isBoss": true
+        },
+        {
+          "login": "vercel-release-bot",
+          "avatarPath": "avatars/vercel-release-bot.png",
+          "contributions": 300,
+          "isBoss": false
+        },
+        {
+          "login": "sokra",
+          "avatarPath": "avatars/sokra.png",
+          "contributions": 300,
+          "isBoss": false
+        },
+        {
+          "login": "timneutkens",
+          "avatarPath": "avatars/timneutkens.png",
+          "contributions": 204,
+          "isBoss": false
+        },
+        {
+          "login": "ijjk",
+          "avatarPath": "avatars/ijjk.png",
+          "contributions": 185,
+          "isBoss": false
+        }
+      ]
+    },
+    {
+      "owner": "vercel",
+      "name": "ai",
+      "language": "TypeScript",
+      "description": "",
+      "totalContributions": 1266,
+      "top5": [
+        {
+          "login": "lgrammel",
+          "avatarPath": "avatars/lgrammel.png",
+          "contributions": 300,
+          "isBoss": true
+        },
+        {
+          "login": "gr2m",
+          "avatarPath": "avatars/gr2m.png",
+          "contributions": 286,
+          "isBoss": false
+        },
+        {
+          "login": "dancer",
+          "avatarPath": "avatars/dancer.png",
+          "contributions": 269,
+          "isBoss": false
+        },
+        {
+          "login": "nicoalbanese",
+          "avatarPath": "avatars/nicoalbanese.png",
+          "contributions": 217,
+          "isBoss": false
+        },
+        {
+          "login": "aayush-kapoor",
+          "avatarPath": "avatars/aayush-kapoor.png",
+          "contributions": 194,
+          "isBoss": false
+        }
+      ]
+    },
+    {
+      "owner": "microsoft",
+      "name": "playwright",
+      "language": "TypeScript",
+      "description": "",
+      "totalContributions": 1258,
+      "top5": [
+        {
+          "login": "yury-s",
+          "avatarPath": "avatars/yury-s.png",
+          "contributions": 300,
+          "isBoss": true
+        },
+        {
+          "login": "dgozman",
+          "avatarPath": "avatars/dgozman.png",
+          "contributions": 300,
+          "isBoss": false
+        },
+        {
+          "login": "pavelfeldman",
+          "avatarPath": "avatars/pavelfeldman.png",
+          "contributions": 300,
+          "isBoss": false
+        },
+        {
+          "login": "Skn0tt",
+          "avatarPath": "avatars/Skn0tt.png",
+          "contributions": 214,
+          "isBoss": false
+        },
+        {
+          "login": "mxschmitt",
+          "avatarPath": "avatars/mxschmitt.png",
+          "contributions": 144,
+          "isBoss": false
+        }
+      ]
+    },
+    {
+      "owner": "oven-sh",
+      "name": "bun",
+      "language": "Zig",
+      "description": "",
+      "totalContributions": 1229,
+      "top5": [
+        {
+          "login": "robobun",
+          "avatarPath": "avatars/robobun.png",
+          "contributions": 300,
+          "isBoss": true
+        },
+        {
+          "login": "Jarred-Sumner",
+          "avatarPath": "avatars/Jarred-Sumner.png",
+          "contributions": 300,
+          "isBoss": false
+        },
+        {
+          "login": "dylan-conway",
+          "avatarPath": "avatars/dylan-conway.png",
+          "contributions": 280,
+          "isBoss": false
+        },
+        {
+          "login": "nektro",
+          "avatarPath": "avatars/nektro.png",
+          "contributions": 237,
+          "isBoss": false
+        },
+        {
+          "login": "alii",
+          "avatarPath": "avatars/alii.png",
+          "contributions": 112,
+          "isBoss": false
+        }
+      ]
+    },
+    {
+      "owner": "elastic",
+      "name": "kibana",
+      "language": "TypeScript",
+      "description": "",
+      "totalContributions": 1227,
+      "top5": [
+        {
+          "login": "kibanamachine",
+          "avatarPath": "avatars/kibanamachine.png",
+          "contributions": 300,
+          "isBoss": true
+        },
+        {
+          "login": "mistic",
+          "avatarPath": "avatars/mistic.png",
+          "contributions": 300,
+          "isBoss": false
+        },
+        {
+          "login": "stratoula",
+          "avatarPath": "avatars/stratoula.png",
+          "contributions": 259,
+          "isBoss": false
+        },
+        {
+          "login": "flash1293",
+          "avatarPath": "avatars/flash1293.png",
+          "contributions": 212,
+          "isBoss": false
+        },
+        {
+          "login": "nreese",
+          "avatarPath": "avatars/nreese.png",
+          "contributions": 156,
+          "isBoss": false
+        }
+      ]
+    },
+    {
+      "owner": "nextcloud",
+      "name": "server",
+      "language": "PHP",
+      "description": "",
+      "totalContributions": 1185,
+      "top5": [
+        {
+          "login": "nextcloud-bot",
+          "avatarPath": "avatars/nextcloud-bot.png",
+          "contributions": 300,
+          "isBoss": true
+        },
+        {
+          "login": "nickvergessen",
+          "avatarPath": "avatars/nickvergessen.png",
+          "contributions": 300,
+          "isBoss": false
+        },
+        {
+          "login": "skjnldsv",
+          "avatarPath": "avatars/skjnldsv.png",
+          "contributions": 280,
+          "isBoss": false
+        },
+        {
+          "login": "icewind1991",
+          "avatarPath": "avatars/icewind1991.png",
+          "contributions": 270,
+          "isBoss": false
+        },
+        {
+          "login": "blizzz",
+          "avatarPath": "avatars/blizzz.png",
+          "contributions": 35,
+          "isBoss": false
+        }
+      ]
+    },
+    {
+      "owner": "cockroachdb",
+      "name": "cockroach",
+      "language": "Go",
+      "description": "",
+      "totalContributions": 1163,
+      "top5": [
+        {
+          "login": "yuzefovich",
+          "avatarPath": "avatars/yuzefovich.png",
+          "contributions": 300,
+          "isBoss": true
+        },
+        {
+          "login": "rafiss",
+          "avatarPath": "avatars/rafiss.png",
+          "contributions": 299,
+          "isBoss": false
+        },
+        {
+          "login": "tbg",
+          "avatarPath": "avatars/tbg.png",
+          "contributions": 299,
+          "isBoss": false
+        },
+        {
+          "login": "dt",
+          "avatarPath": "avatars/dt.png",
+          "contributions": 158,
+          "isBoss": false
+        },
+        {
+          "login": "RaduBerinde",
+          "avatarPath": "avatars/RaduBerinde.png",
+          "contributions": 107,
+          "isBoss": false
+        }
+      ]
+    },
+    {
+      "owner": "immich-app",
+      "name": "immich",
+      "language": "TypeScript",
+      "description": "",
+      "totalContributions": 1156,
+      "top5": [
+        {
+          "login": "jrasm91",
+          "avatarPath": "avatars/jrasm91.png",
+          "contributions": 300,
+          "isBoss": true
+        },
+        {
+          "login": "alextran1502",
+          "avatarPath": "avatars/alextran1502.png",
+          "contributions": 300,
+          "isBoss": false
+        },
+        {
+          "login": "shenlong-tanwen",
+          "avatarPath": "avatars/shenlong-tanwen.png",
+          "contributions": 224,
+          "isBoss": false
+        },
+        {
+          "login": "danieldietzler",
+          "avatarPath": "avatars/danieldietzler.png",
+          "contributions": 172,
+          "isBoss": false
+        },
+        {
+          "login": "midzelis",
+          "avatarPath": "avatars/midzelis.png",
+          "contributions": 160,
+          "isBoss": false
+        }
+      ]
+    },
+    {
+      "owner": "pytorch",
+      "name": "pytorch",
+      "language": "Python",
+      "description": "",
+      "totalContributions": 1129,
+      "top5": [
+        {
+          "login": "anijain2305",
+          "avatarPath": "avatars/anijain2305.png",
+          "contributions": 300,
+          "isBoss": true
+        },
+        {
+          "login": "cyyever",
+          "avatarPath": "avatars/cyyever.png",
+          "contributions": 300,
+          "isBoss": false
+        },
+        {
+          "login": "malfet",
+          "avatarPath": "avatars/malfet.png",
+          "contributions": 300,
+          "isBoss": false
+        },
+        {
+          "login": "ezyang",
+          "avatarPath": "avatars/ezyang.png",
+          "contributions": 180,
+          "isBoss": false
+        },
+        {
+          "login": "zou3519",
+          "avatarPath": "avatars/zou3519.png",
+          "contributions": 49,
+          "isBoss": false
+        }
+      ]
+    },
+    {
+      "owner": "tldraw",
+      "name": "tldraw",
+      "language": "TypeScript",
+      "description": "",
+      "totalContributions": 1047,
+      "top5": [
+        {
+          "login": "steveruizok",
+          "avatarPath": "avatars/steveruizok.png",
+          "contributions": 300,
+          "isBoss": true
+        },
+        {
+          "login": "mimecuvalo",
+          "avatarPath": "avatars/mimecuvalo.png",
+          "contributions": 270,
+          "isBoss": false
+        },
+        {
+          "login": "MitjaBezensek",
+          "avatarPath": "avatars/MitjaBezensek.png",
+          "contributions": 252,
+          "isBoss": false
+        },
+        {
+          "login": "ds300",
+          "avatarPath": "avatars/ds300.png",
+          "contributions": 136,
+          "isBoss": false
+        },
+        {
+          "login": "SomeHats",
+          "avatarPath": "avatars/SomeHats.png",
+          "contributions": 89,
+          "isBoss": false
+        }
+      ]
+    },
+    {
+      "owner": "facebook",
+      "name": "react-native",
+      "language": "C++",
+      "description": "",
+      "totalContributions": 1001,
+      "top5": [
+        {
+          "login": "rubennorte",
+          "avatarPath": "avatars/rubennorte.png",
+          "contributions": 259,
+          "isBoss": true
+        },
+        {
+          "login": "cortinico",
+          "avatarPath": "avatars/cortinico.png",
+          "contributions": 212,
+          "isBoss": false
+        },
+        {
+          "login": "cipolleschi",
+          "avatarPath": "avatars/cipolleschi.png",
+          "contributions": 198,
+          "isBoss": false
+        },
+        {
+          "login": "mdvacca",
+          "avatarPath": "avatars/mdvacca.png",
+          "contributions": 187,
+          "isBoss": false
+        },
+        {
+          "login": "sammy-SC",
+          "avatarPath": "avatars/sammy-SC.png",
+          "contributions": 145,
+          "isBoss": false
+        }
+      ]
+    },
+    {
+      "owner": "elastic",
+      "name": "elasticsearch",
+      "language": "Java",
+      "description": "",
+      "totalContributions": 1001,
+      "top5": [
+        {
+          "login": "elasticsearchmachine",
+          "avatarPath": "avatars/elasticsearchmachine.png",
+          "contributions": 300,
+          "isBoss": true
+        },
+        {
+          "login": "nik9000",
+          "avatarPath": "avatars/nik9000.png",
+          "contributions": 240,
+          "isBoss": false
+        },
+        {
+          "login": "DaveCTurner",
+          "avatarPath": "avatars/DaveCTurner.png",
+          "contributions": 221,
+          "isBoss": false
+        },
+        {
+          "login": "rjernst",
+          "avatarPath": "avatars/rjernst.png",
+          "contributions": 126,
+          "isBoss": false
+        },
+        {
+          "login": "martijnvg",
+          "avatarPath": "avatars/martijnvg.png",
+          "contributions": 114,
+          "isBoss": false
+        }
+      ]
+    },
+    {
+      "owner": "tensorflow",
+      "name": "tensorflow",
+      "language": "C++",
+      "description": "",
+      "totalContributions": 991,
+      "top5": [
+        {
+          "login": "ezhulenev",
+          "avatarPath": "avatars/ezhulenev.png",
+          "contributions": 300,
+          "isBoss": true
+        },
+        {
+          "login": "tensorflower-gardener",
+          "avatarPath": "avatars/tensorflower-gardener.png",
+          "contributions": 300,
+          "isBoss": false
+        },
+        {
+          "login": "akuegel",
+          "avatarPath": "avatars/akuegel.png",
+          "contributions": 287,
+          "isBoss": false
+        },
+        {
+          "login": "hawkinsp",
+          "avatarPath": "avatars/hawkinsp.png",
+          "contributions": 95,
+          "isBoss": false
+        },
+        {
+          "login": "mrry",
+          "avatarPath": "avatars/mrry.png",
+          "contributions": 9,
+          "isBoss": false
+        }
+      ]
+    },
+    {
+      "owner": "mastodon",
+      "name": "mastodon",
+      "language": "Ruby",
+      "description": "",
+      "totalContributions": 970,
+      "top5": [
+        {
+          "login": "mjankowski",
+          "avatarPath": "avatars/mjankowski.png",
+          "contributions": 300,
+          "isBoss": true
+        },
+        {
+          "login": "ClearlyClaire",
+          "avatarPath": "avatars/ClearlyClaire.png",
+          "contributions": 300,
+          "isBoss": false
+        },
+        {
+          "login": "diondiondion",
+          "avatarPath": "avatars/diondiondion.png",
+          "contributions": 293,
+          "isBoss": false
+        },
+        {
+          "login": "Gargron",
+          "avatarPath": "avatars/Gargron.png",
+          "contributions": 50,
+          "isBoss": false
+        },
+        {
+          "login": "renchap",
+          "avatarPath": "avatars/renchap.png",
+          "contributions": 27,
+          "isBoss": false
+        }
+      ]
+    },
+    {
+      "owner": "mrdoob",
+      "name": "three.js",
+      "language": "JavaScript",
+      "description": "",
+      "totalContributions": 967,
+      "top5": [
+        {
+          "login": "Mugen87",
+          "avatarPath": "avatars/Mugen87.png",
+          "contributions": 300,
+          "isBoss": true
+        },
+        {
+          "login": "mrdoob",
+          "avatarPath": "avatars/mrdoob.png",
+          "contributions": 300,
+          "isBoss": false
+        },
+        {
+          "login": "sunag",
+          "avatarPath": "avatars/sunag.png",
+          "contributions": 297,
+          "isBoss": false
+        },
+        {
+          "login": "WestLangley",
+          "avatarPath": "avatars/WestLangley.png",
+          "contributions": 53,
+          "isBoss": false
+        },
+        {
+          "login": "gkjohnson",
+          "avatarPath": "avatars/gkjohnson.png",
+          "contributions": 17,
+          "isBoss": false
+        }
+      ]
+    },
+    {
+      "owner": "langchain-ai",
+      "name": "langchain",
+      "language": "Python",
+      "description": "",
+      "totalContributions": 921,
+      "top5": [
+        {
+          "login": "mdrxy",
+          "avatarPath": "avatars/mdrxy.png",
+          "contributions": 300,
+          "isBoss": true
+        },
+        {
+          "login": "ccurme",
+          "avatarPath": "avatars/ccurme.png",
+          "contributions": 300,
+          "isBoss": false
+        },
+        {
+          "login": "cbornet",
+          "avatarPath": "avatars/cbornet.png",
+          "contributions": 191,
+          "isBoss": false
+        },
+        {
+          "login": "eyurtsev",
+          "avatarPath": "avatars/eyurtsev.png",
+          "contributions": 121,
+          "isBoss": false
+        },
+        {
+          "login": "hinthornw",
+          "avatarPath": "avatars/hinthornw.png",
+          "contributions": 9,
+          "isBoss": false
+        }
+      ]
+    },
+    {
+      "owner": "supabase",
+      "name": "supabase",
+      "language": "TypeScript",
+      "description": "",
+      "totalContributions": 917,
+      "top5": [
+        {
+          "login": "charislam",
+          "avatarPath": "avatars/charislam.png",
+          "contributions": 300,
+          "isBoss": true
+        },
+        {
+          "login": "joshenlim",
+          "avatarPath": "avatars/joshenlim.png",
+          "contributions": 300,
+          "isBoss": false
+        },
+        {
+          "login": "alaister",
+          "avatarPath": "avatars/alaister.png",
+          "contributions": 142,
+          "isBoss": false
+        },
+        {
+          "login": "fsansalvadore",
+          "avatarPath": "avatars/fsansalvadore.png",
+          "contributions": 108,
+          "isBoss": false
+        },
+        {
+          "login": "saltcod",
+          "avatarPath": "avatars/saltcod.png",
+          "contributions": 67,
+          "isBoss": false
+        }
+      ]
+    },
+    {
+      "owner": "n8n-io",
+      "name": "n8n",
+      "language": "TypeScript",
+      "description": "",
+      "totalContributions": 887,
+      "top5": [
+        {
+          "login": "ivov",
+          "avatarPath": "avatars/ivov.png",
+          "contributions": 300,
+          "isBoss": true
+        },
+        {
+          "login": "alexgrozav",
+          "avatarPath": "avatars/alexgrozav.png",
+          "contributions": 198,
+          "isBoss": false
+        },
+        {
+          "login": "tomi",
+          "avatarPath": "avatars/tomi.png",
+          "contributions": 142,
+          "isBoss": false
+        },
+        {
+          "login": "cstuncsik",
+          "avatarPath": "avatars/cstuncsik.png",
+          "contributions": 124,
+          "isBoss": false
+        },
+        {
+          "login": "OlegIvaniv",
+          "avatarPath": "avatars/OlegIvaniv.png",
+          "contributions": 123,
+          "isBoss": false
+        }
+      ]
+    },
+    {
+      "owner": "biomejs",
+      "name": "biome",
+      "language": "Rust",
+      "description": "",
+      "totalContributions": 885,
+      "top5": [
+        {
+          "login": "ematipico",
+          "avatarPath": "avatars/ematipico.png",
+          "contributions": 300,
+          "isBoss": true
+        },
+        {
+          "login": "dyc3",
+          "avatarPath": "avatars/dyc3.png",
+          "contributions": 221,
+          "isBoss": false
+        },
+        {
+          "login": "arendjr",
+          "avatarPath": "avatars/arendjr.png",
+          "contributions": 192,
+          "isBoss": false
+        },
+        {
+          "login": "siketyan",
+          "avatarPath": "avatars/siketyan.png",
+          "contributions": 109,
+          "isBoss": false
+        },
+        {
+          "login": "denbezrukov",
+          "avatarPath": "avatars/denbezrukov.png",
+          "contributions": 63,
+          "isBoss": false
+        }
+      ]
+    },
+    {
+      "owner": "denoland",
+      "name": "deno",
+      "language": "Rust",
+      "description": "",
+      "totalContributions": 880,
+      "top5": [
+        {
+          "login": "dsherret",
+          "avatarPath": "avatars/dsherret.png",
+          "contributions": 300,
+          "isBoss": true
+        },
+        {
+          "login": "bartlomieju",
+          "avatarPath": "avatars/bartlomieju.png",
+          "contributions": 300,
+          "isBoss": false
+        },
+        {
+          "login": "littledivy",
+          "avatarPath": "avatars/littledivy.png",
+          "contributions": 118,
+          "isBoss": false
+        },
+        {
+          "login": "kt3k",
+          "avatarPath": "avatars/kt3k.png",
+          "contributions": 85,
+          "isBoss": false
+        },
+        {
+          "login": "nayeemrmn",
+          "avatarPath": "avatars/nayeemrmn.png",
+          "contributions": 77,
+          "isBoss": false
+        }
+      ]
+    },
+    {
+      "owner": "ant-design",
+      "name": "ant-design",
+      "language": "TypeScript",
+      "description": "",
+      "totalContributions": 874,
+      "top5": [
+        {
+          "login": "thinkasany",
+          "avatarPath": "avatars/thinkasany.png",
+          "contributions": 300,
+          "isBoss": true
+        },
+        {
+          "login": "li-jia-nan",
+          "avatarPath": "avatars/li-jia-nan.png",
+          "contributions": 300,
+          "isBoss": false
+        },
+        {
+          "login": "zombieJ",
+          "avatarPath": "avatars/zombieJ.png",
+          "contributions": 140,
+          "isBoss": false
+        },
+        {
+          "login": "afc163",
+          "avatarPath": "avatars/afc163.png",
+          "contributions": 117,
+          "isBoss": false
+        },
+        {
+          "login": "MadCcc",
+          "avatarPath": "avatars/MadCcc.png",
+          "contributions": 17,
+          "isBoss": false
+        }
+      ]
+    },
+    {
+      "owner": "swc-project",
+      "name": "swc",
+      "language": "Rust",
+      "description": "",
+      "totalContributions": 853,
+      "top5": [
+        {
+          "login": "kdy1",
+          "avatarPath": "avatars/kdy1.png",
+          "contributions": 300,
+          "isBoss": true
+        },
+        {
+          "login": "swc-bot",
+          "avatarPath": "avatars/swc-bot.png",
+          "contributions": 293,
+          "isBoss": false
+        },
+        {
+          "login": "bvanjoi",
+          "avatarPath": "avatars/bvanjoi.png",
+          "contributions": 115,
+          "isBoss": false
+        },
+        {
+          "login": "CPunisher",
+          "avatarPath": "avatars/CPunisher.png",
+          "contributions": 73,
+          "isBoss": false
+        },
+        {
+          "login": "magic-akari",
+          "avatarPath": "avatars/magic-akari.png",
+          "contributions": 72,
+          "isBoss": false
+        }
+      ]
+    },
+    {
+      "owner": "Stirling-Tools",
+      "name": "Stirling-PDF",
+      "language": "TypeScript",
+      "description": "",
+      "totalContributions": 853,
+      "top5": [
+        {
+          "login": "Frooodle",
+          "avatarPath": "avatars/Frooodle.png",
+          "contributions": 300,
+          "isBoss": true
+        },
+        {
+          "login": "Ludy87",
+          "avatarPath": "avatars/Ludy87.png",
+          "contributions": 175,
+          "isBoss": false
+        },
+        {
+          "login": "jbrunton96",
+          "avatarPath": "avatars/jbrunton96.png",
+          "contributions": 134,
+          "isBoss": false
+        },
+        {
+          "login": "balazs-szucs",
+          "avatarPath": "avatars/balazs-szucs.png",
+          "contributions": 124,
+          "isBoss": false
+        },
+        {
+          "login": "reecebrowne",
+          "avatarPath": "avatars/reecebrowne.png",
+          "contributions": 120,
+          "isBoss": false
+        }
+      ]
+    },
+    {
+      "owner": "go-gitea",
+      "name": "gitea",
+      "language": "Go",
+      "description": "",
+      "totalContributions": 834,
+      "top5": [
+        {
+          "login": "silverwind",
+          "avatarPath": "avatars/silverwind.png",
+          "contributions": 263,
+          "isBoss": true
+        },
+        {
+          "login": "lunny",
+          "avatarPath": "avatars/lunny.png",
+          "contributions": 209,
+          "isBoss": false
+        },
+        {
+          "login": "wxiaoguang",
+          "avatarPath": "avatars/wxiaoguang.png",
+          "contributions": 203,
+          "isBoss": false
+        },
+        {
+          "login": "GiteaBot",
+          "avatarPath": "avatars/GiteaBot.png",
+          "contributions": 136,
+          "isBoss": false
+        },
+        {
+          "login": "techknowlogick",
+          "avatarPath": "avatars/techknowlogick.png",
+          "contributions": 23,
+          "isBoss": false
+        }
+      ]
+    },
+    {
+      "owner": "withastro",
+      "name": "astro",
+      "language": "TypeScript",
+      "description": "",
+      "totalContributions": 827,
+      "top5": [
+        {
+          "login": "florian-lefebvre",
+          "avatarPath": "avatars/florian-lefebvre.png",
+          "contributions": 255,
+          "isBoss": true
+        },
+        {
+          "login": "matthewp",
+          "avatarPath": "avatars/matthewp.png",
+          "contributions": 211,
+          "isBoss": false
+        },
+        {
+          "login": "ematipico",
+          "avatarPath": "avatars/ematipico.png",
+          "contributions": 146,
+          "isBoss": false
+        },
+        {
+          "login": "astrobot-houston",
+          "avatarPath": "avatars/astrobot-houston.png",
+          "contributions": 141,
+          "isBoss": false
+        },
+        {
+          "login": "Princesseuh",
+          "avatarPath": "avatars/Princesseuh.png",
+          "contributions": 74,
+          "isBoss": false
+        }
+      ]
+    },
+    {
+      "owner": "grafana",
+      "name": "grafana",
+      "language": "TypeScript",
+      "description": "",
+      "totalContributions": 817,
+      "top5": [
+        {
+          "login": "ashharrison90",
+          "avatarPath": "avatars/ashharrison90.png",
+          "contributions": 257,
+          "isBoss": true
+        },
+        {
+          "login": "ryantxu",
+          "avatarPath": "avatars/ryantxu.png",
+          "contributions": 255,
+          "isBoss": false
+        },
+        {
+          "login": "hugohaggmark",
+          "avatarPath": "avatars/hugohaggmark.png",
+          "contributions": 148,
+          "isBoss": false
+        },
+        {
+          "login": "torkelo",
+          "avatarPath": "avatars/torkelo.png",
+          "contributions": 85,
+          "isBoss": false
+        },
+        {
+          "login": "dprokop",
+          "avatarPath": "avatars/dprokop.png",
+          "contributions": 72,
+          "isBoss": false
+        }
+      ]
+    },
+    {
+      "owner": "laurent22",
+      "name": "joplin",
+      "language": "TypeScript",
+      "description": "",
+      "totalContributions": 804,
+      "top5": [
+        {
+          "login": "personalizedrefrigerator",
+          "avatarPath": "avatars/personalizedrefrigerator.png",
+          "contributions": 300,
+          "isBoss": true
+        },
+        {
+          "login": "laurent22",
+          "avatarPath": "avatars/laurent22.png",
+          "contributions": 300,
+          "isBoss": false
+        },
+        {
+          "login": "joplinbot",
+          "avatarPath": "avatars/joplinbot.png",
+          "contributions": 95,
+          "isBoss": false
+        },
+        {
+          "login": "mrjo118",
+          "avatarPath": "avatars/mrjo118.png",
+          "contributions": 81,
+          "isBoss": false
+        },
+        {
+          "login": "pedr",
+          "avatarPath": "avatars/pedr.png",
+          "contributions": 28,
+          "isBoss": false
+        }
+      ]
+    },
+    {
+      "owner": "prometheus",
+      "name": "prometheus",
+      "language": "Go",
+      "description": "",
+      "totalContributions": 803,
+      "top5": [
+        {
+          "login": "roidelapluie",
+          "avatarPath": "avatars/roidelapluie.png",
+          "contributions": 235,
+          "isBoss": true
+        },
+        {
+          "login": "krajorama",
+          "avatarPath": "avatars/krajorama.png",
+          "contributions": 166,
+          "isBoss": false
+        },
+        {
+          "login": "bboreham",
+          "avatarPath": "avatars/bboreham.png",
+          "contributions": 145,
+          "isBoss": false
+        },
+        {
+          "login": "bwplotka",
+          "avatarPath": "avatars/bwplotka.png",
+          "contributions": 137,
+          "isBoss": false
+        },
+        {
+          "login": "beorn7",
+          "avatarPath": "avatars/beorn7.png",
+          "contributions": 120,
+          "isBoss": false
+        }
+      ]
+    },
+    {
+      "owner": "huggingface",
+      "name": "transformers",
+      "language": "Python",
+      "description": "",
+      "totalContributions": 797,
+      "top5": [
+        {
+          "login": "ydshieh",
+          "avatarPath": "avatars/ydshieh.png",
+          "contributions": 300,
+          "isBoss": true
+        },
+        {
+          "login": "zucchini-nlp",
+          "avatarPath": "avatars/zucchini-nlp.png",
+          "contributions": 226,
+          "isBoss": false
+        },
+        {
+          "login": "gante",
+          "avatarPath": "avatars/gante.png",
+          "contributions": 100,
+          "isBoss": false
+        },
+        {
+          "login": "Rocketknight1",
+          "avatarPath": "avatars/Rocketknight1.png",
+          "contributions": 89,
+          "isBoss": false
+        },
+        {
+          "login": "ArthurZucker",
+          "avatarPath": "avatars/ArthurZucker.png",
+          "contributions": 82,
+          "isBoss": false
+        }
+      ]
+    },
+    {
+      "owner": "TryGhost",
+      "name": "Ghost",
+      "language": "JavaScript",
+      "description": "",
+      "totalContributions": 769,
+      "top5": [
+        {
+          "login": "kevinansfield",
+          "avatarPath": "avatars/kevinansfield.png",
+          "contributions": 300,
+          "isBoss": true
+        },
+        {
+          "login": "peterzimon",
+          "avatarPath": "avatars/peterzimon.png",
+          "contributions": 251,
+          "isBoss": false
+        },
+        {
+          "login": "ErisDS",
+          "avatarPath": "avatars/ErisDS.png",
+          "contributions": 131,
+          "isBoss": false
+        },
+        {
+          "login": "allouis",
+          "avatarPath": "avatars/allouis.png",
+          "contributions": 52,
+          "isBoss": false
+        },
+        {
+          "login": "daniellockyer",
+          "avatarPath": "avatars/daniellockyer.png",
+          "contributions": 35,
+          "isBoss": false
+        }
+      ]
+    },
+    {
+      "owner": "TanStack",
+      "name": "router",
+      "language": "TypeScript",
+      "description": "",
+      "totalContributions": 760,
+      "top5": [
+        {
+          "login": "schiller-manuel",
+          "avatarPath": "avatars/schiller-manuel.png",
+          "contributions": 300,
+          "isBoss": true
+        },
+        {
+          "login": "birkskyum",
+          "avatarPath": "avatars/birkskyum.png",
+          "contributions": 197,
+          "isBoss": false
+        },
+        {
+          "login": "Sheraff",
+          "avatarPath": "avatars/Sheraff.png",
+          "contributions": 141,
+          "isBoss": false
+        },
+        {
+          "login": "tannerlinsley",
+          "avatarPath": "avatars/tannerlinsley.png",
+          "contributions": 70,
+          "isBoss": false
+        },
+        {
+          "login": "nlynzaad",
+          "avatarPath": "avatars/nlynzaad.png",
+          "contributions": 52,
+          "isBoss": false
+        }
+      ]
+    },
+    {
+      "owner": "makeplane",
+      "name": "plane",
+      "language": "TypeScript",
+      "description": "",
+      "totalContributions": 753,
+      "top5": [
+        {
+          "login": "sriramveeraghanta",
+          "avatarPath": "avatars/sriramveeraghanta.png",
+          "contributions": 244,
+          "isBoss": true
+        },
+        {
+          "login": "anmolsinghbhatia",
+          "avatarPath": "avatars/anmolsinghbhatia.png",
+          "contributions": 167,
+          "isBoss": false
+        },
+        {
+          "login": "aaryan610",
+          "avatarPath": "avatars/aaryan610.png",
+          "contributions": 148,
+          "isBoss": false
+        },
+        {
+          "login": "prateekshourya29",
+          "avatarPath": "avatars/prateekshourya29.png",
+          "contributions": 98,
+          "isBoss": false
+        },
+        {
+          "login": "vamsikrishnamathala",
+          "avatarPath": "avatars/vamsikrishnamathala.png",
+          "contributions": 96,
+          "isBoss": false
+        }
+      ]
+    },
+    {
+      "owner": "RocketChat",
+      "name": "Rocket.Chat",
+      "language": "TypeScript",
+      "description": "",
+      "totalContributions": 750,
+      "top5": [
+        {
+          "login": "ggazzo",
+          "avatarPath": "avatars/ggazzo.png",
+          "contributions": 284,
+          "isBoss": true
+        },
+        {
+          "login": "KevLehman",
+          "avatarPath": "avatars/KevLehman.png",
+          "contributions": 134,
+          "isBoss": false
+        },
+        {
+          "login": "tassoevan",
+          "avatarPath": "avatars/tassoevan.png",
+          "contributions": 126,
+          "isBoss": false
+        },
+        {
+          "login": "dougfabris",
+          "avatarPath": "avatars/dougfabris.png",
+          "contributions": 118,
+          "isBoss": false
+        },
+        {
+          "login": "sampaiodiego",
+          "avatarPath": "avatars/sampaiodiego.png",
+          "contributions": 88,
+          "isBoss": false
+        }
+      ]
+    },
+    {
+      "owner": "facebook",
+      "name": "react",
+      "language": "JavaScript",
+      "description": "",
+      "totalContributions": 748,
+      "top5": [
+        {
+          "login": "sebmarkbage",
+          "avatarPath": "avatars/sebmarkbage.png",
+          "contributions": 300,
+          "isBoss": true
+        },
+        {
+          "login": "eps1lon",
+          "avatarPath": "avatars/eps1lon.png",
+          "contributions": 216,
+          "isBoss": false
+        },
+        {
+          "login": "josephsavona",
+          "avatarPath": "avatars/josephsavona.png",
+          "contributions": 160,
+          "isBoss": false
+        },
+        {
+          "login": "poteto",
+          "avatarPath": "avatars/poteto.png",
+          "contributions": 67,
+          "isBoss": false
+        },
+        {
+          "login": "acdlite",
+          "avatarPath": "avatars/acdlite.png",
+          "contributions": 5,
+          "isBoss": false
+        }
+      ]
+    },
+    {
+      "owner": "kubernetes",
+      "name": "kubernetes",
+      "language": "Go",
+      "description": "",
+      "totalContributions": 718,
+      "top5": [
+        {
+          "login": "k8s-ci-robot",
+          "avatarPath": "avatars/k8s-ci-robot.png",
+          "contributions": 300,
+          "isBoss": true
+        },
+        {
+          "login": "pohly",
+          "avatarPath": "avatars/pohly.png",
+          "contributions": 285,
+          "isBoss": false
+        },
+        {
+          "login": "thockin",
+          "avatarPath": "avatars/thockin.png",
+          "contributions": 66,
+          "isBoss": false
+        },
+        {
+          "login": "liggitt",
+          "avatarPath": "avatars/liggitt.png",
+          "contributions": 65,
+          "isBoss": false
+        },
+        {
+          "login": "sttts",
+          "avatarPath": "avatars/sttts.png",
+          "contributions": 2,
+          "isBoss": false
+        }
+      ]
+    },
+    {
+      "owner": "mermaid-js",
+      "name": "mermaid",
+      "language": "TypeScript",
+      "description": "",
+      "totalContributions": 691,
+      "top5": [
+        {
+          "login": "sidharthv96",
+          "avatarPath": "avatars/sidharthv96.png",
+          "contributions": 239,
+          "isBoss": true
+        },
+        {
+          "login": "knsv",
+          "avatarPath": "avatars/knsv.png",
+          "contributions": 174,
+          "isBoss": false
+        },
+        {
+          "login": "omkarht",
+          "avatarPath": "avatars/omkarht.png",
+          "contributions": 151,
+          "isBoss": false
+        },
+        {
+          "login": "ashishjain0512",
+          "avatarPath": "avatars/ashishjain0512.png",
+          "contributions": 65,
+          "isBoss": false
+        },
+        {
+          "login": "aloisklink",
+          "avatarPath": "avatars/aloisklink.png",
+          "contributions": 62,
+          "isBoss": false
+        }
+      ]
+    },
+    {
+      "owner": "ollama",
+      "name": "ollama",
+      "language": "Go",
+      "description": "",
+      "totalContributions": 690,
+      "top5": [
+        {
+          "login": "dhiltgen",
+          "avatarPath": "avatars/dhiltgen.png",
+          "contributions": 201,
+          "isBoss": true
+        },
+        {
+          "login": "jmorganca",
+          "avatarPath": "avatars/jmorganca.png",
+          "contributions": 138,
+          "isBoss": false
+        },
+        {
+          "login": "ParthSareen",
+          "avatarPath": "avatars/ParthSareen.png",
+          "contributions": 124,
+          "isBoss": false
+        },
+        {
+          "login": "jessegross",
+          "avatarPath": "avatars/jessegross.png",
+          "contributions": 116,
+          "isBoss": false
+        },
+        {
+          "login": "mxyng",
+          "avatarPath": "avatars/mxyng.png",
+          "contributions": 111,
+          "isBoss": false
+        }
+      ]
+    },
+    {
+      "owner": "usebruno",
+      "name": "bruno",
+      "language": "JavaScript",
+      "description": "",
+      "totalContributions": 656,
+      "top5": [
+        {
+          "login": "lohit-bruno",
+          "avatarPath": "avatars/lohit-bruno.png",
+          "contributions": 157,
+          "isBoss": true
+        },
+        {
+          "login": "pooja-bruno",
+          "avatarPath": "avatars/pooja-bruno.png",
+          "contributions": 150,
+          "isBoss": false
+        },
+        {
+          "login": "naman-bruno",
+          "avatarPath": "avatars/naman-bruno.png",
+          "contributions": 137,
+          "isBoss": false
+        },
+        {
+          "login": "helloanoop",
+          "avatarPath": "avatars/helloanoop.png",
+          "contributions": 113,
+          "isBoss": false
+        },
+        {
+          "login": "sanish-bruno",
+          "avatarPath": "avatars/sanish-bruno.png",
+          "contributions": 99,
+          "isBoss": false
+        }
+      ]
+    },
+    {
+      "owner": "toeverything",
+      "name": "AFFiNE",
+      "language": "TypeScript",
+      "description": "",
+      "totalContributions": 629,
+      "top5": [
+        {
+          "login": "darkskygit",
+          "avatarPath": "avatars/darkskygit.png",
+          "contributions": 300,
+          "isBoss": true
+        },
+        {
+          "login": "CatsJuice",
+          "avatarPath": "avatars/CatsJuice.png",
+          "contributions": 99,
+          "isBoss": false
+        },
+        {
+          "login": "EYHN",
+          "avatarPath": "avatars/EYHN.png",
+          "contributions": 95,
+          "isBoss": false
+        },
+        {
+          "login": "pengx17",
+          "avatarPath": "avatars/pengx17.png",
+          "contributions": 86,
+          "isBoss": false
+        },
+        {
+          "login": "forehalo",
+          "avatarPath": "avatars/forehalo.png",
+          "contributions": 49,
+          "isBoss": false
+        }
+      ]
+    },
+    {
+      "owner": "remix-run",
+      "name": "react-router",
+      "language": "TypeScript",
+      "description": "",
+      "totalContributions": 607,
+      "top5": [
+        {
+          "login": "brophdawg11",
+          "avatarPath": "avatars/brophdawg11.png",
+          "contributions": 300,
+          "isBoss": true
+        },
+        {
+          "login": "remix-run-bot",
+          "avatarPath": "avatars/remix-run-bot.png",
+          "contributions": 195,
+          "isBoss": false
+        },
+        {
+          "login": "markdalgleish",
+          "avatarPath": "avatars/markdalgleish.png",
+          "contributions": 77,
+          "isBoss": false
+        },
+        {
+          "login": "pcattori",
+          "avatarPath": "avatars/pcattori.png",
+          "contributions": 20,
+          "isBoss": false
+        },
+        {
+          "login": "ryanflorence",
+          "avatarPath": "avatars/ryanflorence.png",
+          "contributions": 15,
+          "isBoss": false
+        }
+      ]
+    },
+    {
+      "owner": "nodejs",
+      "name": "node",
+      "language": "JavaScript",
+      "description": "",
+      "totalContributions": 603,
+      "top5": [
+        {
+          "login": "aduh95",
+          "avatarPath": "avatars/aduh95.png",
+          "contributions": 198,
+          "isBoss": true
+        },
+        {
+          "login": "joyeecheung",
+          "avatarPath": "avatars/joyeecheung.png",
+          "contributions": 183,
+          "isBoss": false
+        },
+        {
+          "login": "targos",
+          "avatarPath": "avatars/targos.png",
+          "contributions": 92,
+          "isBoss": false
+        },
+        {
+          "login": "jasnell",
+          "avatarPath": "avatars/jasnell.png",
+          "contributions": 82,
+          "isBoss": false
+        },
+        {
+          "login": "addaleax",
+          "avatarPath": "avatars/addaleax.png",
+          "contributions": 48,
+          "isBoss": false
+        }
+      ]
+    },
+    {
+      "owner": "remix-run",
+      "name": "remix",
+      "language": "TypeScript",
+      "description": "",
+      "totalContributions": 598,
+      "top5": [
+        {
+          "login": "mjackson",
+          "avatarPath": "avatars/mjackson.png",
+          "contributions": 300,
+          "isBoss": true
+        },
+        {
+          "login": "remix-run-bot",
+          "avatarPath": "avatars/remix-run-bot.png",
+          "contributions": 103,
+          "isBoss": false
+        },
+        {
+          "login": "pcattori",
+          "avatarPath": "avatars/pcattori.png",
+          "contributions": 93,
+          "isBoss": false
+        },
+        {
+          "login": "brophdawg11",
+          "avatarPath": "avatars/brophdawg11.png",
+          "contributions": 65,
+          "isBoss": false
+        },
+        {
+          "login": "ryanflorence",
+          "avatarPath": "avatars/ryanflorence.png",
+          "contributions": 37,
+          "isBoss": false
+        }
+      ]
+    },
+    {
+      "owner": "vitest-dev",
+      "name": "vitest",
+      "language": "TypeScript",
+      "description": "",
+      "totalContributions": 559,
+      "top5": [
+        {
+          "login": "sheremet-va",
+          "avatarPath": "avatars/sheremet-va.png",
+          "contributions": 300,
+          "isBoss": true
+        },
+        {
+          "login": "hi-ogawa",
+          "avatarPath": "avatars/hi-ogawa.png",
+          "contributions": 148,
+          "isBoss": false
+        },
+        {
+          "login": "AriPerkkio",
+          "avatarPath": "avatars/AriPerkkio.png",
+          "contributions": 94,
+          "isBoss": false
+        },
+        {
+          "login": "userquin",
+          "avatarPath": "avatars/userquin.png",
+          "contributions": 10,
+          "isBoss": false
+        },
+        {
+          "login": "btea",
+          "avatarPath": "avatars/btea.png",
+          "contributions": 7,
+          "isBoss": false
+        }
+      ]
+    },
+    {
+      "owner": "typst",
+      "name": "typst",
+      "language": "Rust",
+      "description": "",
+      "totalContributions": 552,
+      "top5": [
+        {
+          "login": "laurmaedje",
+          "avatarPath": "avatars/laurmaedje.png",
+          "contributions": 256,
+          "isBoss": true
+        },
+        {
+          "login": "saecki",
+          "avatarPath": "avatars/saecki.png",
+          "contributions": 169,
+          "isBoss": false
+        },
+        {
+          "login": "isuffix",
+          "avatarPath": "avatars/isuffix.png",
+          "contributions": 54,
+          "isBoss": false
+        },
+        {
+          "login": "mkorje",
+          "avatarPath": "avatars/mkorje.png",
+          "contributions": 42,
+          "isBoss": false
+        },
+        {
+          "login": "MDLC01",
+          "avatarPath": "avatars/MDLC01.png",
+          "contributions": 31,
+          "isBoss": false
+        }
+      ]
+    },
+    {
+      "owner": "SigNoz",
+      "name": "signoz",
+      "language": "TypeScript",
+      "description": "",
+      "totalContributions": 540,
+      "top5": [
+        {
+          "login": "therealpandey",
+          "avatarPath": "avatars/therealpandey.png",
+          "contributions": 125,
+          "isBoss": true
+        },
+        {
+          "login": "vikrantgupta25",
+          "avatarPath": "avatars/vikrantgupta25.png",
+          "contributions": 118,
+          "isBoss": false
+        },
+        {
+          "login": "srikanthccv",
+          "avatarPath": "avatars/srikanthccv.png",
+          "contributions": 107,
+          "isBoss": false
+        },
+        {
+          "login": "YounixM",
+          "avatarPath": "avatars/YounixM.png",
+          "contributions": 96,
+          "isBoss": false
+        },
+        {
+          "login": "SagarRajput-7",
+          "avatarPath": "avatars/SagarRajput-7.png",
+          "contributions": 94,
+          "isBoss": false
+        }
+      ]
+    },
+    {
+      "owner": "apache",
+      "name": "superset",
+      "language": "TypeScript",
+      "description": "",
+      "totalContributions": 493,
+      "top5": [
+        {
+          "login": "rusackas",
+          "avatarPath": "avatars/rusackas.png",
+          "contributions": 123,
+          "isBoss": true
+        },
+        {
+          "login": "michael-s-molina",
+          "avatarPath": "avatars/michael-s-molina.png",
+          "contributions": 103,
+          "isBoss": false
+        },
+        {
+          "login": "betodealmeida",
+          "avatarPath": "avatars/betodealmeida.png",
+          "contributions": 100,
+          "isBoss": false
+        },
+        {
+          "login": "mistercrunch",
+          "avatarPath": "avatars/mistercrunch.png",
+          "contributions": 99,
+          "isBoss": false
+        },
+        {
+          "login": "kgabryje",
+          "avatarPath": "avatars/kgabryje.png",
+          "contributions": 68,
+          "isBoss": false
+        }
+      ]
+    },
+    {
+      "owner": "sveltejs",
+      "name": "svelte",
+      "language": "JavaScript",
+      "description": "",
+      "totalContributions": 490,
+      "top5": [
+        {
+          "login": "Rich-Harris",
+          "avatarPath": "avatars/Rich-Harris.png",
+          "contributions": 300,
+          "isBoss": true
+        },
+        {
+          "login": "dummdidumm",
+          "avatarPath": "avatars/dummdidumm.png",
+          "contributions": 111,
+          "isBoss": false
+        },
+        {
+          "login": "paoloricciuti",
+          "avatarPath": "avatars/paoloricciuti.png",
+          "contributions": 60,
+          "isBoss": false
+        },
+        {
+          "login": "benmccann",
+          "avatarPath": "avatars/benmccann.png",
+          "contributions": 12,
+          "isBoss": false
+        },
+        {
+          "login": "Conduitry",
+          "avatarPath": "avatars/Conduitry.png",
+          "contributions": 7,
+          "isBoss": false
+        }
+      ]
+    },
+    {
+      "owner": "TanStack",
+      "name": "db",
+      "language": "TypeScript",
+      "description": "",
+      "totalContributions": 490,
+      "top5": [
+        {
+          "login": "KyleAMathews",
+          "avatarPath": "avatars/KyleAMathews.png",
+          "contributions": 244,
+          "isBoss": true
+        },
+        {
+          "login": "samwillis",
+          "avatarPath": "avatars/samwillis.png",
+          "contributions": 117,
+          "isBoss": false
+        },
+        {
+          "login": "kevin-dp",
+          "avatarPath": "avatars/kevin-dp.png",
+          "contributions": 106,
+          "isBoss": false
+        },
+        {
+          "login": "thruflo",
+          "avatarPath": "avatars/thruflo.png",
+          "contributions": 14,
+          "isBoss": false
+        },
+        {
+          "login": "ignatz",
+          "avatarPath": "avatars/ignatz.png",
+          "contributions": 9,
+          "isBoss": false
+        }
+      ]
+    },
+    {
+      "owner": "electron",
+      "name": "electron",
+      "language": "C++",
+      "description": "",
+      "totalContributions": 483,
+      "top5": [
+        {
+          "login": "codebytere",
+          "avatarPath": "avatars/codebytere.png",
+          "contributions": 207,
+          "isBoss": true
+        },
+        {
+          "login": "ckerr",
+          "avatarPath": "avatars/ckerr.png",
+          "contributions": 147,
+          "isBoss": false
+        },
+        {
+          "login": "MarshallOfSound",
+          "avatarPath": "avatars/MarshallOfSound.png",
+          "contributions": 82,
+          "isBoss": false
+        },
+        {
+          "login": "deepak1556",
+          "avatarPath": "avatars/deepak1556.png",
+          "contributions": 46,
+          "isBoss": false
+        },
+        {
+          "login": "miniak",
+          "avatarPath": "avatars/miniak.png",
+          "contributions": 1,
+          "isBoss": false
+        }
+      ]
+    },
+    {
+      "owner": "helm",
+      "name": "helm",
+      "language": "Go",
+      "description": "",
+      "totalContributions": 474,
+      "top5": [
+        {
+          "login": "gjenkins8",
+          "avatarPath": "avatars/gjenkins8.png",
+          "contributions": 157,
+          "isBoss": true
+        },
+        {
+          "login": "mattfarina",
+          "avatarPath": "avatars/mattfarina.png",
+          "contributions": 133,
+          "isBoss": false
+        },
+        {
+          "login": "robertsirc",
+          "avatarPath": "avatars/robertsirc.png",
+          "contributions": 106,
+          "isBoss": false
+        },
+        {
+          "login": "scottrigby",
+          "avatarPath": "avatars/scottrigby.png",
+          "contributions": 50,
+          "isBoss": false
+        },
+        {
+          "login": "joejulian",
+          "avatarPath": "avatars/joejulian.png",
+          "contributions": 28,
+          "isBoss": false
+        }
+      ]
+    },
+    {
+      "owner": "run-llama",
+      "name": "llama_index",
+      "language": "Python",
+      "description": "",
+      "totalContributions": 468,
+      "top5": [
+        {
+          "login": "logan-markewich",
+          "avatarPath": "avatars/logan-markewich.png",
+          "contributions": 299,
+          "isBoss": true
+        },
+        {
+          "login": "AstraBert",
+          "avatarPath": "avatars/AstraBert.png",
+          "contributions": 102,
+          "isBoss": false
+        },
+        {
+          "login": "masci",
+          "avatarPath": "avatars/masci.png",
+          "contributions": 48,
+          "isBoss": false
+        },
+        {
+          "login": "seldo",
+          "avatarPath": "avatars/seldo.png",
+          "contributions": 16,
+          "isBoss": false
+        },
+        {
+          "login": "jerryjliu",
+          "avatarPath": "avatars/jerryjliu.png",
+          "contributions": 3,
+          "isBoss": false
+        }
+      ]
+    },
+    {
+      "owner": "pnpm",
+      "name": "pnpm",
+      "language": "TypeScript",
+      "description": "",
+      "totalContributions": 459,
+      "top5": [
+        {
+          "login": "zkochan",
+          "avatarPath": "avatars/zkochan.png",
+          "contributions": 300,
+          "isBoss": true
+        },
+        {
+          "login": "btea",
+          "avatarPath": "avatars/btea.png",
+          "contributions": 58,
+          "isBoss": false
+        },
+        {
+          "login": "gluxon",
+          "avatarPath": "avatars/gluxon.png",
+          "contributions": 50,
+          "isBoss": false
+        },
+        {
+          "login": "KSXGitHub",
+          "avatarPath": "avatars/KSXGitHub.png",
+          "contributions": 50,
+          "isBoss": false
+        },
+        {
+          "login": "lvqq",
+          "avatarPath": "avatars/lvqq.png",
+          "contributions": 1,
+          "isBoss": false
+        }
+      ]
+    },
+    {
+      "owner": "TanStack",
+      "name": "query",
+      "language": "TypeScript",
+      "description": "",
+      "totalContributions": 453,
+      "top5": [
+        {
+          "login": "sukvvon",
+          "avatarPath": "avatars/sukvvon.png",
+          "contributions": 300,
+          "isBoss": true
+        },
+        {
+          "login": "TkDodo",
+          "avatarPath": "avatars/TkDodo.png",
+          "contributions": 56,
+          "isBoss": false
+        },
+        {
+          "login": "lachlancollins",
+          "avatarPath": "avatars/lachlancollins.png",
+          "contributions": 38,
+          "isBoss": false
+        },
+        {
+          "login": "arnoud-dv",
+          "avatarPath": "avatars/arnoud-dv.png",
+          "contributions": 33,
+          "isBoss": false
+        },
+        {
+          "login": "manudeli",
+          "avatarPath": "avatars/manudeli.png",
+          "contributions": 26,
+          "isBoss": false
+        }
+      ]
+    },
+    {
+      "owner": "sveltejs",
+      "name": "kit",
+      "language": "JavaScript",
+      "description": "",
+      "totalContributions": 406,
+      "top5": [
+        {
+          "login": "teemingc",
+          "avatarPath": "avatars/teemingc.png",
+          "contributions": 108,
+          "isBoss": true
+        },
+        {
+          "login": "Rich-Harris",
+          "avatarPath": "avatars/Rich-Harris.png",
+          "contributions": 100,
+          "isBoss": false
+        },
+        {
+          "login": "benmccann",
+          "avatarPath": "avatars/benmccann.png",
+          "contributions": 77,
+          "isBoss": false
+        },
+        {
+          "login": "dummdidumm",
+          "avatarPath": "avatars/dummdidumm.png",
+          "contributions": 63,
+          "isBoss": false
+        },
+        {
+          "login": "elliott-with-the-longest-name-on-github",
+          "avatarPath": "avatars/elliott-with-the-longest-name-on-github.png",
+          "contributions": 58,
+          "isBoss": false
+        }
+      ]
+    },
+    {
+      "owner": "vitejs",
+      "name": "vite",
+      "language": "TypeScript",
+      "description": "",
+      "totalContributions": 405,
+      "top5": [
+        {
+          "login": "sapphi-red",
+          "avatarPath": "avatars/sapphi-red.png",
+          "contributions": 300,
+          "isBoss": true
+        },
+        {
+          "login": "bluwy",
+          "avatarPath": "avatars/bluwy.png",
+          "contributions": 43,
+          "isBoss": false
+        },
+        {
+          "login": "hi-ogawa",
+          "avatarPath": "avatars/hi-ogawa.png",
+          "contributions": 27,
+          "isBoss": false
+        },
+        {
+          "login": "btea",
+          "avatarPath": "avatars/btea.png",
+          "contributions": 25,
+          "isBoss": false
+        },
+        {
+          "login": "ArnaudBarre",
+          "avatarPath": "avatars/ArnaudBarre.png",
+          "contributions": 10,
+          "isBoss": false
+        }
+      ]
+    },
+    {
+      "owner": "istio",
+      "name": "istio",
+      "language": "Go",
+      "description": "",
+      "totalContributions": 403,
+      "top5": [
+        {
+          "login": "istio-testing",
+          "avatarPath": "avatars/istio-testing.png",
+          "contributions": 300,
+          "isBoss": true
+        },
+        {
+          "login": "ramaraochavali",
+          "avatarPath": "avatars/ramaraochavali.png",
+          "contributions": 51,
+          "isBoss": false
+        },
+        {
+          "login": "howardjohn",
+          "avatarPath": "avatars/howardjohn.png",
+          "contributions": 49,
+          "isBoss": false
+        },
+        {
+          "login": "hanxiaop",
+          "avatarPath": "avatars/hanxiaop.png",
+          "contributions": 2,
+          "isBoss": false
+        },
+        {
+          "login": "kyessenov",
+          "avatarPath": "avatars/kyessenov.png",
+          "contributions": 1,
+          "isBoss": false
+        }
+      ]
+    },
+    {
+      "owner": "puppeteer",
+      "name": "puppeteer",
+      "language": "TypeScript",
+      "description": "",
+      "totalContributions": 383,
+      "top5": [
+        {
+          "login": "OrKoN",
+          "avatarPath": "avatars/OrKoN.png",
+          "contributions": 150,
+          "isBoss": true
+        },
+        {
+          "login": "browser-automation-bot",
+          "avatarPath": "avatars/browser-automation-bot.png",
+          "contributions": 133,
+          "isBoss": false
+        },
+        {
+          "login": "Lightning00Blade",
+          "avatarPath": "avatars/Lightning00Blade.png",
+          "contributions": 96,
+          "isBoss": false
+        },
+        {
+          "login": "mathiasbynens",
+          "avatarPath": "avatars/mathiasbynens.png",
+          "contributions": 3,
+          "isBoss": false
+        },
+        {
+          "login": "jackfranklin",
+          "avatarPath": "avatars/jackfranklin.png",
+          "contributions": 1,
+          "isBoss": false
+        }
+      ]
+    },
+    {
+      "owner": "cypress-io",
+      "name": "cypress",
+      "language": "TypeScript",
+      "description": "",
+      "totalContributions": 372,
+      "top5": [
+        {
+          "login": "AtofStryker",
+          "avatarPath": "avatars/AtofStryker.png",
+          "contributions": 165,
+          "isBoss": true
+        },
+        {
+          "login": "jennifer-shehane",
+          "avatarPath": "avatars/jennifer-shehane.png",
+          "contributions": 142,
+          "isBoss": false
+        },
+        {
+          "login": "semantic-release-bot",
+          "avatarPath": "avatars/semantic-release-bot.png",
+          "contributions": 60,
+          "isBoss": false
+        },
+        {
+          "login": "chrisbreiding",
+          "avatarPath": "avatars/chrisbreiding.png",
+          "contributions": 4,
+          "isBoss": false
+        },
+        {
+          "login": "brian-mann",
+          "avatarPath": "avatars/brian-mann.png",
+          "contributions": 1,
+          "isBoss": false
+        }
+      ]
+    },
+    {
+      "owner": "FlowiseAI",
+      "name": "Flowise",
+      "language": "TypeScript",
+      "description": "",
+      "totalContributions": 361,
+      "top5": [
+        {
+          "login": "HenryHengZJ",
+          "avatarPath": "avatars/HenryHengZJ.png",
+          "contributions": 211,
+          "isBoss": true
+        },
+        {
+          "login": "christopherholland-workday",
+          "avatarPath": "avatars/christopherholland-workday.png",
+          "contributions": 53,
+          "isBoss": false
+        },
+        {
+          "login": "jocelynlin-wd",
+          "avatarPath": "avatars/jocelynlin-wd.png",
+          "contributions": 50,
+          "isBoss": false
+        },
+        {
+          "login": "0xi4o",
+          "avatarPath": "avatars/0xi4o.png",
+          "contributions": 27,
+          "isBoss": false
+        },
+        {
+          "login": "chungyau97",
+          "avatarPath": "avatars/chungyau97.png",
+          "contributions": 20,
+          "isBoss": false
+        }
+      ]
+    },
+    {
+      "owner": "nuxt",
+      "name": "nuxt",
+      "language": "TypeScript",
+      "description": "",
+      "totalContributions": 356,
+      "top5": [
+        {
+          "login": "danielroe",
+          "avatarPath": "avatars/danielroe.png",
+          "contributions": 300,
+          "isBoss": true
+        },
+        {
+          "login": "huang-julien",
+          "avatarPath": "avatars/huang-julien.png",
+          "contributions": 39,
+          "isBoss": false
+        },
+        {
+          "login": "TheAlexLichter",
+          "avatarPath": "avatars/TheAlexLichter.png",
+          "contributions": 9,
+          "isBoss": false
+        },
+        {
+          "login": "atinux",
+          "avatarPath": "avatars/atinux.png",
+          "contributions": 4,
+          "isBoss": false
+        },
+        {
+          "login": "antfu",
+          "avatarPath": "avatars/antfu.png",
+          "contributions": 4,
+          "isBoss": false
+        }
+      ]
+    },
+    {
+      "owner": "shadcn-ui",
+      "name": "ui",
+      "language": "TypeScript",
+      "description": "",
+      "totalContributions": 344,
+      "top5": [
+        {
+          "login": "shadcn",
+          "avatarPath": "avatars/shadcn.png",
+          "contributions": 300,
+          "isBoss": true
+        },
+        {
+          "login": "kapishdima",
+          "avatarPath": "avatars/kapishdima.png",
+          "contributions": 20,
+          "isBoss": false
+        },
+        {
+          "login": "jaem0629",
+          "avatarPath": "avatars/jaem0629.png",
+          "contributions": 10,
+          "isBoss": false
+        },
+        {
+          "login": "ANIBIT14",
+          "avatarPath": "avatars/ANIBIT14.png",
+          "contributions": 7,
+          "isBoss": false
+        },
+        {
+          "login": "ramonclaudio",
+          "avatarPath": "avatars/ramonclaudio.png",
+          "contributions": 7,
+          "isBoss": false
+        }
+      ]
+    },
+    {
+      "owner": "jellyfin",
+      "name": "jellyfin",
+      "language": "C#",
+      "description": "",
+      "totalContributions": 336,
+      "top5": [
+        {
+          "login": "Bond-009",
+          "avatarPath": "avatars/Bond-009.png",
+          "contributions": 213,
+          "isBoss": true
+        },
+        {
+          "login": "Shadowghost",
+          "avatarPath": "avatars/Shadowghost.png",
+          "contributions": 46,
+          "isBoss": false
+        },
+        {
+          "login": "joshuaboniface",
+          "avatarPath": "avatars/joshuaboniface.png",
+          "contributions": 39,
+          "isBoss": false
+        },
+        {
+          "login": "crobibero",
+          "avatarPath": "avatars/crobibero.png",
+          "contributions": 24,
+          "isBoss": false
+        },
+        {
+          "login": "dkanada",
+          "avatarPath": "avatars/dkanada.png",
+          "contributions": 14,
+          "isBoss": false
+        }
+      ]
+    },
+    {
+      "owner": "restic",
+      "name": "restic",
+      "language": "Go",
+      "description": "",
+      "totalContributions": 330,
+      "top5": [
+        {
+          "login": "MichaelEischer",
+          "avatarPath": "avatars/MichaelEischer.png",
+          "contributions": 300,
+          "isBoss": true
+        },
+        {
+          "login": "konidev20",
+          "avatarPath": "avatars/konidev20.png",
+          "contributions": 11,
+          "isBoss": false
+        },
+        {
+          "login": "greatroar",
+          "avatarPath": "avatars/greatroar.png",
+          "contributions": 8,
+          "isBoss": false
+        },
+        {
+          "login": "rawtaz",
+          "avatarPath": "avatars/rawtaz.png",
+          "contributions": 7,
+          "isBoss": false
+        },
+        {
+          "login": "fd0",
+          "avatarPath": "avatars/fd0.png",
+          "contributions": 4,
+          "isBoss": false
+        }
+      ]
+    },
+    {
+      "owner": "traefik",
+      "name": "traefik",
+      "language": "Go",
+      "description": "",
+      "totalContributions": 312,
+      "top5": [
+        {
+          "login": "rtribotte",
+          "avatarPath": "avatars/rtribotte.png",
+          "contributions": 108,
+          "isBoss": true
+        },
+        {
+          "login": "kevinpollet",
+          "avatarPath": "avatars/kevinpollet.png",
+          "contributions": 87,
+          "isBoss": false
+        },
+        {
+          "login": "mmatur",
+          "avatarPath": "avatars/mmatur.png",
+          "contributions": 81,
+          "isBoss": false
+        },
+        {
+          "login": "nmengin",
+          "avatarPath": "avatars/nmengin.png",
+          "contributions": 20,
+          "isBoss": false
+        },
+        {
+          "login": "juliens",
+          "avatarPath": "avatars/juliens.png",
+          "contributions": 16,
+          "isBoss": false
+        }
+      ]
+    },
+    {
+      "owner": "hoppscotch",
+      "name": "hoppscotch",
+      "language": "TypeScript",
+      "description": "",
+      "totalContributions": 307,
+      "top5": [
+        {
+          "login": "jamesgeorge007",
+          "avatarPath": "avatars/jamesgeorge007.png",
+          "contributions": 112,
+          "isBoss": true
+        },
+        {
+          "login": "CuriousCorrelation",
+          "avatarPath": "avatars/CuriousCorrelation.png",
+          "contributions": 60,
+          "isBoss": false
+        },
+        {
+          "login": "nivedin",
+          "avatarPath": "avatars/nivedin.png",
+          "contributions": 50,
+          "isBoss": false
+        },
+        {
+          "login": "mirarifhasan",
+          "avatarPath": "avatars/mirarifhasan.png",
+          "contributions": 47,
+          "isBoss": false
+        },
+        {
+          "login": "anwarulislam",
+          "avatarPath": "avatars/anwarulislam.png",
+          "contributions": 38,
+          "isBoss": false
+        }
+      ]
+    },
+    {
+      "owner": "syncthing",
+      "name": "syncthing",
+      "language": "Go",
+      "description": "",
+      "totalContributions": 289,
+      "top5": [
+        {
+          "login": "calmh",
+          "avatarPath": "avatars/calmh.png",
+          "contributions": 212,
+          "isBoss": true
+        },
+        {
+          "login": "st-release",
+          "avatarPath": "avatars/st-release.png",
+          "contributions": 47,
+          "isBoss": false
+        },
+        {
+          "login": "imsodin",
+          "avatarPath": "avatars/imsodin.png",
+          "contributions": 17,
+          "isBoss": false
+        },
+        {
+          "login": "tomasz1986",
+          "avatarPath": "avatars/tomasz1986.png",
+          "contributions": 9,
+          "isBoss": false
+        },
+        {
+          "login": "acolomb",
+          "avatarPath": "avatars/acolomb.png",
+          "contributions": 4,
+          "isBoss": false
+        }
+      ]
+    },
+    {
+      "owner": "bitwarden",
+      "name": "server",
+      "language": "C#",
+      "description": "",
+      "totalContributions": 264,
+      "top5": [
+        {
+          "login": "amorask-bitwarden",
+          "avatarPath": "avatars/amorask-bitwarden.png",
+          "contributions": 91,
+          "isBoss": true
+        },
+        {
+          "login": "r-tome",
+          "avatarPath": "avatars/r-tome.png",
+          "contributions": 66,
+          "isBoss": false
+        },
+        {
+          "login": "eliykat",
+          "avatarPath": "avatars/eliykat.png",
+          "contributions": 48,
+          "isBoss": false
+        },
+        {
+          "login": "justindbaur",
+          "avatarPath": "avatars/justindbaur.png",
+          "contributions": 43,
+          "isBoss": false
+        },
+        {
+          "login": "Hinton",
+          "avatarPath": "avatars/Hinton.png",
+          "contributions": 16,
+          "isBoss": false
+        }
+      ]
+    },
+    {
+      "owner": "tailwindlabs",
+      "name": "tailwindcss",
+      "language": "TypeScript",
+      "description": "",
+      "totalContributions": 261,
+      "top5": [
+        {
+          "login": "RobinMalfait",
+          "avatarPath": "avatars/RobinMalfait.png",
+          "contributions": 160,
+          "isBoss": true
+        },
+        {
+          "login": "thecrypticace",
+          "avatarPath": "avatars/thecrypticace.png",
+          "contributions": 68,
+          "isBoss": false
+        },
+        {
+          "login": "philipp-spiess",
+          "avatarPath": "avatars/philipp-spiess.png",
+          "contributions": 24,
+          "isBoss": false
+        },
+        {
+          "login": "adamwathan",
+          "avatarPath": "avatars/adamwathan.png",
+          "contributions": 8,
+          "isBoss": false
+        },
+        {
+          "login": "reinink",
+          "avatarPath": "avatars/reinink.png",
+          "contributions": 1,
+          "isBoss": false
+        }
+      ]
+    },
+    {
+      "owner": "strapi",
+      "name": "strapi",
+      "language": "TypeScript",
+      "description": "",
+      "totalContributions": 261,
+      "top5": [
+        {
+          "login": "innerdvations",
+          "avatarPath": "avatars/innerdvations.png",
+          "contributions": 132,
+          "isBoss": true
+        },
+        {
+          "login": "markkaylor",
+          "avatarPath": "avatars/markkaylor.png",
+          "contributions": 100,
+          "isBoss": false
+        },
+        {
+          "login": "alexandrebodin",
+          "avatarPath": "avatars/alexandrebodin.png",
+          "contributions": 23,
+          "isBoss": false
+        },
+        {
+          "login": "Convly",
+          "avatarPath": "avatars/Convly.png",
+          "contributions": 5,
+          "isBoss": false
+        },
+        {
+          "login": "Marc-Roig",
+          "avatarPath": "avatars/Marc-Roig.png",
+          "contributions": 1,
+          "isBoss": false
+        }
+      ]
+    },
+    {
+      "owner": "argoproj",
+      "name": "argo-cd",
+      "language": "Go",
+      "description": "",
+      "totalContributions": 249,
+      "top5": [
+        {
+          "login": "crenshaw-dev",
+          "avatarPath": "avatars/crenshaw-dev.png",
+          "contributions": 123,
+          "isBoss": true
+        },
+        {
+          "login": "agaudreault",
+          "avatarPath": "avatars/agaudreault.png",
+          "contributions": 60,
+          "isBoss": false
+        },
+        {
+          "login": "mmorel-35",
+          "avatarPath": "avatars/mmorel-35.png",
+          "contributions": 47,
+          "isBoss": false
+        },
+        {
+          "login": "alexmt",
+          "avatarPath": "avatars/alexmt.png",
+          "contributions": 17,
+          "isBoss": false
+        },
+        {
+          "login": "pasha-codefresh",
+          "avatarPath": "avatars/pasha-codefresh.png",
+          "contributions": 2,
+          "isBoss": false
+        }
+      ]
+    },
+    {
+      "owner": "ansible",
+      "name": "ansible",
+      "language": "Python",
+      "description": "",
+      "totalContributions": 247,
+      "top5": [
+        {
+          "login": "mattclay",
+          "avatarPath": "avatars/mattclay.png",
+          "contributions": 130,
+          "isBoss": true
+        },
+        {
+          "login": "Akasurde",
+          "avatarPath": "avatars/Akasurde.png",
+          "contributions": 60,
+          "isBoss": false
+        },
+        {
+          "login": "bcoca",
+          "avatarPath": "avatars/bcoca.png",
+          "contributions": 29,
+          "isBoss": false
+        },
+        {
+          "login": "sivel",
+          "avatarPath": "avatars/sivel.png",
+          "contributions": 27,
+          "isBoss": false
+        },
+        {
+          "login": "dagwieers",
+          "avatarPath": "avatars/dagwieers.png",
+          "contributions": 1,
+          "isBoss": false
+        }
+      ]
+    },
+    {
+      "owner": "open-telemetry",
+      "name": "opentelemetry-js",
+      "language": "TypeScript",
+      "description": "",
+      "totalContributions": 199,
+      "top5": [
+        {
+          "login": "pichlermarc",
+          "avatarPath": "avatars/pichlermarc.png",
+          "contributions": 80,
+          "isBoss": true
+        },
+        {
+          "login": "trentm",
+          "avatarPath": "avatars/trentm.png",
+          "contributions": 59,
+          "isBoss": false
+        },
+        {
+          "login": "cjihrig",
+          "avatarPath": "avatars/cjihrig.png",
+          "contributions": 52,
+          "isBoss": false
+        },
+        {
+          "login": "dyladan",
+          "avatarPath": "avatars/dyladan.png",
+          "contributions": 5,
+          "isBoss": false
+        },
+        {
+          "login": "renovate-bot",
+          "avatarPath": "avatars/renovate-bot.png",
+          "contributions": 3,
+          "isBoss": false
+        }
+      ]
+    },
+    {
+      "owner": "excalidraw",
+      "name": "excalidraw",
+      "language": "TypeScript",
+      "description": "",
+      "totalContributions": 184,
+      "top5": [
+        {
+          "login": "dwelle",
+          "avatarPath": "avatars/dwelle.png",
+          "contributions": 88,
+          "isBoss": true
+        },
+        {
+          "login": "mtolmacs",
+          "avatarPath": "avatars/mtolmacs.png",
+          "contributions": 57,
+          "isBoss": false
+        },
+        {
+          "login": "zsviczian",
+          "avatarPath": "avatars/zsviczian.png",
+          "contributions": 18,
+          "isBoss": false
+        },
+        {
+          "login": "ryan-di",
+          "avatarPath": "avatars/ryan-di.png",
+          "contributions": 17,
+          "isBoss": false
+        },
+        {
+          "login": "excalibot",
+          "avatarPath": "avatars/excalibot.png",
+          "contributions": 4,
+          "isBoss": false
+        }
+      ]
+    },
+    {
+      "owner": "mui",
+      "name": "material-ui",
+      "language": "JavaScript",
+      "description": "",
+      "totalContributions": 175,
+      "top5": [
+        {
+          "login": "siriwatknp",
+          "avatarPath": "avatars/siriwatknp.png",
+          "contributions": 86,
+          "isBoss": true
+        },
+        {
+          "login": "oliviertassinari",
+          "avatarPath": "avatars/oliviertassinari.png",
+          "contributions": 80,
+          "isBoss": false
+        },
+        {
+          "login": "mnajdova",
+          "avatarPath": "avatars/mnajdova.png",
+          "contributions": 7,
+          "isBoss": false
+        },
+        {
+          "login": "michaldudak",
+          "avatarPath": "avatars/michaldudak.png",
+          "contributions": 1,
+          "isBoss": false
+        },
+        {
+          "login": "mbrookes",
+          "avatarPath": "avatars/mbrookes.png",
+          "contributions": 1,
+          "isBoss": false
+        }
+      ]
+    },
+    {
+      "owner": "google",
+      "name": "zx",
+      "language": "JavaScript",
+      "description": "",
+      "totalContributions": 165,
+      "top5": [
+        {
+          "login": "antongolub",
+          "avatarPath": "avatars/antongolub.png",
+          "contributions": 152,
+          "isBoss": true
+        },
+        {
+          "login": "antonmedv",
+          "avatarPath": "avatars/antonmedv.png",
+          "contributions": 6,
+          "isBoss": false
+        },
+        {
+          "login": "google-admin",
+          "avatarPath": "avatars/google-admin.png",
+          "contributions": 3,
+          "isBoss": false
+        },
+        {
+          "login": "Ayoub-Mabrouk",
+          "avatarPath": "avatars/Ayoub-Mabrouk.png",
+          "contributions": 2,
+          "isBoss": false
+        },
+        {
+          "login": "apoorvdarshan",
+          "avatarPath": "avatars/apoorvdarshan.png",
+          "contributions": 2,
+          "isBoss": false
+        }
+      ]
+    },
+    {
+      "owner": "caddyserver",
+      "name": "caddy",
+      "language": "Go",
+      "description": "",
+      "totalContributions": 136,
+      "top5": [
+        {
+          "login": "mholt",
+          "avatarPath": "avatars/mholt.png",
+          "contributions": 58,
+          "isBoss": true
+        },
+        {
+          "login": "francislavoie",
+          "avatarPath": "avatars/francislavoie.png",
+          "contributions": 28,
+          "isBoss": false
+        },
+        {
+          "login": "WeidiDeng",
+          "avatarPath": "avatars/WeidiDeng.png",
+          "contributions": 24,
+          "isBoss": false
+        },
+        {
+          "login": "mohammed90",
+          "avatarPath": "avatars/mohammed90.png",
+          "contributions": 18,
+          "isBoss": false
+        },
+        {
+          "login": "marten-seemann",
+          "avatarPath": "avatars/marten-seemann.png",
+          "contributions": 8,
+          "isBoss": false
+        }
+      ]
+    },
+    {
+      "owner": "bigskysoftware",
+      "name": "htmx",
+      "language": "JavaScript",
+      "description": "",
+      "totalContributions": 128,
+      "top5": [
+        {
+          "login": "1cg",
+          "avatarPath": "avatars/1cg.png",
+          "contributions": 89,
+          "isBoss": true
+        },
+        {
+          "login": "MichaelWest22",
+          "avatarPath": "avatars/MichaelWest22.png",
+          "contributions": 24,
+          "isBoss": false
+        },
+        {
+          "login": "scrhartley",
+          "avatarPath": "avatars/scrhartley.png",
+          "contributions": 10,
+          "isBoss": false
+        },
+        {
+          "login": "Telroshan",
+          "avatarPath": "avatars/Telroshan.png",
+          "contributions": 3,
+          "isBoss": false
+        },
+        {
+          "login": "alexpetros",
+          "avatarPath": "avatars/alexpetros.png",
+          "contributions": 2,
+          "isBoss": false
+        }
+      ]
+    },
+    {
+      "owner": "mongodb",
+      "name": "mongo",
+      "language": "C++",
+      "description": "",
+      "totalContributions": 128,
+      "top5": [
+        {
+          "login": "RedBeard0531",
+          "avatarPath": "avatars/RedBeard0531.png",
+          "contributions": 74,
+          "isBoss": true
+        },
+        {
+          "login": "benety",
+          "avatarPath": "avatars/benety.png",
+          "contributions": 33,
+          "isBoss": false
+        },
+        {
+          "login": "kaloianm",
+          "avatarPath": "avatars/kaloianm.png",
+          "contributions": 14,
+          "isBoss": false
+        },
+        {
+          "login": "lukech",
+          "avatarPath": "avatars/lukech.png",
+          "contributions": 4,
+          "isBoss": false
+        },
+        {
+          "login": "markbenvenuto",
+          "avatarPath": "avatars/markbenvenuto.png",
+          "contributions": 3,
+          "isBoss": false
+        }
+      ]
+    },
+    {
+      "owner": "reduxjs",
+      "name": "redux-toolkit",
+      "language": "TypeScript",
+      "description": "",
+      "totalContributions": 118,
+      "top5": [
+        {
+          "login": "markerikson",
+          "avatarPath": "avatars/markerikson.png",
+          "contributions": 45,
+          "isBoss": true
+        },
+        {
+          "login": "aryaemami59",
+          "avatarPath": "avatars/aryaemami59.png",
+          "contributions": 36,
+          "isBoss": false
+        },
+        {
+          "login": "EskiMojo14",
+          "avatarPath": "avatars/EskiMojo14.png",
+          "contributions": 32,
+          "isBoss": false
+        },
+        {
+          "login": "riqts",
+          "avatarPath": "avatars/riqts.png",
+          "contributions": 4,
+          "isBoss": false
+        },
+        {
+          "login": "phryneas",
+          "avatarPath": "avatars/phryneas.png",
+          "contributions": 1,
+          "isBoss": false
+        }
+      ]
+    },
+    {
+      "owner": "fastify",
+      "name": "fastify",
+      "language": "JavaScript",
+      "description": "",
+      "totalContributions": 97,
+      "top5": [
+        {
+          "login": "mcollina",
+          "avatarPath": "avatars/mcollina.png",
+          "contributions": 37,
+          "isBoss": true
+        },
+        {
+          "login": "Eomm",
+          "avatarPath": "avatars/Eomm.png",
+          "contributions": 22,
+          "isBoss": false
+        },
+        {
+          "login": "Fdawgs",
+          "avatarPath": "avatars/Fdawgs.png",
+          "contributions": 19,
+          "isBoss": false
+        },
+        {
+          "login": "climba03003",
+          "avatarPath": "avatars/climba03003.png",
+          "contributions": 10,
+          "isBoss": false
+        },
+        {
+          "login": "Uzlopak",
+          "avatarPath": "avatars/Uzlopak.png",
+          "contributions": 9,
+          "isBoss": false
+        }
+      ]
+    },
+    {
+      "owner": "TanStack",
+      "name": "pacer",
+      "language": "TypeScript",
+      "description": "",
+      "totalContributions": 96,
+      "top5": [
+        {
+          "login": "KevinVandy",
+          "avatarPath": "avatars/KevinVandy.png",
+          "contributions": 74,
+          "isBoss": true
+        },
+        {
+          "login": "AlemTuzlak",
+          "avatarPath": "avatars/AlemTuzlak.png",
+          "contributions": 8,
+          "isBoss": false
+        },
+        {
+          "login": "lachlancollins",
+          "avatarPath": "avatars/lachlancollins.png",
+          "contributions": 6,
+          "isBoss": false
+        },
+        {
+          "login": "LadyBluenotes",
+          "avatarPath": "avatars/LadyBluenotes.png",
+          "contributions": 5,
+          "isBoss": false
+        },
+        {
+          "login": "harry-whorlow",
+          "avatarPath": "avatars/harry-whorlow.png",
+          "contributions": 3,
+          "isBoss": false
+        }
+      ]
+    },
+    {
+      "owner": "TanStack",
+      "name": "form",
+      "language": "TypeScript",
+      "description": "",
+      "totalContributions": 91,
+      "top5": [
+        {
+          "login": "harry-whorlow",
+          "avatarPath": "avatars/harry-whorlow.png",
+          "contributions": 24,
+          "isBoss": true
+        },
+        {
+          "login": "crutchcorn",
+          "avatarPath": "avatars/crutchcorn.png",
+          "contributions": 23,
+          "isBoss": false
+        },
+        {
+          "login": "LeCarbonator",
+          "avatarPath": "avatars/LeCarbonator.png",
+          "contributions": 21,
+          "isBoss": false
+        },
+        {
+          "login": "lachlancollins",
+          "avatarPath": "avatars/lachlancollins.png",
+          "contributions": 14,
+          "isBoss": false
+        },
+        {
+          "login": "Balastrong",
+          "avatarPath": "avatars/Balastrong.png",
+          "contributions": 9,
+          "isBoss": false
+        }
+      ]
+    },
+    {
+      "owner": "drizzle-team",
+      "name": "drizzle-orm",
+      "language": "TypeScript",
+      "description": "",
+      "totalContributions": 66,
+      "top5": [
+        {
+          "login": "RomanNabukhotnyi",
+          "avatarPath": "avatars/RomanNabukhotnyi.png",
+          "contributions": 24,
+          "isBoss": true
+        },
+        {
+          "login": "AndriiSherman",
+          "avatarPath": "avatars/AndriiSherman.png",
+          "contributions": 16,
+          "isBoss": false
+        },
+        {
+          "login": "Sukairo-02",
+          "avatarPath": "avatars/Sukairo-02.png",
+          "contributions": 14,
+          "isBoss": false
+        },
+        {
+          "login": "AlexBlokh",
+          "avatarPath": "avatars/AlexBlokh.png",
+          "contributions": 10,
+          "isBoss": false
+        },
+        {
+          "login": "L-Mario564",
+          "avatarPath": "avatars/L-Mario564.png",
+          "contributions": 2,
+          "isBoss": false
+        }
+      ]
+    },
+    {
+      "owner": "microsoft",
+      "name": "TypeScript",
+      "language": "TypeScript",
+      "description": "",
+      "totalContributions": 41,
+      "top5": [
+        {
+          "login": "csigs",
+          "avatarPath": "avatars/csigs.png",
+          "contributions": 13,
+          "isBoss": true
+        },
+        {
+          "login": "DanielRosenwasser",
+          "avatarPath": "avatars/DanielRosenwasser.png",
+          "contributions": 13,
+          "isBoss": false
+        },
+        {
+          "login": "ahejlsberg",
+          "avatarPath": "avatars/ahejlsberg.png",
+          "contributions": 8,
+          "isBoss": false
+        },
+        {
+          "login": "sheetalkamat",
+          "avatarPath": "avatars/sheetalkamat.png",
+          "contributions": 6,
+          "isBoss": false
+        },
+        {
+          "login": "sandersn",
+          "avatarPath": "avatars/sandersn.png",
+          "contributions": 1,
+          "isBoss": false
+        }
+      ]
+    },
+    {
+      "owner": "minio",
+      "name": "minio",
+      "language": "Go",
+      "description": "",
+      "totalContributions": 39,
+      "top5": [
+        {
+          "login": "jiuker",
+          "avatarPath": "avatars/jiuker.png",
+          "contributions": 17,
+          "isBoss": true
+        },
+        {
+          "login": "harshavardhana",
+          "avatarPath": "avatars/harshavardhana.png",
+          "contributions": 11,
+          "isBoss": false
+        },
+        {
+          "login": "minio-trusted",
+          "avatarPath": "avatars/minio-trusted.png",
+          "contributions": 5,
+          "isBoss": false
+        },
+        {
+          "login": "klauspost",
+          "avatarPath": "avatars/klauspost.png",
+          "contributions": 4,
+          "isBoss": false
+        },
+        {
+          "login": "vadmeste",
+          "avatarPath": "avatars/vadmeste.png",
+          "contributions": 2,
+          "isBoss": false
+        }
+      ]
+    },
+    {
+      "owner": "TanStack",
+      "name": "store",
+      "language": "TypeScript",
+      "description": "",
+      "totalContributions": 27,
+      "top5": [
+        {
+          "login": "crutchcorn",
+          "avatarPath": "avatars/crutchcorn.png",
+          "contributions": 8,
+          "isBoss": true
+        },
+        {
+          "login": "Sheraff",
+          "avatarPath": "avatars/Sheraff.png",
+          "contributions": 6,
+          "isBoss": false
+        },
+        {
+          "login": "lachlancollins",
+          "avatarPath": "avatars/lachlancollins.png",
+          "contributions": 6,
+          "isBoss": false
+        },
+        {
+          "login": "KevinVandy",
+          "avatarPath": "avatars/KevinVandy.png",
+          "contributions": 5,
+          "isBoss": false
+        },
+        {
+          "login": "davidkpiano",
+          "avatarPath": "avatars/davidkpiano.png",
+          "contributions": 2,
+          "isBoss": false
+        }
+      ]
+    }
+  ]
+}

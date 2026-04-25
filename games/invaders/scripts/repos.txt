@@ -1,6 +1,243 @@
 # One owner/name per line. Lines starting with # are ignored.
 # Run scripts/fetch-repos.sh after editing this file.
-# Example entries (uncomment to test):
-# facebook/react
-# vitejs/vite
-# microsoft/typescript
+
+# --- Frameworks / UI ---
+facebook/react
+vuejs/core
+vuejs/vue
+nuxt/nuxt
+sveltejs/svelte
+sveltejs/kit
+solidjs/solid
+preactjs/preact
+vercel/next.js
+remix-run/remix
+remix-run/react-router
+angular/angular
+QwikDev/qwik
+withastro/astro
+
+# --- TanStack ---
+TanStack/query
+TanStack/router
+TanStack/table
+TanStack/form
+TanStack/store
+TanStack/virtual
+TanStack/ranger
+TanStack/config
+TanStack/db
+TanStack/pacer
+TanStack/start
+TanStack/optimistic
+
+# --- State management ---
+reduxjs/redux
+reduxjs/redux-toolkit
+pmndrs/zustand
+pmndrs/jotai
+mobxjs/mobx
+vuejs/pinia
+
+# --- Build tools / Bundlers / Runtimes ---
+vitejs/vite
+webpack/webpack
+parcel-bundler/parcel
+rollup/rollup
+evanw/esbuild
+swc-project/swc
+oven-sh/bun
+nodejs/node
+denoland/deno
+
+# --- Languages / Compilers ---
+microsoft/TypeScript
+babel/babel
+
+# --- Testing ---
+jestjs/jest
+vitest-dev/vitest
+cypress-io/cypress
+microsoft/playwright
+testing-library/react-testing-library
+
+# --- CSS / Styling ---
+tailwindlabs/tailwindcss
+styled-components/styled-components
+emotion-js/emotion
+
+# --- UI component libraries ---
+mui/material-ui
+ant-design/ant-design
+chakra-ui/chakra-ui
+shadcn-ui/ui
+radix-ui/primitives
+mantinedev/mantine
+
+# --- Backend / Node ---
+expressjs/express
+fastify/fastify
+nestjs/nest
+koajs/koa
+trpc/trpc
+
+# --- Tooling / Monorepo ---
+prettier/prettier
+eslint/eslint
+biomejs/biome
+pnpm/pnpm
+yarnpkg/berry
+vercel/turborepo
+nrwl/nx
+
+# --- ORM / DB ---
+prisma/prisma
+drizzle-team/drizzle-orm
+typeorm/typeorm
+sequelize/sequelize
+
+# --- Forms / Validation ---
+colinhacks/zod
+react-hook-form/react-hook-form
+jaredpalmer/formik
+
+# --- Mobile / Desktop ---
+facebook/react-native
+electron/electron
+ionic-team/ionic-framework
+
+# --- Utilities / Other ---
+axios/axios
+lodash/lodash
+date-fns/date-fns
+d3/d3
+mrdoob/three.js
+chartjs/Chart.js
+socketio/socket.io
+iamkun/dayjs
+bigskysoftware/htmx
+google/zx
+naptha/tesseract.js
+mozilla/pdf.js
+
+# --- Editors / IDEs ---
+microsoft/vscode
+microsoft/monaco-editor
+
+# --- Documentation / Slides ---
+facebook/docusaurus
+storybookjs/storybook
+slidevjs/slidev
+
+# --- Diagramming / Drawing ---
+excalidraw/excalidraw
+tldraw/tldraw
+mermaid-js/mermaid
+jgraph/drawio-desktop
+
+# --- Charts / Visualization ---
+apache/echarts
+juliangarnier/anime
+Leaflet/Leaflet
+pixijs/pixijs
+
+# --- Browser automation / API clients ---
+puppeteer/puppeteer
+usebruno/bruno
+hoppscotch/hoppscotch
+
+# --- Backends / BaaS ---
+supabase/supabase
+appwrite/appwrite
+n8n-io/n8n
+strapi/strapi
+nocodb/nocodb
+apache/superset
+FlowiseAI/Flowise
+coder/code-server
+
+# --- Self-hosted apps ---
+immich-app/immich
+RocketChat/Rocket.Chat
+laurent22/joplin
+TryGhost/Ghost
+makeplane/plane
+twentyhq/twenty
+toeverything/AFFiNE
+Stirling-Tools/Stirling-PDF
+Eugeny/tabby
+
+# --- Game engines / Media ---
+phaserjs/phaser
+nolimits4web/swiper
+videojs/video.js
+slab/quill
+
+# --- More frameworks / runtimes ---
+gatsbyjs/gatsby
+expo/expo
+serverless/serverless
+Unitech/pm2
+
+# --- Markdown / Browser ext ---
+markedjs/marked
+gorhill/uBlock
+jquery/jquery
+
+# --- Observability / Monitoring ---
+getsentry/sentry
+grafana/grafana
+prometheus/prometheus
+elastic/elasticsearch
+elastic/kibana
+SigNoz/signoz
+open-telemetry/opentelemetry-js
+
+# --- Infrastructure / DevOps ---
+kubernetes/kubernetes
+moby/moby
+hashicorp/terraform
+ansible/ansible
+envoyproxy/envoy
+traefik/traefik
+caddyserver/caddy
+helm/helm
+argoproj/argo-cd
+istio/istio
+
+# --- Databases / Storage ---
+redis/redis
+mongodb/mongo
+minio/minio
+cockroachdb/cockroach
+ClickHouse/ClickHouse
+duckdb/duckdb
+
+# --- Self-hosted apps (more) ---
+jellyfin/jellyfin
+nextcloud/server
+home-assistant/core
+mastodon/mastodon
+bitwarden/server
+discourse/discourse
+go-gitea/gitea
+penpot/penpot
+
+# --- AI / ML ---
+huggingface/transformers
+pytorch/pytorch
+tensorflow/tensorflow
+ollama/ollama
+langchain-ai/langchain
+vercel/ai
+run-llama/llama_index
+openai/openai-python
+google/jax
+microsoft/autogen
+
+# --- Misc heavyweights ---
+11ty/eleventy
+yt-dlp/yt-dlp
+syncthing/syncthing
+restic/restic
+typst/typst

@@ -52,7 +52,19 @@
       "mcp__plugin_playwright_playwright__browser_run_code",
       "Bash(node -e \"try { require\\('canvas'\\); console.log\\('canvas available'\\); } catch { console.log\\('no canvas module'\\); }\")",
       "Bash(npm install:*)",
-      "Bash(grep -r \"'\\\\#[0-9a-f]\\\\{3,6\\\\}\\\\|'\\\\\"#[0-9a-f]\\\\{3,6\\\\}\" /Users/dan.neciu/projects/arcade-games/games/invaders/src --include=\"*.ts\" -n)"
+      "Bash(grep -r \"'\\\\#[0-9a-f]\\\\{3,6\\\\}\\\\|'\\\\\"#[0-9a-f]\\\\{3,6\\\\}\" /Users/dan.neciu/projects/arcade-games/games/invaders/src --include=\"*.ts\" -n)",
+      "Bash(git -C /Users/dan.neciu/projects/arcade-games add games/invaders/src/main.ts)",
+      "Bash(git -C /Users/dan.neciu/projects/arcade-games commit -m ' *)",
+      "Bash(git -C /Users/dan.neciu/projects/arcade-games log -1 --format=\"%h %s\")",
+      "Bash(chmod +x /Users/dan.neciu/projects/arcade-games/games/invaders/scripts/fetch-repos.sh)",
+      "Bash(bash -n /Users/dan.neciu/projects/arcade-games/games/invaders/scripts/fetch-repos.sh)",
+      "Bash(git -C /Users/dan.neciu/projects/arcade-games add games/invaders/scripts/repos.txt games/invaders/scripts/fetch-repos.sh games/invaders/public/data/.gitkeep games/invaders/public/avatars/.gitkeep)",
+      "Bash(git -C /Users/dan.neciu/projects/arcade-games add -A games/invaders/src)",
+      "Bash(git -C /Users/dan.neciu/projects/arcade-games status --short)",
+      "Bash(git -C /Users/dan.neciu/projects/arcade-games show 91a3f90:games/invaders/src/scenes/title.ts)",
+      "Bash(git -C /Users/dan.neciu/projects/arcade-games add games/invaders/src/scenes/homepage.ts)",
+      "Bash(grep -v '^$')",
+      "WebFetch(domain:github.com)"
     ]
   }
 }
