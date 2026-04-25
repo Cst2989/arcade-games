@@ -2,7 +2,7 @@
 # Finds X (twitter) handles for the top 5 contributors of every repo in the index.
 #
 # Reads:   public/data/repos.json (must exist — run fetch-repos.sh first)
-# Writes:  public/data/twitter.md (markdown, grouped by repo)
+# Writes:  public/data/twitter.md (markdown, grouped by repo, written incrementally)
 #
 # Requires: bash, curl, jq. GITHUB_TOKEN env var (for higher API rate limit).
 #
@@ -64,6 +64,7 @@ lookup_handle() {
   echo "$handle"
 }
 
+# Truncate the output and write the header.
 {
   echo "# X (Twitter) handles for top contributors"
   echo ""
@@ -71,31 +72,43 @@ lookup_handle() {
   echo ""
   echo "Send these folks the game so they can battle their own commits 🎮"
   echo ""
-
-  total_repos="$(jq '.repos | length' "$INDEX_FILE")"
-  for ((i = 0; i < total_repos; i++)); do
-    owner="$(jq -r ".repos[$i].owner" "$INDEX_FILE")"
-    name="$(jq -r ".repos[$i].name" "$INDEX_FILE")"
-    echo "## $owner/$name"
-    echo ""
-
-    top5_logins="$(jq -r ".repos[$i].top5[].login" "$INDEX_FILE")"
-    while IFS= read -r login; do
-      [[ -z "$login" ]] && continue
-      handle="$(lookup_handle "$login")"
-      if [[ -n "$handle" ]]; then
-        echo "- \`$login\` → [@${handle}](https://x.com/${handle})"
-      else
-        echo "- \`$login\` → _(no X handle on profile)_"
-      fi
-      sleep 0.1
-    done <<< "$top5_logins"
-    echo ""
-  done
 } > "$OUT_FILE"
 
-found="$(grep -c '→ \[@' "$OUT_FILE" || true)"
-missing="$(grep -c '_(no X handle' "$OUT_FILE" || true)"
-echo "Wrote $OUT_FILE"
-echo "  $found contributors with X handle"
-echo "  $missing without"
+total_repos="$(jq '.repos | length' "$INDEX_FILE")"
+echo "[find-twitter] $total_repos repos in index" >&2
+
+found=0
+missing=0
+for ((i = 0; i < total_repos; i++)); do
+  owner="$(jq -r ".repos[$i].owner" "$INDEX_FILE")"
+  name="$(jq -r ".repos[$i].name" "$INDEX_FILE")"
+  echo "[$((i + 1))/$total_repos] $owner/$name" >&2
+
+  {
+    echo "## $owner/$name"
+    echo ""
+  } >> "$OUT_FILE"
+
+  top5_logins="$(jq -r ".repos[$i].top5[].login" "$INDEX_FILE")"
+  while IFS= read -r login; do
+    [[ -z "$login" ]] && continue
+    handle="$(lookup_handle "$login")"
+    if [[ -n "$handle" ]]; then
+      echo "  · $login → @$handle" >&2
+      echo "- \`$login\` → [@${handle}](https://x.com/${handle})" >> "$OUT_FILE"
+      found=$((found + 1))
+    else
+      echo "  · $login → (no handle)" >&2
+      echo "- \`$login\` → _(no X handle on profile)_" >> "$OUT_FILE"
+      missing=$((missing + 1))
+    fi
+    sleep 0.1
+  done <<< "$top5_logins"
+
+  echo "" >> "$OUT_FILE"
+done
+
+echo "" >&2
+echo "Done. Wrote $OUT_FILE" >&2
+echo "  $found contributors with X handle" >&2
+echo "  $missing without" >&2
