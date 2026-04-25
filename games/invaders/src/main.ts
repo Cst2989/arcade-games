@@ -4,19 +4,11 @@ import {
 } from '@osi/engine';
 
 import { BALANCE } from './config/balance.js';
-import { getMockRepoData } from './data/mock-data.js';
-import { contributorToLevel, type Level } from './data/mapping.js';
-import type { ContributorStats } from './data/contributor-stats.js';
-import { aggregateDaily, pickBiggestCommit } from './data/contributor-stats.js';
-import {
-  getRepo, getContributors, getUser, getCommitsForAuthor,
-  withCache, GitHubRateLimitError,
-  type GitHubUser,
-} from './data/github-client.js';
-import { promptForToken } from './ui/token-prompt.js';
+import { loadIndex, loadRepo, repoFileToLevels, type RepoIndex } from './data/repos-loader.js';
+import type { Level } from './data/mapping.js';
 import { createGameStats, type GameStats } from './scenes/gameplay-context.js';
 
-import { TitleScene } from './scenes/title.js';
+import { HomepageScene } from './scenes/homepage.js';
 import { DeepLinkIntroScene } from './scenes/deep-link-intro.js';
 import { LoadingScene } from './scenes/loading.js';
 import { LevelIntroScene } from './scenes/level-intro.js';
@@ -34,16 +26,6 @@ import { trackGameStart, trackLevelComplete, trackBossDefeated, trackGameOver, t
 
 const BASE = import.meta.env.BASE_URL;
 const assetUrl = (p: string) => `${BASE}${p.replace(/^\/+/, '')}`;
-
-function loadImage(url: string): Promise<HTMLImageElement> {
-  return new Promise((resolve, reject) => {
-    const img = new Image();
-    img.crossOrigin = 'anonymous';
-    img.onload = () => resolve(img);
-    img.onerror = () => reject(new Error(`image load failed: ${url}`));
-    img.src = url;
-  });
-}
 
 const canvas = document.getElementById('game') as HTMLCanvasElement;
 const renderer = new Renderer(canvas);
@@ -139,25 +121,22 @@ async function boot(): Promise<void> {
   window.addEventListener('touchstart', unlockAudio);
   window.addEventListener('click', unlockAudio);
 
-  const params = new URLSearchParams(window.location.search);
-
-  (window as unknown as { __osiShowTokenModal?: () => void }).__osiShowTokenModal = () =>
-    promptForToken({
-      onSave: () => console.log('[invaders] token-modal demo: saved'),
-      onCancel: () => console.log('[invaders] token-modal demo: cancelled'),
-    });
-
-  if (params.get('test') === 'modal') {
-    promptForToken({
-      onSave: () => console.log('[invaders] token-modal demo: saved'),
-      onCancel: () => console.log('[invaders] token-modal demo: cancelled'),
-    });
+  let cachedIndex: RepoIndex | null = null;
+  try {
+    cachedIndex = await loadIndex();
+  } catch (err) {
+    console.warn('[invaders] failed to load repos.json', err);
   }
 
+  const params = new URLSearchParams(window.location.search);
   const deepLink = params.get('repo') ?? params.get('load');
-  const hasValidDeepLink = deepLink !== null && /^[\w.-]+\/[\w.-]+$/.test(deepLink);
+  const isInIndex = (full: string): boolean => {
+    if (!cachedIndex) return false;
+    const [o, n] = full.split('/');
+    return cachedIndex.repos.some((r) => r.owner === o && r.name === n);
+  };
 
-  if (hasValidDeepLink) {
+  if (deepLink && /^[\w.-]+\/[\w.-]+$/.test(deepLink) && isInIndex(deepLink)) {
     const intro = new DeepLinkIntroScene(
       renderer,
       deepLink,
@@ -169,8 +148,7 @@ async function boot(): Promise<void> {
     );
     sceneManager.push(intro);
   } else {
-    const title = new TitleScene(renderer, particles.stars, (repo) => startGame(repo), audio, touch);
-    sceneManager.push(title);
+    sceneManager.push(new HomepageScene(renderer, particles.stars, (repo) => startGame(repo), audio, touch));
   }
 
   gameLoop.start();
@@ -180,122 +158,23 @@ function startGame(repoFullName: string): void {
   trackGameStart(repoFullName);
   const loading = new LoadingScene(renderer, atlas, particles.stars, kb);
   sceneManager.replace(loading);
-  void loadRealRepo(repoFullName, loading).catch((err) => {
-    console.error('[invaders] real-data load failed, using mock', err);
-    if (err instanceof GitHubRateLimitError) {
-      promptForToken({
-        onSave: () => startGame(repoFullName),
-        onCancel: () => startGameFromMock(repoFullName, loading),
-      });
-      return;
-    }
-    startGameFromMock(repoFullName, loading);
+  void loadAndLaunch(repoFullName, loading).catch((err) => {
+    console.error('[invaders] failed to load repo data', err);
+    sceneManager.clear();
+    sceneManager.push(new HomepageScene(renderer, particles.stars, (r) => startGame(r), audio, touch));
   });
 }
 
-async function loadRealRepo(repoFullName: string, loading: LoadingScene): Promise<void> {
+async function loadAndLaunch(repoFullName: string, loading: LoadingScene): Promise<void> {
   const [owner, name] = repoFullName.split('/');
-  if (!owner || !name) {
-    startGameFromMock(repoFullName, loading);
-    return;
-  }
-
-  loading.setProgress(0.05, 'fetching repo metadata');
-  const repo = await withCache(`repo:${owner}/${name}`, () => getRepo(owner, name));
-
-  loading.setProgress(0.15, 'fetching contributors');
-  const contribs = await withCache(
-    `contribs:${owner}/${name}`,
-    () => getContributors(owner, name),
-  );
-  if (contribs.length === 0) throw new Error('no contributors returned');
-
-  // Fetch commits for top 10 by GitHub's all-time count, then re-rank by last-year
-  // total so the boss is whoever's been most active this past year.
-  const candidates = contribs.slice(0, 10);
-  const sinceIso = new Date(Date.now() - 365 * 24 * 3600 * 1000).toISOString();
-
-  interface Ranked {
-    stats: ContributorStats;
-    user: GitHubUser | null;
-    avatarImage: HTMLImageElement | null;
-    recentTotal: number;
-  }
-
-  const ranked: Ranked[] = [];
-  for (let i = 0; i < candidates.length; i++) {
-    const c = candidates[i]!;
-    loading.setProgress(
-      0.15 + 0.45 * (i / candidates.length),
-      `fetching commits for ${c.login}`,
-    );
-    const commits = await withCache(
-      `commits:${owner}/${name}/${c.login}`,
-      () => getCommitsForAuthor(owner, name, c.login, sinceIso),
-    );
-    const daily = aggregateDaily(commits);
-    const recentTotal = daily.reduce((n, d) => n + d.count, 0);
-    const biggestCommit = pickBiggestCommit(commits);
-
-    const user = await withCache(`user:${c.login}`, () => getUser(c.login))
-      .catch(() => null);
-    const avatarUrl = user?.avatar_url ?? c.avatar_url;
-    const avatarImage = await loadImage(avatarUrl).catch(() => null);
-
-    const stats: ContributorStats = {
-      login: c.login,
-      avatarUrl,
-      totalCommits: recentTotal,
-      daily,
-      ...(biggestCommit ? { biggestCommit } : {}),
-    };
-    ranked.push({ stats, user, avatarImage, recentTotal });
-  }
-
-  // Sort by recent commits DESC and keep top 5. The #1 recent committer becomes the boss.
-  ranked.sort((a, b) => b.recentTotal - a.recentTotal);
-  const top5 = ranked.filter((r) => r.recentTotal > 0).slice(0, 5);
-  if (top5.length === 0) throw new Error('no recent contributors');
-
-  // Level order = weakest → strongest: reverse so levels[0] = rank #5, levels[N-1] = boss.
-  const ordered = [...top5].reverse();
-  const levels: Level[] = ordered.map(({ stats, user, avatarImage }, idx) =>
-    contributorToLevel(
-      stats,
-      { id: stats.login, login: stats.login, name: stats.login },
-      idx,
-      {
-        ...(user ? { user } : {}),
-        ...(repo.language ? { language: repo.language } : {}),
-        ...(avatarImage ? { avatarImage } : {}),
-      },
-    ),
-  );
-  const ranks = ordered.map((_, idx) => ordered.length - idx);
-
+  if (!owner || !name) throw new Error(`malformed repo name: ${repoFullName}`);
+  loading.setProgress(0.2, `loading ${repoFullName}`);
+  const file = await loadRepo(owner, name);
+  loading.setProgress(0.8, 'building levels');
+  const { levels, ranks } = repoFileToLevels(file);
   loading.setProgress(1, 'ready');
   const stats = createGameStats();
-  setTimeout(() => launchLevel(0, levels, ranks, repoFullName, stats), 400);
-}
-
-function startGameFromMock(repoFullName: string, loading: LoadingScene): void {
-  loading.setProgress(0.1, 'using mock data (offline)');
-  const data = getMockRepoData(repoFullName);
-  loading.setProgress(0.5, 'building levels');
-  const levels: Level[] = data.contributors.slice(0, 5).map((stats, idx) =>
-    contributorToLevel(
-      stats,
-      { id: stats.login, login: stats.login, name: stats.login },
-      idx,
-    ),
-  );
-  const ranks = levels.map((_, idx) => levels.length - idx);
-  loading.setProgress(1, 'ready');
-  const stats = createGameStats();
-  setTimeout(
-    () => launchLevel(0, levels, ranks, repoFullName, stats),
-    600,
-  );
+  setTimeout(() => launchLevel(0, levels, ranks, repoFullName, stats), 250);
 }
 
 function launchLevel(
@@ -334,7 +213,7 @@ function launchLevel(
               trackVictory(repoFullName, stats.totalScore);
               const victory = new VictoryScene(renderer, repoFullName, stats, levels, () => {
                 sceneManager.clear();
-                sceneManager.push(new TitleScene(renderer, particles.stars, (r) => startGame(r), audio, touch));
+                sceneManager.push(new HomepageScene(renderer, particles.stars, (r: string) => startGame(r), audio, touch));
               }, touch);
               sceneManager.replace(victory);
             },
