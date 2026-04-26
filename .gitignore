@@ -4,3 +4,4 @@ dist/
 .superpowers/
 .vite/
 *.tsbuildinfo
+.claude/settings.local.json
