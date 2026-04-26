@@ -1,8 +1,8 @@
 import type { GameContext } from '../scenes/gameplay-context.js';
-import { Powerup, Player, Health, Position, Enemy } from '../components/index.js';
+import { Powerup, Player, Health, Position } from '../components/index.js';
 
 export function applyPowerup(kind: string, playerEntity: number, ctx: GameContext, _now: number): void {
-  const { world, sfx, particles } = ctx;
+  const { world, sfx } = ctx;
   const p = world.get(playerEntity, Player);
   const hp = world.get(playerEntity, Health);
   const pos = world.get(playerEntity, Position);
@@ -23,23 +23,11 @@ export function applyPowerup(kind: string, playerEntity: number, ctx: GameContex
     case 'squash':
       ctx.state.squashReady = true;
       break;
-    case 'forcepush': {
-      const toClear: number[] = [];
-      for (const [e, epos] of world.query(Position, Enemy)) {
-        toClear.push(e);
-        for (let i = 0; i < 12; i++) {
-          particles.bigExplosions.spawn({
-            x: epos.x,
-            y: epos.y,
-            vx: (Math.random() - 0.5) * 400,
-            vy: (Math.random() - 0.5) * 400,
-            life: 0.8,
-          });
-        }
-      }
-      for (const e of toClear) world.remove(e);
+    case 'forcepush':
+      // Stockpiles a bomb instead of auto-clearing the screen. Player
+      // detonates it manually with X (see player-control.ts).
+      p.bombsLeft += 1;
       break;
-    }
   }
   void Powerup;
 }

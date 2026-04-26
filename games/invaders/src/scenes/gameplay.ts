@@ -374,7 +374,7 @@ function drawInstructions(ctx: CanvasRenderingContext2D, atlas: SpriteAtlas, mob
     fork:      'triple shot 8s',
     rebase:    'slow enemies 5s',
     squash:    'next shot pierces',
-    forcepush: 'clear screen',
+    forcepush: '+1 bomb (X)',
   };
   ctx.font = '12px ui-monospace, Menlo, monospace';
   const iconScale = 0.6;
@@ -432,7 +432,7 @@ function drawInstructionsMobile(ctx: CanvasRenderingContext2D, atlas: SpriteAtla
     fork:      'triple shot',
     rebase:    'slow enemies',
     squash:    'pierce shot',
-    forcepush: 'clear screen',
+    forcepush: '+1 bomb (X)',
   };
   ctx.font = '11px ui-monospace, Menlo, monospace';
   const iconScale = 0.5;

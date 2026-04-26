@@ -111,22 +111,20 @@ describe('loadRepo', () => {
 });
 
 describe('repoFileToLevels', () => {
-  it('returns 5 levels worst-first when given a repo with multiple contributors', () => {
-    const big: RepoFile = {
-      ...REPO_FIXTURE,
-      contributors: Array.from({ length: 5 }, (_, i) => ({
-        ...REPO_FIXTURE.contributors[0]!,
-        login: `user${i + 1}`,
-      })),
-    };
-    const { levels, ranks } = repoFileToLevels(big);
-    expect(levels).toHaveLength(5);
-    expect(ranks).toEqual([5, 4, 3, 2, 1]);
-    expect(levels[0]?.contributor.login).toBe('user1');
-    expect(levels[4]?.contributor.login).toBe('user5');
+  // The pre-load uses `new Image()`. Vitest runs in node — stub it so
+  // it always errors out (we don't assert avatar bytes, only metadata).
+  beforeEach(() => {
+    (globalThis as unknown as { Image: typeof Image }).Image = class {
+      onload: (() => void) | null = null;
+      onerror: (() => void) | null = null;
+      src = '';
+      constructor() {
+        setTimeout(() => this.onerror?.(), 0);
+      }
+    } as unknown as typeof Image;
   });
 
-  it('preserves daily commit data on the level profile', () => {
+  it('returns 5 levels with ranks 5..1 when contributors are uniform', async () => {
     const big: RepoFile = {
       ...REPO_FIXTURE,
       contributors: Array.from({ length: 5 }, (_, i) => ({
@@ -134,12 +132,47 @@ describe('repoFileToLevels', () => {
         login: `user${i + 1}`,
       })),
     };
-    const { levels } = repoFileToLevels(big);
+    const { levels, ranks } = await repoFileToLevels(big);
+    expect(levels).toHaveLength(5);
+    expect(ranks).toEqual([5, 4, 3, 2, 1]);
+  });
+
+  it('preserves daily commit data on the level profile', async () => {
+    const big: RepoFile = {
+      ...REPO_FIXTURE,
+      contributors: Array.from({ length: 5 }, (_, i) => ({
+        ...REPO_FIXTURE.contributors[0]!,
+        login: `user${i + 1}`,
+      })),
+    };
+    const { levels } = await repoFileToLevels(big);
     expect(levels[0]?.profile.totalCommits).toBe(100);
     expect(levels[0]?.profile.location).toBe('Berlin');
   });
 
-  it('throws if the repo has fewer than 5 contributors', () => {
-    expect(() => repoFileToLevels(REPO_FIXTURE)).toThrow(/at least 5/);
+  it('rejects if the repo has fewer than 5 contributors', async () => {
+    await expect(repoFileToLevels(REPO_FIXTURE)).rejects.toThrow(/at least 5/);
+  });
+
+  it('orders contributors by ascending active-week count (fewer waves first)', async () => {
+    // Build daily arrays where the first N weeks have non-zero commits.
+    const buildDaily = (activeWeeks: number) =>
+      Array.from({ length: 365 }, (_, i) => ({
+        date: `2025-01-${String((i % 28) + 1).padStart(2, '0')}`,
+        count: Math.floor(i / 7) < activeWeeks ? 1 : 0,
+      }));
+    const big: RepoFile = {
+      ...REPO_FIXTURE,
+      contributors: [
+        { ...REPO_FIXTURE.contributors[0]!, login: 'forty',  totalCommits: 280, daily: buildDaily(40) },
+        { ...REPO_FIXTURE.contributors[0]!, login: 'one',    totalCommits: 7,   daily: buildDaily(1)  },
+        { ...REPO_FIXTURE.contributors[0]!, login: 'twenty', totalCommits: 140, daily: buildDaily(20) },
+        { ...REPO_FIXTURE.contributors[0]!, login: 'five',   totalCommits: 35,  daily: buildDaily(5)  },
+        { ...REPO_FIXTURE.contributors[0]!, login: 'ten',    totalCommits: 70,  daily: buildDaily(10) },
+      ],
+    };
+    const { levels } = await repoFileToLevels(big);
+    expect(levels.map((l) => l.contributor.login))
+      .toEqual(['one', 'five', 'ten', 'twenty', 'forty']);
   });
 });

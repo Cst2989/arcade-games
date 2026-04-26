@@ -171,7 +171,7 @@ async function loadAndLaunch(repoFullName: string, loading: LoadingScene): Promi
   loading.setProgress(0.2, `loading ${repoFullName}`);
   const file = await loadRepo(owner, name);
   loading.setProgress(0.8, 'building levels');
-  const { levels, ranks } = repoFileToLevels(file);
+  const { levels, ranks } = await repoFileToLevels(file);
   loading.setProgress(1, 'ready');
   const stats = createGameStats();
   setTimeout(() => launchLevel(0, levels, ranks, repoFullName, stats), 250);
