@@ -27,6 +27,18 @@ import { trackGameStart, trackLevelComplete, trackBossDefeated, trackGameOver, t
 const BASE = import.meta.env.BASE_URL;
 const assetUrl = (p: string) => `${BASE}${p.replace(/^\/+/, '')}`;
 
+function setRepoUrl(repoFullName: string | null): void {
+  const url = new URL(window.location.href);
+  if (repoFullName) {
+    url.searchParams.set('repo', repoFullName);
+    url.searchParams.delete('load');
+  } else {
+    url.searchParams.delete('repo');
+    url.searchParams.delete('load');
+  }
+  window.history.replaceState(null, '', url.toString());
+}
+
 const canvas = document.getElementById('game') as HTMLCanvasElement;
 const renderer = new Renderer(canvas);
 const scaler = new CanvasScaler(canvas);
@@ -155,11 +167,13 @@ async function boot(): Promise<void> {
 }
 
 function startGame(repoFullName: string): void {
+  setRepoUrl(repoFullName);
   trackGameStart(repoFullName);
   const loading = new LoadingScene(renderer, atlas, particles.stars, kb);
   sceneManager.replace(loading);
   void loadAndLaunch(repoFullName, loading).catch((err) => {
     console.error('[invaders] failed to load repo data', err);
+    setRepoUrl(null);
     sceneManager.clear();
     sceneManager.push(new HomepageScene(renderer, particles.stars, (r) => startGame(r), audio, touch));
   });
@@ -212,6 +226,7 @@ function launchLevel(
               trackBossDefeated(repoFullName, stats.totalScore);
               trackVictory(repoFullName, stats.totalScore);
               const victory = new VictoryScene(renderer, repoFullName, stats, levels, () => {
+                setRepoUrl(null);
                 sceneManager.clear();
                 sceneManager.push(new HomepageScene(renderer, particles.stars, (r: string) => startGame(r), audio, touch));
               }, touch);
